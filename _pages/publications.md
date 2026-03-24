@@ -20,7 +20,13 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     <p class="pub-title">{{ pub.title }}</p>
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
-    {% if pub.doi %}<a href="{{ pub.doi }}" class="pub-link" target="_blank">DOI</a>{% endif %}
+    <div class="pub-actions">
+      {% if pub.doi %}<a href="{{ pub.doi }}" class="pub-link" target="_blank">DOI</a>{% endif %}
+      {% if pub.abstract %}<button class="pub-link pub-abstract-toggle" data-target="abstract-{{ forloop.index }}">Abstract</button>{% endif %}
+    </div>
+    {% if pub.abstract %}
+    <div class="pub-abstract" id="abstract-{{ forloop.index }}">{{ pub.abstract }}</div>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
@@ -106,4 +112,31 @@ html.dark .pub-title { color: #e2e8f0; }
 html.dark .pub-authors,
 html.dark .pub-venue { color: #94a3b8; }
 html.dark .pub-entry { border-bottom-color: #334155; }
+.pub-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.pub-abstract-toggle { cursor: pointer; background: none; }
+.pub-abstract-toggle.open { background: #2e5b9e; color: #fff; }
+.pub-abstract {
+  display: none;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.65;
+  background: #f8fafc;
+  border-left: 3px solid #2e5b9e;
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+}
+.pub-abstract.open { display: block; }
+html.dark .pub-abstract { background: #0f172a; color: #94a3b8; border-left-color: #3b82f6; }
 </style>
+
+<script>
+document.querySelectorAll('.pub-abstract-toggle').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var target = document.getElementById(btn.dataset.target);
+    var open = target.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.textContent = open ? 'Hide Abstract' : 'Abstract';
+  });
+});
+</script>

@@ -5,6 +5,7 @@
   authors: "De La Vega FM, <strong>Han S</strong>, Onuchic VF, Chen X, <em>et al.</em>"
   venue: "<em>Bioinformatics Advances</em>, 5(1), vbaf071."
   doi: "https://doi.org/10.1093/bioadv/vbaf071"
+  abstract: "Evaluated multiple short-read germline CNV callers for clinical WGS applications using reference cell lines. Tools varied widely in sensitivity (7–83%) and precision (1–76%), with better deletion detection than duplication detection—particularly for small duplications under 5 kb. When evaluated against clinically relevant gene panels, DRAGEN v4.2 achieved 100% sensitivity and 77% precision with custom filtering, underscoring the importance of tool selection and calibration for clinical genomics workflows."
 
 - type: journal
   year: 2023
@@ -13,6 +14,7 @@
   authors: "Chen J, Basting PJ, <strong>Han S</strong>, Garfinkel DJ, Bergman CM."
   venue: "<em>Mobile DNA</em>, 14, 8."
   doi: "https://doi.org/10.1186/s13100-023-00296-4"
+  abstract: "Introduced McClintock 2, a reproducible benchmarking framework for evaluating transposable element detection tools in short-read sequencing data. Applied to Saccharomyces cerevisiae, the framework enables systematic comparison of TE detectors and guides accurate inference of Ty retrotransposon insertion patterns. The study demonstrates that tool choice and filtering parameters have a large impact on inferred insertion landscapes, and that consensus approaches across multiple tools improve accuracy."
 
 - type: journal
   year: 2022
@@ -21,7 +23,7 @@
   authors: "<strong>Han S</strong>&dagger;, Dias GB&dagger;, Basting PJ, Viswanatha R, Perrimon N, Bergman CM."
   venue: "<em>Nucleic Acids Research</em>, 50(21), e124."
   doi: "https://doi.org/10.1093/nar/gkac794"
-  fulltext: "https://academic.oup.com/nar/article/50/21/e124/6717830"
+  abstract: "Developed TELR, a software pipeline that leverages local assembly of long reads (PacBio / Oxford Nanopore) to detect non-reference transposable element insertions at base-pair resolution. Applied to a polyploid Drosophila cell line, TELR enables phylogenomic analysis of TE insertions—resolving haplotype-specific insertions that short-read methods cannot distinguish. TELR is open-source and available at github.com/bergmanlab/TELR."
 
 - type: journal
   year: 2022
@@ -30,6 +32,7 @@
   authors: "<strong>Han S</strong>, Dias GB, Basting PJ, Nelson MG, Patel S, Marzo M, Bergman CM."
   venue: "<em>Genetics</em>, 221(3), iyac077."
   doi: "https://doi.org/10.1093/genetics/iyac077"
+  abstract: "Performed genomic analysis of 32 whole-genome sequencing datasets from Drosophila melanogaster S2 cell sublines maintained in different laboratories worldwide. Phylogenetic analysis using TE insertion profiles revealed that ongoing transposition has accumulated at measurable rates during cell culture passaging, and that TE-based phylogenies accurately reflect the known history of S2 subline propagation. The study provides the first comprehensive map of somatic TE activity in a widely used model cell line."
 
 - type: journal
   year: 2022
@@ -38,6 +41,7 @@
   authors: "Mariyappa D, Rusch DB, <strong>Han S</strong>, Luhur A, Overton D, Miller DFB, Bergman CM, Zelhof AC."
   venue: "<em>G3: Genes, Genomes, Genetics</em>, 12(2), jkab403."
   doi: "https://doi.org/10.1093/g3journal/jkab403"
+  abstract: "Developed a cell line authentication protocol based on unique TE insertion profiles derived from whole-genome sequencing data, analogous to STR profiling used in mammalian cell authentication. Applied to a panel of Drosophila cell lines, the method successfully identifies each line from its TE fingerprint and detects loss of heterozygosity. The study also reports the first confirmed misidentification events in Drosophila cell culture, involving the mbn2 and Sg4 lines."
 
 - type: journal
   year: 2021
@@ -46,6 +50,7 @@
   authors: "<strong>Han S</strong>, Basting PJ, Dias GB, Luhur A, Zelhof AC, Bergman CM."
   venue: "<em>Genetics</em>, 219(2), iyab113."
   doi: "https://doi.org/10.1093/genetics/iyab113"
+  abstract: "Demonstrated that TE insertion profiles derived from WGS data serve as reliable molecular fingerprints for Drosophila cell line identity, and can detect loss of heterozygosity arising during prolonged cell culture. Profiled a diverse set of Drosophila cell lines using the ngs_te_mapper2 pipeline and showed that each line has a distinctive, stable TE signature. The approach provides a low-cost, sequence-based alternative to traditional cytogenetic methods for cell line quality control."
 
 - type: journal
   year: 2017
@@ -54,7 +59,7 @@
   authors: "Bergman CM, <strong>Han S</strong>, Nelson MG, Bondarenko V, Kozeretska I."
   venue: "<em>PeerJ</em>, 5, e3824."
   doi: "https://doi.org/10.7717/peerj.3824"
-  fulltext: "https://peerj.com/articles/3824/"
+  abstract: "Analyzed P element genomic content across isofemale strains from three worldwide Drosophila melanogaster populations (North America, Europe, Africa) using whole-genome sequencing. P element abundance estimates were highly consistent across different bioinformatics approaches. North American strains had fewer but proportionally more full-length P elements compared to other populations, yet genomic P element content alone did not explain variation in gonadal dysgenesis phenotypes—suggesting additional regulatory factors determine dysgenesis severity beyond simple transposon copy number."
 
 - type: patent
   year: 2024

@@ -1408,3 +1408,51 @@ html.theme-transitions *::before,
 html.theme-transitions *::after {
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, box-shadow 200ms ease !important;
 }
+
+/* ── Active nav link ── */
+nav a.nav-active {
+  color: #2e5b9e;
+  font-weight: 600;
+  border-bottom: 2px solid #2e5b9e;
+  padding-bottom: 1px;
+}
+html.dark nav a.nav-active {
+  color: #7dd3fc;
+  border-bottom-color: #7dd3fc;
+}
+
+/* ── Back to top button ── */
+#back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2e5b9e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  pointer-events: none;
+  z-index: 999;
+}
+#back-to-top svg { width: 18px; height: 18px; }
+#back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+#back-to-top:hover { background: #1e4585; }
+html.dark #back-to-top { background: #334155; }
+html.dark #back-to-top:hover { background: #475569; }
+
+@media (max-width: 640px) {
+  #back-to-top { bottom: 20px; right: 20px; }
+}
