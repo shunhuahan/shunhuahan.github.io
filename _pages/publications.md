@@ -21,7 +21,6 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
     {% if pub.doi %}<a href="{{ pub.doi }}" class="pub-link" target="_blank">DOI</a>{% endif %}
-    {% if pub.fulltext %}<a href="{{ pub.fulltext }}" class="pub-link" target="_blank">Full Text</a>{% endif %}
   </div>
 </div>
 {% endfor %}

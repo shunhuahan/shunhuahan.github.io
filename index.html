@@ -30,10 +30,6 @@ layout: default
         <svg viewBox="0 0 600 530" fill="currentColor"><path d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.38-3.69-10.832-3.708-7.896-.017-2.936-1.193.516-3.707 7.896-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.45-163.25-81.433C20.15 217.613 10 86.535 10 68.825c0-88.687 77.742-60.816 125.72-24.795z"/></svg>
         Bluesky
       </a>
-      <span class="about-link about-link-text about-email">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        hanshunhua0829 [at] gmail [.] com
-      </span>
     </div>
   </div>
 
@@ -63,36 +59,36 @@ layout: default
 
 </div>
 
-<!-- ── News section ── -->
-<div class="news-section">
-  <div class="news-col">
-    <h3>Recent Publications</h3>
-    {% assign journal_pubs = site.data.publications | where: "type", "journal" %}
-    {% for pub in journal_pubs limit:3 %}
-    <div class="news-item">
-      <span class="news-year">{{ pub.year }}</span>
-      <div class="news-item-body">
-        <p class="news-title">{{ pub.title }}</p>
-        <p class="news-venue">{{ pub.venue }}</p>
-      </div>
-    </div>
-    {% endfor %}
-    <a href="/publications/" class="news-more">All publications &rarr;</a>
-  </div>
+<!-- ── Recent News ── -->
+{% assign journal_pubs = site.data.publications | where: "type", "journal" %}
+{% assign all_news = journal_pubs | concat: site.data.talks | sort: "year" | reverse %}
 
-  <div class="news-col">
-    <h3>Recent Talks</h3>
-    {% for talk in site.data.talks limit:3 %}
-    <div class="news-item">
-      <span class="news-year">{{ talk.year }}</span>
-      <div class="news-item-body">
-        <p class="news-title">{% if talk.url %}<a href="{{ talk.url }}" target="_blank">{{ talk.title }}</a>{% else %}{{ talk.title }}{% endif %}</p>
-        <p class="news-venue">{{ talk.venue }}{% if talk.location %}, {{ talk.location }}{% endif %}</p>
-      </div>
+<div class="home-news-card">
+  <h3 class="home-section-title">Recent News</h3>
+  {% for item in all_news limit:6 %}
+  <div class="news-item">
+    <span class="news-year">{{ item.year }}</span>
+    <div class="news-item-body">
+      {% if item.type == "journal" %}
+        <span class="news-badge badge-pub">Publication</span>
+      {% elsif item.type == "Platform Presentation" %}
+        <span class="news-badge badge-talk">Platform Talk</span>
+      {% elsif item.type == "Poster" %}
+        <span class="news-badge badge-poster">Poster</span>
+      {% else %}
+        <span class="news-badge badge-talk">Talk</span>
+      {% endif %}
+      <p class="news-title">{% if item.url %}<a href="{{ item.url }}" target="_blank">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</p>
+      <p class="news-venue">{{ item.venue }}{% if item.location %}, {{ item.location }}{% endif %}</p>
     </div>
-    {% endfor %}
-    <a href="/talks/" class="news-more">All talks &rarr;</a>
   </div>
+  {% endfor %}
+</div>
+
+<!-- ── Contact ── -->
+<div class="home-news-card">
+  <h3 class="home-section-title">Contact</h3>
+  <p class="contact-text">Please reach out to me by email: <span class="contact-email">hanshunhua0829 [at] gmail [.] com</span></p>
 </div>
 
 <style>
@@ -103,30 +99,17 @@ layout: default
 }
 .about-link-text:hover { color: #64748b; }
 html.dark .about-link-text { color: #64748b; }
-.about-email {
-  font-size: 12px;
-  line-height: 1.4;
-  margin-top: 4px;
-  text-align: left;
-  white-space: normal;
-  word-break: break-word;
-}
 
-/* ── News section ── */
-.news-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
-}
-.news-col {
+/* ── Shared home card ── */
+.home-news-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  padding: 22px 26px;
+  padding: 22px 28px;
+  margin-top: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
-.news-col h3 {
+.home-section-title {
   margin: 0 0 16px;
   font-size: 15px;
   font-weight: 600;
@@ -134,11 +117,14 @@ html.dark .about-link-text { color: #64748b; }
   border-bottom: 1px solid #e2e8f0;
   padding-bottom: 10px;
 }
+
+/* ── News items ── */
 .news-item {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   padding: 10px 0;
   border-bottom: 1px solid #f1f5f9;
+  align-items: flex-start;
 }
 .news-item:last-of-type { border-bottom: none; }
 .news-year {
@@ -146,10 +132,24 @@ html.dark .about-link-text { color: #64748b; }
   font-size: 12px;
   font-weight: 700;
   color: #52adc8;
-  padding-top: 2px;
+  padding-top: 3px;
   min-width: 36px;
 }
 .news-item-body { flex: 1; min-width: 0; }
+.news-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
+.badge-pub    { background: #e0f2fe; color: #0369a1; }
+.badge-talk   { background: #f0fdf4; color: #15803d; }
+.badge-poster { background: #fef9c3; color: #854d0e; }
 .news-title {
   font-size: 13px;
   font-weight: 500;
@@ -157,33 +157,36 @@ html.dark .about-link-text { color: #64748b; }
   line-height: 1.5;
   margin: 0 0 2px;
 }
-.news-title a {
-  color: #334155;
-  text-decoration: none;
-}
-.news-title a:hover { color: #52adc8; text-decoration: none; }
+.news-title a { color: #334155; text-decoration: none; }
+.news-title a:hover { color: #52adc8; }
 .news-venue {
   font-size: 12px;
   color: #94a3b8;
   margin: 0;
   font-style: italic;
 }
-.news-more {
-  display: inline-block;
-  margin-top: 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #52adc8;
-  text-decoration: none;
-}
-.news-more:hover { text-decoration: underline; }
 
-/* Dark mode */
-html.dark .news-col {
+/* ── Contact ── */
+.contact-text {
+  font-size: 15px;
+  color: #475569;
+  margin: 0;
+}
+.contact-email {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ── Dark mode ── */
+html.dark .home-news-card {
   background: #1e293b;
   border-color: #334155;
 }
-html.dark .news-col h3 {
+html.dark .home-section-title {
   color: #e2e8f0;
   border-bottom-color: #334155;
 }
@@ -192,9 +195,13 @@ html.dark .news-title,
 html.dark .news-title a { color: #cbd5e1; }
 html.dark .news-title a:hover { color: #7dd3fc; }
 html.dark .news-venue { color: #64748b; }
+html.dark .badge-pub    { background: #0c2d48; color: #7dd3fc; }
+html.dark .badge-talk   { background: #052e16; color: #86efac; }
+html.dark .badge-poster { background: #2d1a00; color: #fcd34d; }
+html.dark .contact-text { color: #94a3b8; }
+html.dark .contact-email { background: #334155; color: #e2e8f0; }
 
 @media (max-width: 640px) {
-  .news-section { grid-template-columns: 1fr; }
-  .about-email { font-size: 11px; }
+  .home-news-card { padding: 18px 16px; }
 }
 </style>
