@@ -1400,3 +1400,11 @@ html.dark code {
   background: #253347;
   color: #e2e8f0;
 }
+
+/* ── Dark mode transition ── */
+html.theme-transitions,
+html.theme-transitions *,
+html.theme-transitions *::before,
+html.theme-transitions *::after {
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, box-shadow 200ms ease !important;
+}

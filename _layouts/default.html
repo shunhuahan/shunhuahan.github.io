@@ -73,6 +73,12 @@
         var btn = document.getElementById('theme-toggle');
         var html = document.documentElement;
 
+        // Enable transitions only after page load so the flash-prevention
+        // script doesn't animate the initial theme application.
+        window.addEventListener('DOMContentLoaded', function() {
+          html.classList.add('theme-transitions');
+        });
+
         function applyTheme(dark) {
           if (dark) {
             html.classList.add('dark');
