@@ -8,36 +8,34 @@ My research sits at the intersection of computational method development and gen
 
 <div class="research-section">
 <div class="research-section-header">
-<h2>Variant Calling in Complex Genomic Regions</h2>
+<h2>Haplotype-resolved variant calling in complex genomic regions</h2>
 </div>
 <div class="research-section-body" markdown="1">
 
-Many important genes reside in segmental duplications or highly repetitive genomic regions where standard short-read aligners and variant callers fail. I develop targeted, haplotype-aware methods that leverage whole-genome sequencing—both short-read and long-read—to produce accurate calls in these challenging loci.
+Many important genes reside in segmental duplications or highly repetitive genomic regions where standard short-read aligners and variant callers fail. I develop targeted, haplotype-aware methods that leverage whole-genome sequencing—both short-read and long-read to produce accurate calls in these challenging loci.
 
-**TruPath Genome (formerly Constellation mapped reads)**
+**Haplotype-resolved variant calling in segmental duplications using TruPath Genome (formerly Constellation)**
 
-TruPath Genome is a sequencing and analysis approach that uses on-flowcell proximity sequencing to generate constellation mapped reads, enabling haplotype-resolved variant calling across structurally complex and paralogous gene regions. By phasing reads into haplotype-specific groups before variant calling, TruPath Genome can resolve variants that are otherwise ambiguous or undetectable with standard mapping.
+TruPath Genome is an on-flowcell proximity sequencing technology. The proximity information from sequenced reads in nearby nanowells can help infer whether a group of reads belongs to the same original DNA molecule. I designed multi-region joint detection (MRJD) algorithm that can take advantage of this long-range information from TruPath Genome to produce haplotype-resolved variant calls in segmental duplications.
 
 I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext)
 
 **Other key projects:**
 
-- **Alpha-thalassemia (*HBA1/2*) copy number genotyping** — Developed a targeted copy number caller for the alpha-globin locus, one of the most structurally complex and clinically important regions of the genome (~5% global carrier frequency for alpha-thalassemia).
+- **Alpha-thalassemia (*HBA1/2*) copy number genotyping** — Developed a targeted copy number caller for the alpha-globin locus, one of the most structurally complex and clinically important regions of the genome (~5% global carrier frequency for alpha-thalassemia). [[Blog]](https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html)
 
-- **Lynch syndrome (*PMS2*) variant detection** — Improved variant calling accuracy in *PMS2*, a mismatch-repair gene with a highly similar pseudogene (*PMS2CL*) that causes widespread misalignment and false variant calls.
-
-- **Multi-region joint detection & region-ambiguous variants** — Methods for jointly genotyping variants across paralogous gene families, enabling confident variant assignment even when reads map ambiguously. (Patents WO2024010812A2, US 18/674,538, US 18/674,279)
+- **Lynch syndrome (*PMS2*) variant detection** — Improved variant calling accuracy in *PMS2*, a mismatch-repair gene with a highly similar pseudogene (*PMS2CL*) that causes widespread misalignment and false variant calls. [[Blog]](https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html)
 
 </div>
 </div>
 
 <div class="research-section">
 <div class="research-section-header">
-<h2>Transposable Element Analysis in Genomics</h2>
+<h2>Detecting and analyzing transposable element in Drosophila</h2>
 </div>
 <div class="research-section-body" markdown="1">
 
-Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D. I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies.
+Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D., I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies.
 
 **Key projects:**
 
@@ -47,7 +45,7 @@ Transposable elements (TEs) make up nearly half the human genome and are major d
 
 - **TE dynamics in *Drosophila* S2 cell lines** — Genomic analysis of 32 whole-genome datasets from *D. melanogaster* S2 sublines, characterizing ongoing transposition and phylogenetic relationships among laboratory cell cultures.
 
-- **P element target site prediction** — Machine learning models trained on 30+ engineered features to predict P element insertion site preferences.
+- ***P* element target site prediction** — Machine learning models trained on 30+ engineered features to predict *P* element insertion site preferences.
 
 </div>
 </div>

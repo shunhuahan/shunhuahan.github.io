@@ -6,12 +6,28 @@
   date: "March 12, 2026"
   url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
 
+- year: 2026
+  type: "Poster"
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-Region Joint Detection with Illumina TruPath Genome."
+  venue: "Biennial Meeting of the International Society for Gastrointestinal Hereditary Tumours (InSiGHT)"
+  location: "Dusit Thani Laguna, Singapore"
+  date: "March 7, 2026"
+
+- year: 2026
+  type: "Poster"
+  title: "Haplotype-resolved variant calling in paralogous \"dark\" regions with Illumina Constellation."
+  venue: "AGBT Advances in Genome Biology and Technology Meeting"
+  location: "Orlando, Florida"
+  date: "February 24, 2026"
+  url: "https://www.illumina.com/events/conferences/2026/agbt-2026.html"
+
 - year: 2025
   type: "Poster"
   title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina constellation mapped reads."
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
+  url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025
   type: "Poster"
@@ -19,6 +35,7 @@
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
+  url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025
   type: "Poster"
@@ -30,9 +47,10 @@
 - year: 2023
   type: "Poster"
   title: "Overcoming the challenges of variant calling in <em>PMS2</em> high homology regions for improved Lynch syndrome diagnosis using whole-genome sequencing."
-  venue: "ISMB Conference"
+  venue: "ISMB Intelligent Systems for Molecular Biology Conference"
   location: "Lyon, France"
   date: "July 25, 2023"
+  url: "https://www.tempus.com/wp-content/uploads/2023/07/Han_etal_ISMB23.pdf"
 
 - year: 2022
   type: "Poster"

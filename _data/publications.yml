@@ -61,15 +61,18 @@
   title: "Region-ambiguous variant detection."
   authors: "Onuchic VF, <strong>Han S</strong>."
   venue: "<em>US Patent Application</em> 18/674,538."
+  patent: "https://patents.google.com/patent/US20240395359A1"
 
 - type: patent
   year: 2024
   title: "Multi-region joint detection."
   authors: "<strong>Han S</strong>, Andrews D, Onuchic VF."
   venue: "<em>US Patent Application</em> 18/674,279."
+  patent: "https://patents.google.com/patent/US20240395363A1"
 
 - type: thesis
   year: 2021
   title: "Novel computational strategies for the analysis of transposable elements in <em>Drosophila</em> cell culture genomes."
   authors: "<strong>Han S.</strong>"
   venue: "Ph.D. Dissertation, University of Georgia."
+  thesis: "https://www.proquest.com/docview/2627523092"
