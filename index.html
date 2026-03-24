@@ -4,6 +4,10 @@ layout: default
 
 <div class="home-intro">
 
+  <div class="intro-photo">
+    <img src="/images/profile.jpg" alt="Shunhua Han" class="profile-photo">
+  </div>
+
   <div class="intro-bio">
     <h1 style="text-align:left; margin-top:0;">Shunhua Han, Ph.D.</h1>
     <p class="position-title">Sr. Staff Bioinformatics Scientist &bull; <a href="https://www.illumina.com" target="_blank">Illumina</a></p>
@@ -91,7 +95,33 @@ layout: default
 
 <style>
 .home-intro {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
   margin-bottom: 10px;
+}
+.intro-photo {
+  flex-shrink: 0;
+}
+.profile-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.intro-bio {
+  flex: 1;
+}
+@media (max-width: 600px) {
+  .home-intro {
+    flex-direction: column;
+    align-items: center;
+  }
+  .intro-bio h1 {
+    text-align: center !important;
+  }
 }
 .position-title {
   font-size: 17px;
