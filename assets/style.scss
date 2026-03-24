@@ -1260,3 +1260,143 @@ Modules - reusable parts of our design
 //@import "highlights";
 @import "darcula";
 @import "svg-icons";
+
+/* ════════════════════════════════════════
+   DARK MODE TOGGLE BUTTON
+   ════════════════════════════════════════ */
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  transition: color 0.15s;
+
+  svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+  }
+
+  &:hover { color: #52adc8; }
+  &:focus { outline: none; }
+}
+
+/* Show sun in dark mode, moon in light mode */
+.icon-sun  { display: none; }
+.icon-moon { display: block; }
+html.dark .icon-sun  { display: block; }
+html.dark .icon-moon { display: none; }
+
+/* ════════════════════════════════════════
+   DARK MODE COLOURS
+   ════════════════════════════════════════ */
+
+html.dark body {
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+html.dark body:after {
+  background: linear-gradient(90deg, #1d6fa4 0%, #3a9bbf 50%, #52adc8 100%);
+}
+
+/* Masthead */
+html.dark .wrapper-masthead {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+html.dark .site-name a { color: #f1f5f9; }
+html.dark nav a { color: #94a3b8; }
+html.dark nav a:hover { color: #7dd3fc; }
+html.dark .theme-toggle { color: #94a3b8; }
+html.dark .theme-toggle:hover { color: #7dd3fc; }
+
+/* Content cards */
+html.dark .content-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Headings */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #f1f5f9;
+}
+
+/* Links */
+html.dark a {
+  color: #7dd3fc;
+}
+html.dark a:hover {
+  color: #bae6fd;
+}
+
+/* About sidebar */
+html.dark .about-photo {
+  border-color: #334155;
+}
+html.dark .about-name { color: #f1f5f9 !important; }
+html.dark .about-title,
+html.dark .about-org { color: #94a3b8; }
+html.dark .about-location { color: #64748b; }
+html.dark .about-link { color: #94a3b8; }
+html.dark .about-link:hover { color: #7dd3fc; }
+
+/* Publication entries */
+html.dark .pub-entry {
+  border-bottom-color: #334155;
+}
+html.dark .pub-year { color: #52adc8; }
+html.dark .pub-title { color: #e2e8f0; }
+html.dark .pub-authors,
+html.dark .pub-venue { color: #94a3b8; }
+html.dark .pub-link {
+  border-color: #52adc8;
+  color: #52adc8;
+}
+html.dark .pub-link:hover {
+  background: #52adc8;
+  color: #0f172a !important;
+}
+
+/* Tables */
+html.dark table tr {
+  background-color: #1e293b;
+  border-top-color: #334155;
+}
+html.dark table tr:nth-child(2n) {
+  background-color: #253347;
+}
+html.dark table tr th,
+html.dark table tr td {
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+/* Horizontal rules */
+html.dark hr {
+  border-color: #334155;
+}
+
+/* Footer */
+html.dark .wrapper-footer {
+  background: #0f172a;
+  border-top-color: #334155;
+}
+
+/* Code blocks */
+html.dark code {
+  background: #253347;
+  color: #e2e8f0;
+}
