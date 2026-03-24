@@ -34,7 +34,7 @@ Transposable elements (TEs) make up nearly half the human genome and are major d
 
 **Key projects:**
 
-- **[TELR](https://github.com/bergmanlab/TELR)** — A software pipeline for detecting non-reference TE insertions in long-read (PacBio / Oxford Nanopore) sequencing data using local assembly. TELR enables phylogenomic analysis of TE insertions at base-pair resolution. Published in *Nucleic Acids Research* (2022); selected as **Editor's Picks** at *Mobile DNA*; cited in *Transposable Elements: Methods and Protocols*.
+- **[TELR](https://github.com/bergmanlab/TELR)** — A software pipeline for detecting non-reference TE insertions in long-read (PacBio / Oxford Nanopore) sequencing data using local assembly. TELR enables phylogenomic analysis of TE insertions at base-pair resolution. Published in *Nucleic Acids Research* (2022).
 
 - **[ngs\_te\_mapper2](https://github.com/bergmanlab/ngs_te_mapper2)** — A cell-line authentication tool based on TE insertion profiles, used to identify *Drosophila* cell lines and detect loss of heterozygosity.
 

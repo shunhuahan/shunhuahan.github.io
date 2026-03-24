@@ -1,0 +1,75 @@
+- type: journal
+  year: 2025
+  title: "Benchmarking of germline copy number variant callers from whole genome sequencing data for clinical applications."
+  authors: "De La Vega FM, <strong>Han S</strong>, Onuchic VF, Chen X, <em>et al.</em>"
+  venue: "<em>Bioinformatics Advances</em>, 5(1), vbaf071."
+  doi: "https://doi.org/10.1093/bioadv/vbaf071"
+
+- type: journal
+  year: 2023
+  title: "Reproducible evaluation of transposable element detectors with McClintock 2 guides accurate inference of Ty insertion patterns in yeast."
+  authors: "Chen J, Basting PJ, <strong>Han S</strong>, Garfinkel DJ, Bergman CM."
+  venue: "<em>Mobile DNA</em>, 14, 8."
+  doi: "https://doi.org/10.1186/s13100-023-00296-4"
+
+- type: journal
+  year: 2022
+  title: "Local assembly of long reads enables phylogenomics of transposable elements in a polyploid cell line."
+  authors: "<strong>Han S</strong>&dagger;, Dias GB&dagger;, Basting PJ, Viswanatha R, Perrimon N, Bergman CM."
+  venue: "<em>Nucleic Acids Research</em>, 50(21), e124."
+  doi: "https://doi.org/10.1093/nar/gkac794"
+  fulltext: "https://academic.oup.com/nar/article/50/21/e124/6717830"
+
+- type: journal
+  year: 2022
+  title: "Ongoing transposition in cell culture reveals the phylogeny of diverse <em>Drosophila</em> S2 sublines."
+  authors: "<strong>Han S</strong>, Dias GB, Basting PJ, Nelson MG, Patel S, Marzo M, Bergman CM."
+  venue: "<em>Genetics</em>, 221(3), iyac077."
+  doi: "https://doi.org/10.1093/genetics/iyac077"
+
+- type: journal
+  year: 2022
+  title: "A novel transposable element-based authentication protocol for <em>Drosophila</em> cell lines."
+  authors: "Mariyappa D, Rusch DB, <strong>Han S</strong>, Luhur A, Overton D, Miller DFB, Bergman CM, Zelhof AC."
+  venue: "<em>G3: Genes, Genomes, Genetics</em>, 12(2), jkab403."
+  doi: "https://doi.org/10.1093/g3journal/jkab403"
+
+- type: journal
+  year: 2021
+  title: "Transposable element profiles reveal cell line identity and loss of heterozygosity in <em>Drosophila</em> cell culture."
+  authors: "<strong>Han S</strong>, Basting PJ, Dias GB, Luhur A, Zelhof AC, Bergman CM."
+  venue: "<em>Genetics</em>, 219(2), iyab113."
+  doi: "https://doi.org/10.1093/genetics/iyab113"
+
+- type: journal
+  year: 2017
+  title: "Genomic analysis of P elements in natural populations of <em>Drosophila melanogaster</em>."
+  authors: "Bergman CM, <strong>Han S</strong>, Nelson MG, Bondarenko V, Kozeretska I."
+  venue: "<em>PeerJ</em>, 5, e3824."
+  doi: "https://doi.org/10.7717/peerj.3824"
+  fulltext: "https://peerj.com/articles/3824/"
+
+- type: patent
+  year: 2024
+  title: "Methods and systems for determining copy number variant genotypes."
+  authors: "<strong>Han S</strong>, Onuchic VF, Chen X."
+  venue: "<em>WO Patent</em> WO2024010812A2."
+  patent: "https://patents.google.com/patent/WO2024010812A2"
+
+- type: patent
+  year: 2024
+  title: "Region-ambiguous variant detection."
+  authors: "Onuchic VF, <strong>Han S</strong>."
+  venue: "<em>US Patent Application</em> 18/674,538."
+
+- type: patent
+  year: 2024
+  title: "Multi-region joint detection."
+  authors: "<strong>Han S</strong>, Andrews D, Onuchic VF."
+  venue: "<em>US Patent Application</em> 18/674,279."
+
+- type: thesis
+  year: 2021
+  title: "Novel computational strategies for the analysis of transposable elements in <em>Drosophila</em> cell culture genomes."
+  authors: "<strong>Han S.</strong>"
+  venue: "Ph.D. Dissertation, University of Georgia."
