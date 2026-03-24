@@ -1288,10 +1288,10 @@ Modules - reusable parts of our design
 }
 
 /* Show sun in dark mode, moon in light mode */
-.icon-sun  { display: none; }
-.icon-moon { display: block; }
-html.dark .icon-sun  { display: block; }
-html.dark .icon-moon { display: none; }
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html.dark .theme-toggle .icon-sun  { display: block; }
+html.dark .theme-toggle .icon-moon { display: none; }
 
 /* ════════════════════════════════════════
    DARK MODE COLOURS
