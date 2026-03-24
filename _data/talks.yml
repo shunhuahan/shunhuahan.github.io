@@ -4,6 +4,7 @@
   venue: "ACMG Annual Clinical Genetics Meeting"
   location: "Baltimore, MD"
   date: "March 12, 2026"
+  sort_date: "2026-03-12"
   url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
 
 - year: 2026
@@ -12,6 +13,7 @@
   venue: "Biennial Meeting of the International Society for Gastrointestinal Hereditary Tumours (InSiGHT)"
   location: "Dusit Thani Laguna, Singapore"
   date: "March 7, 2026"
+  sort_date: "2026-03-07"
 
 - year: 2026
   type: "Poster"
@@ -19,6 +21,7 @@
   venue: "AGBT Advances in Genome Biology and Technology Meeting"
   location: "Orlando, Florida"
   date: "February 24, 2026"
+  sort_date: "2026-02-24"
 
 - year: 2025
   type: "Poster"
@@ -26,6 +29,7 @@
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
+  sort_date: "2025-10-17"
   url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025
@@ -34,6 +38,7 @@
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
+  sort_date: "2025-10-17"
   url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025
@@ -42,6 +47,7 @@
   venue: "AGBT Precision Health"
   location: "San Diego, CA"
   date: "September 9, 2025"
+  sort_date: "2025-09-09"
 
 - year: 2023
   type: "Poster"
@@ -49,6 +55,7 @@
   venue: "ISMB Intelligent Systems for Molecular Biology Conference"
   location: "Lyon, France"
   date: "July 25, 2023"
+  sort_date: "2023-07-25"
   url: "https://www.tempus.com/wp-content/uploads/2023/07/Han_etal_ISMB23.pdf"
 
 - year: 2022
@@ -57,6 +64,7 @@
   venue: "AGBT Precision Health Meeting"
   location: "San Diego, CA"
   date: "September 8, 2022"
+  sort_date: "2022-09-08"
 
 - year: 2019
   type: "Invited Talk"
@@ -64,6 +72,7 @@
   venue: "Advancing Informatics in Government and Industry Symposium"
   location: "Athens, GA"
   date: "July 25, 2019"
+  sort_date: "2019-07-25"
 
 - year: 2018
   type: "Invited Talk"
@@ -71,6 +80,7 @@
   venue: "Mobile Genetic Elements and Genome Plasticity Conference"
   location: "Santa Fe, NM"
   date: "February 11-15, 2018"
+  sort_date: "2018-02-11"
 
 - year: 2017
   type: "Poster"
@@ -78,3 +88,4 @@
   venue: "Mobile Genetic Elements Conference"
   location: "Woods Hole, MA"
   date: "August 29-31, 2017"
+  sort_date: "2017-08-29"

@@ -61,7 +61,7 @@ layout: default
 
 <!-- ── Recent News ── -->
 {% assign journal_pubs = site.data.publications | where: "type", "journal" %}
-{% assign all_news = journal_pubs | concat: site.data.talks | sort: "year" | reverse %}
+{% assign all_news = journal_pubs | concat: site.data.talks | sort: "sort_date" | reverse %}
 
 <div class="home-news-card">
   <h3 class="home-section-title">Recent News</h3>
