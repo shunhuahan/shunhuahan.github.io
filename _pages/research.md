@@ -52,19 +52,6 @@ Transposable elements (TEs) make up nearly half the human genome and are major d
 </div>
 </div>
 
-<div class="research-section">
-<div class="research-section-header">
-<h2>Benchmarking and Evaluation</h2>
-</div>
-<div class="research-section-body" markdown="1">
-
-Rigorous benchmarking of bioinformatics tools is essential for reliable genomic research. I have contributed to large-scale evaluations of:
-
-- **Copy number variant callers** — Benchmarking of germline CNV callers from WGS data. *Bioinformatics Advances* (2025).
-- **TE detection tools** — Reproducible evaluation framework (McClintock 2) for transposable element detectors. *Mobile DNA* (2023).
-
-</div>
-</div>
 
 <div class="research-section">
 <div class="research-section-header">

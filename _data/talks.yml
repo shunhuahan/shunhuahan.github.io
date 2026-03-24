@@ -8,46 +8,56 @@
 
 - year: 2025
   type: "Poster"
-  title: "Haplotype-resolved variant calling for medically relevant genes using whole genome sequencing."
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina constellation mapped reads."
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
 
 - year: 2025
   type: "Poster"
-  title: "Benchmarking copy number variant callers for WGS applications."
+  title: "A rapid, novel WGS approach detects pathogenic variants in high homology pseudogenes using on-flowcell proximity sequencing and haplotype-resolved variant calling."
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
 
 - year: 2025
   type: "Poster"
-  title: "Haplotype-resolved variant detection in medically relevant genes."
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina on-flowcell proximity sequencing."
   venue: "AGBT Precision Health"
   location: "San Diego, CA"
   date: "September 9, 2025"
 
 - year: 2023
   type: "Poster"
-  title: "Overcoming challenges of variant calling in <em>PMS2</em>, a gene critical for Lynch syndrome diagnosis."
+  title: "Overcoming the challenges of variant calling in <em>PMS2</em> high homology regions for improved Lynch syndrome diagnosis using whole-genome sequencing."
   venue: "ISMB Conference"
   location: "Lyon, France"
   date: "July 25, 2023"
 
 - year: 2022
   type: "Poster"
-  title: "Targeted detection of variants in <em>HBA1/2</em> using whole genome sequencing."
+  title: "Targeted detection of clinically relevant variants in <em>HBA1/2</em> from whole-genome sequencing data."
   venue: "AGBT Precision Health Meeting"
   location: "San Diego, CA"
   date: "September 8, 2022"
 
 - year: 2019
   type: "Invited Talk"
-  title: "Computational approaches for transposable element analysis in long-read sequencing data."
-  venue: "Advancing Informatics Symposium"
+  title: "Predicting <em>P</em> element target site preferences using machine learning."
+  venue: "Advancing Informatics in Government and Industry Symposium"
   location: "Athens, GA"
+  date: "July 25, 2019"
 
 - year: 2018
   type: "Invited Talk"
-  title: "TE dynamics in <em>Drosophila</em> cell culture."
+  title: "Genomic insights into the pattern of transposable element proliferation in <em>Drosophila</em> S2 cells."
   venue: "Mobile Genetic Elements and Genome Plasticity Conference"
+  location: "Santa Fe, NM"
+  date: "February 11-15, 2018"
+
+- year: 2017
+  type: "Poster"
+  title: "Genomic insights into the pattern of transposable element proliferation in <em>Drosophila</em> S2 cells."
+  venue: "Mobile Genetic Elements Conference"
+  location: "Woods Hole, MA"
+  date: "August 29-31, 2017"
