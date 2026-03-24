@@ -549,7 +549,7 @@ footer {
 }
 
 body:after {
-    background: linear-gradient(90deg, #3a9bbf 0%, #52adc8 50%, #7ecde0 100%);
+    background: linear-gradient(90deg, #1e4585 0%, #2e5b9e 50%, #5a82c0 100%);
     width: 100%;
     height: 3px;
     top: 0;
@@ -713,12 +713,12 @@ Modules - reusable parts of our design
     height: 28px;
     font-size: 13px;
     font-weight: 500;
-    color: #2980a0;
+    color: #1e4585;
     line-height: 28px;
     padding: 0 12px;
     border-radius: 14px;
-    background-color: #e8f5fa;
-    border: 1px solid #b2dce9;
+    background-color: #eaf0f8;
+    border: 1px solid #b0c4e0;
     margin-bottom: 6px;
     margin-right: 5px;
 }
@@ -1283,7 +1283,7 @@ Modules - reusable parts of our design
     display: block;
   }
 
-  &:hover { color: #52adc8; }
+  &:hover { color: #2e5b9e; }
   &:focus { outline: none; }
 }
 
@@ -1303,7 +1303,7 @@ html.dark body {
 }
 
 html.dark body:after {
-  background: linear-gradient(90deg, #1d6fa4 0%, #3a9bbf 50%, #52adc8 100%);
+  background: linear-gradient(90deg, #1a3a72 0%, #1e4585 50%, #2e5b9e 100%);
 }
 
 /* Masthead */
@@ -1357,16 +1357,16 @@ html.dark .about-link:hover { color: #7dd3fc; }
 html.dark .pub-entry {
   border-bottom-color: #334155;
 }
-html.dark .pub-year { color: #52adc8; }
+html.dark .pub-year { color: #2e5b9e; }
 html.dark .pub-title { color: #e2e8f0; }
 html.dark .pub-authors,
 html.dark .pub-venue { color: #94a3b8; }
 html.dark .pub-link {
-  border-color: #52adc8;
-  color: #52adc8;
+  border-color: #2e5b9e;
+  color: #2e5b9e;
 }
 html.dark .pub-link:hover {
-  background: #52adc8;
+  background: #2e5b9e;
   color: #0f172a !important;
 }
 

@@ -10,7 +10,7 @@ My research sits at the intersection of computational method development and gen
 <div class="research-section-header">
 <h2>Variant Calling in Complex Genomic Regions</h2>
 </div>
-<div class="research-section-body">
+<div class="research-section-body" markdown="1">
 
 Many important genes reside in segmental duplications or highly repetitive genomic regions where standard short-read aligners and variant callers fail. I develop targeted, haplotype-aware methods that leverage whole-genome sequencing—both short-read and long-read—to produce accurate calls in these challenging loci.
 
@@ -35,7 +35,7 @@ I presented this work as a platform talk at the 2026 ACMG Annual Clinical Geneti
 <div class="research-section-header">
 <h2>Transposable Element Analysis in Genomics</h2>
 </div>
-<div class="research-section-body">
+<div class="research-section-body" markdown="1">
 
 Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D. I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies.
 
@@ -56,7 +56,7 @@ Transposable elements (TEs) make up nearly half the human genome and are major d
 <div class="research-section-header">
 <h2>Benchmarking and Evaluation</h2>
 </div>
-<div class="research-section-body">
+<div class="research-section-body" markdown="1">
 
 Rigorous benchmarking of bioinformatics tools is essential for reliable genomic research. I have contributed to large-scale evaluations of:
 
@@ -70,7 +70,7 @@ Rigorous benchmarking of bioinformatics tools is essential for reliable genomic 
 <div class="research-section-header">
 <h2>Software &amp; Resources</h2>
 </div>
-<div class="research-section-body">
+<div class="research-section-body" markdown="1">
 
 | Tool | Description | Link |
 |------|-------------|------|
@@ -91,7 +91,7 @@ Rigorous benchmarking of bioinformatics tools is essential for reliable genomic 
 }
 
 .research-section-header {
-  background: #52adc8;
+  background: #2e5b9e;
   padding: 14px 24px;
 }
 
@@ -116,7 +116,7 @@ html.dark .research-section {
   border-color: #334155;
 }
 html.dark .research-section-header {
-  background: #1d6fa4;
+  background: #1e4585;
 }
 html.dark .research-section-body {
   background: #1e293b;

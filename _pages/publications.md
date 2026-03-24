@@ -71,7 +71,7 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
   width: 44px;
   font-weight: 700;
   font-size: 13px;
-  color: #52adc8;
+  color: #2e5b9e;
   padding-top: 2px;
 }
 .pub-content { flex: 1; }
@@ -91,14 +91,14 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
   font-size: 12px;
   font-weight: 600;
   padding: 2px 10px;
-  border: 1px solid #52adc8;
+  border: 1px solid #2e5b9e;
   border-radius: 4px;
-  color: #52adc8;
+  color: #2e5b9e;
   text-decoration: none !important;
   transition: background 0.15s, color 0.15s;
 }
 .pub-link:hover {
-  background: #52adc8;
+  background: #2e5b9e;
   color: #fff !important;
   text-decoration: none !important;
 }
