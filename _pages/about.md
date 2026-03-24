@@ -4,26 +4,51 @@ title: About
 permalink: /about/
 ---
 
-[Reverie](https://github.com/amitmerchant1990/reverie) is a Jekyll theme which is simple and opinionated. It's actually a fork of [jekyll-now](https://github.com/barryclark/jekyll-now) with some additional features and personal touches which I've implemented to suit my needs for [my blog](https://www.amitmerchant.com).
+## Shunhua Han, Ph.D.
 
-This is a plug-and-play Jekyll theme which you can use on GitHub Pages without even setting up a local environment.
+I am a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com), based in San Diego, CA. My work focuses on developing computational methods to detect genetic variants in medically important but algorithmically challenging regions of the genome—segmental duplications, gene families, and structurally complex loci.
 
-## Features
+---
 
-- Command-line free fork-first workflow, using GitHub.com to create, customize and post to your blog
-- Fully responsive and mobile optimized base theme
-- Sass/Coffeescript support using Jekyll 2.0
-- Free hosting on your GitHub Pages user site
-- All the SEO goodies comes in-built
-- Markdown blogging
-- Syntax highlighting using Pygments
-    - [Dracula syntax theme](https://draculatheme.com/) included
-- Disqus commenting
-- Google Analytics integration
-- Fuzzy search across blog posts
-- Pagination of posts works out-of-the-box.
-- Categorize posts out-of-the box
-- RSS Feed
-- In-built sitemap
+## Education
 
-Learn more about it [here](https://github.com/amitmerchant1990/reverie) on how to get started.
+**Ph.D. in Bioinformatics** — University of Georgia (December 2021)
+Dissertation: *Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes*
+Advisor: Casey Bergman
+
+**B.S. in Pharmaceutical Sciences** — East China University of Science and Technology, Shanghai (June 2015)
+
+---
+
+## Professional Experience
+
+**Sr. Staff Bioinformatics Scientist** — Illumina (November 2025 – present)
+Resolving challenging and disease-causing genes using constellation mapped reads and whole-genome sequencing.
+
+**Staff Bioinformatics Scientist** — Illumina (November 2023 – October 2025)
+Improved variant calling accuracy for *PMS2* (Lynch syndrome diagnostics); published research blog on PMS2 detection.
+
+**Senior Bioinformatics Scientist** — Illumina (January 2022 – October 2023)
+Led development of HBA1/2 copy number genotyping method for alpha-thalassemia diagnosis.
+
+**Graduate Research Assistant** — University of Georgia (August 2016 – December 2021)
+Developed TELR (long-read TE detection), ngs_te_mapper2 (cell-line authentication), and machine learning models for P element target site prediction.
+
+---
+
+## Skills
+
+**Languages:** Python · R · C++ · Bash
+
+**Infrastructure:** Nextflow · Docker · AWS
+
+**Specializations:** Genomic variant calling in complex/repetitive regions · Long-read sequencing · Copy number analysis · Transposable element biology
+
+---
+
+## Contact
+
+- Email: [hanshunhua0829@gmail.com](mailto:hanshunhua0829@gmail.com)
+- GitHub: [shunhuahan](https://github.com/shunhuahan)
+- LinkedIn: [shunhua-han](https://www.linkedin.com/in/shunhua-han/)
+- Google Scholar: [profile](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en)
