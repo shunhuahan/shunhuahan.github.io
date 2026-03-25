@@ -11,8 +11,8 @@ permalink: /zh/talks/
 
 {% for talk in group.items %}
 **{% if talk.type == "Platform Presentation" %}口头报告{% elsif talk.type == "Poster" %}海报展示{% elsif talk.type == "Invited Talk" %}特邀报告{% else %}{{ talk.type }}{% endif %}**
-{{ talk.title }}
-{{ talk.venue }}{% if talk.location %}，{{ talk.location }}{% endif %}{% if talk.date %}。{{ talk.date }}{% endif %}.
+{% if talk.title_zh %}{{ talk.title_zh }}<br>*{{ talk.title }}*{% else %}{{ talk.title }}{% endif %}
+{% if talk.venue_zh %}{{ talk.venue_zh }}{% else %}{{ talk.venue }}{% endif %}{% if talk.location %}，{{ talk.location }}{% endif %}{% if talk.date %}。{{ talk.date }}{% endif %}.
 {% if talk.url %}[[摘要]]({{ talk.url }}){% endif %}
 
 {% endfor %}

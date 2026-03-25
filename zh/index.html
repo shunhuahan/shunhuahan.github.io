@@ -68,8 +68,8 @@ permalink: /zh/
       {% else %}
         <span class="news-badge badge-talk">报告</span>
       {% endif %}
-      <p class="news-title">{% if item.url %}<a href="{{ item.url }}" target="_blank">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</p>
-      <p class="news-venue">{{ item.venue }}{% if item.location %}，{{ item.location }}{% endif %}</p>
+      <p class="news-title">{% if item.url %}<a href="{{ item.url }}" target="_blank">{% if item.title_zh %}{{ item.title_zh }}{% else %}{{ item.title }}{% endif %}</a>{% else %}{% if item.title_zh %}{{ item.title_zh }}{% else %}{{ item.title }}{% endif %}{% endif %}</p>
+      <p class="news-venue">{% if item.venue_zh %}{{ item.venue_zh }}{% else %}{{ item.venue }}{% endif %}{% if item.location %}，{{ item.location }}{% endif %}</p>
     </div>
   </div>
   {% endfor %}
@@ -81,8 +81,3 @@ permalink: /zh/
   <p class="contact-text">欢迎通过邮件联系我：<span class="contact-email">hanshunhua0829 [at] gmail [.] com</span></p>
 </div>
 
-<style>
-.about-link-text { cursor: default; color: #64748b; }
-.about-link-text:hover { color: #64748b; }
-html.dark .about-link-text { color: #64748b; }
-</style>

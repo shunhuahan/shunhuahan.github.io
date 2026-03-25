@@ -18,15 +18,15 @@ permalink: /zh/publications/
 <div class="pub-entry">
   <div class="pub-year">{{ pub.year }}</div>
   <div class="pub-content">
-    <p class="pub-title">{{ pub.title }}</p>
+    <p class="pub-title">{% if pub.title_zh %}{{ pub.title_zh }}<br><span class="pub-title-en">{{ pub.title }}</span>{% else %}{{ pub.title }}{% endif %}</p>
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
     <div class="pub-actions">
       {% if pub.doi %}<a href="{{ pub.doi }}" class="pub-link" target="_blank">DOI</a>{% endif %}
-      {% if pub.abstract %}<button class="pub-link pub-abstract-toggle" data-target="zh-abstract-{{ forloop.index }}">摘要</button>{% endif %}
+      {% if pub.abstract_zh %}<button class="pub-link pub-abstract-toggle" data-target="zh-abstract-{{ forloop.index }}">摘要</button>{% endif %}
     </div>
-    {% if pub.abstract %}
-    <div class="pub-abstract" id="zh-abstract-{{ forloop.index }}">{{ pub.abstract }}</div>
+    {% if pub.abstract_zh %}
+    <div class="pub-abstract" id="zh-abstract-{{ forloop.index }}">{{ pub.abstract_zh }}</div>
     {% endif %}
   </div>
 </div>
@@ -41,7 +41,7 @@ permalink: /zh/publications/
 <div class="pub-entry">
   <div class="pub-year">{{ pub.year }}</div>
   <div class="pub-content">
-    <p class="pub-title">{{ pub.title }}</p>
+    <p class="pub-title">{% if pub.title_zh %}{{ pub.title_zh }}<br><span class="pub-title-en">{{ pub.title }}</span>{% else %}{{ pub.title }}{% endif %}</p>
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
     {% if pub.patent %}<a href="{{ pub.patent }}" class="pub-link" target="_blank">专利链接</a>{% endif %}
@@ -58,9 +58,9 @@ permalink: /zh/publications/
 <div class="pub-entry">
   <div class="pub-year">{{ pub.year }}</div>
   <div class="pub-content">
-    <p class="pub-title">{{ pub.title }}</p>
+    <p class="pub-title">{% if pub.title_zh %}{{ pub.title_zh }}<br><span class="pub-title-en">{{ pub.title }}</span>{% else %}{{ pub.title }}{% endif %}</p>
     <p class="pub-authors">{{ pub.authors }}</p>
-    <p class="pub-venue">{{ pub.venue }}</p>
+    <p class="pub-venue">{% if pub.venue_zh %}{{ pub.venue_zh }}{% else %}{{ pub.venue }}{% endif %}</p>
   </div>
 </div>
 {% endfor %}
@@ -92,6 +92,7 @@ permalink: /zh/publications/
   border-left: 3px solid #2e5b9e; padding: 10px 14px; border-radius: 0 4px 4px 0;
 }
 .pub-abstract.open { display: block; }
+.pub-title-en { font-size: 13px; font-weight: 400; color: #94a3b8; }
 html.dark .pub-title { color: #e2e8f0; }
 html.dark .pub-authors, html.dark .pub-venue { color: #94a3b8; }
 html.dark .pub-entry { border-bottom-color: #334155; }

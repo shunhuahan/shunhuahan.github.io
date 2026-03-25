@@ -2,69 +2,84 @@
   year: 2025
   sort_date: "2025-03-01"
   title: "Benchmarking of germline copy number variant callers from whole genome sequencing data for clinical applications."
+  title_zh: "全基因组测序数据种系拷贝数变异检测工具的临床应用基准评测"
   authors: "De La Vega FM, <strong>Han S</strong>, Onuchic VF, Chen X, <em>et al.</em>"
   venue: "<em>Bioinformatics Advances</em>, 5(1), vbaf071."
   doi: "https://doi.org/10.1093/bioadv/vbaf071"
   abstract: "We benchmark several short-read WGS CNV detection tools using reference cell lines to inform their clinical use. Tools vary in sensitivity (7%–83%) and precision (1%–76%), with few meeting the sensitivity needed for clinical testing. Callers generally perform better for deletions (up to 88% sensitivity) than duplications (up to 47% sensitivity), with poor detection of duplications under 5 kb. For CNVs in genes commonly included in clinical panels, significantly improved sensitivity and precision were observed. DRAGEN v4.2 high-sensitivity CNV calls, post-processed with custom filters, achieved 100% sensitivity and 77% precision on the optimized gene panel after excluding recurring artifacts, which may support clinical use with orthogonal confirmation of reportable CNVs."
+  abstract_zh: "我们使用参考细胞系对多种短读长全基因组测序拷贝数变异检测工具进行基准评测，以指导其临床应用。各工具的灵敏度（7%–83%）和精确度（1%–76%）差异显著，很少有工具能满足临床检测所需的灵敏度。检测工具对缺失的检测效果普遍优于重复（缺失灵敏度最高88%，重复灵敏度最高47%），对5 kb以下小型重复的检测尤为不佳。在临床常用基因Panel范围内评估时，灵敏度和精确度显著提升。DRAGEN v4.2高灵敏度CNV检测结合自定义过滤器，在剔除反复出现的假阳性信号后，在优化基因Panel上实现了100%灵敏度和77%精确度，在对可报告CNV进行正交确认的前提下有望支持临床应用。"
 
 - type: journal
   year: 2023
   sort_date: "2023-03-01"
   title: "Reproducible evaluation of transposable element detectors with McClintock 2 guides accurate inference of Ty insertion patterns in yeast."
+  title_zh: "利用McClintock 2对转座元件检测工具进行可重复评估，指导酵母Ty插入模式的精确推断"
   authors: "Chen J, Basting PJ, <strong>Han S</strong>, Garfinkel DJ, Bergman CM."
   venue: "<em>Mobile DNA</em>, 14, 8."
   doi: "https://doi.org/10.1186/s13100-023-00296-4"
   abstract: "We report a completely re-implemented version of McClintock written in Python using Snakemake and Conda that improves installation, error handling, speed, stability, and extensibility. McClintock 2 now includes 12 short-read TE detectors, auxiliary pre-processing and analysis modules, interactive HTML reports, and a simulation framework to reproducibly evaluate the accuracy of component TE detectors. When applied to Saccharomyces cerevisiae, we find substantial variation in the ability of components to identify the precise locations of non-reference TE insertions, with RelocaTE2 showing the highest recall and precision in simulated data. Best-in-class predictors have sufficient resolution to reveal a dyad pattern of integration in nucleosome-bound regions upstream of yeast tRNA genes for Ty1, Ty2, and Ty4."
+  abstract_zh: "我们报告了用Python基于Snakemake和Conda完全重新实现的McClintock版本，改善了安装、错误处理、速度、稳定性和可扩展性。McClintock 2现包含12种短读长转座元件检测工具、辅助预处理和分析模块、交互式HTML报告，以及可重复评估组件检测精度的模拟框架。应用于酿酒酵母时，我们发现各组件识别非参考转座元件插入精确位置的能力差异显著，RelocaTE2在模拟数据中表现出最高的召回率和精确度。最优工具具有足够分辨率，可揭示Ty1、Ty2和Ty4在酵母tRNA基因上游核小体结合区域内的双向整合模式。"
 
 - type: journal
   year: 2022
   sort_date: "2022-11-01"
   title: "Local assembly of long reads enables phylogenomics of transposable elements in a polyploid cell line."
+  title_zh: "长读长局部组装实现多倍体细胞系中转座元件的系统发育基因组学分析"
   authors: "<strong>Han S</strong>&dagger;, Dias GB&dagger;, Basting PJ, Viswanatha R, Perrimon N, Bergman CM."
   venue: "<em>Nucleic Acids Research</em>, 50(21), e124."
   doi: "https://doi.org/10.1093/nar/gkac794"
   abstract: "Animal cell lines often undergo extreme genome restructuring, including polyploidy and segmental aneuploidy that can impede de novo whole-genome assembly. We developed a novel WGA-independent bioinformatics method called TELR that identifies, locally assembles, and estimates allele frequency of TEs from long-read sequence data. Application of TELR to a ~130x PacBio dataset for the tetraploid Drosophila S2R+ cell line revealed many haplotype-specific TE insertions that arose by transposition after initial cell line establishment and subsequent tetraploidization. Local assemblies from TELR also allowed phylogenetic analysis of paralogous TEs, revealing that proliferation of TE families in vitro can be driven by single or multiple source lineages."
+  abstract_zh: "动物细胞系常常经历极端的基因组重组事件，包括多倍化和节段性非整倍体，这可能阻碍从头全基因组组装。我们开发了一种新型独立于全基因组组装的生物信息学方法TELR，可从长读长测序数据中识别、局部组装转座元件并估计其等位基因频率。将TELR应用于四倍体果蝇S2R+细胞系的约130× PacBio数据集，揭示了许多单倍型特异性转座元件插入，这些插入是在细胞系建立后的转座及随后四倍化过程中产生的。TELR的局部组装结果还支持对旁系转座元件进行系统发育分析，揭示了转座元件家族在体外增殖可由单个或多个来源谱系驱动。"
 
 - type: journal
   year: 2022
   sort_date: "2022-06-01"
   title: "Ongoing transposition in cell culture reveals the phylogeny of diverse <em>Drosophila</em> S2 sublines."
+  title_zh: "细胞培养中持续转座揭示多种<em>果蝇</em>S2亚系的系统发育关系"
   authors: "<strong>Han S</strong>, Dias GB, Basting PJ, Nelson MG, Patel S, Marzo M, Bergman CM."
   venue: "<em>Genetics</em>, 221(3), iyac077."
   doi: "https://doi.org/10.1093/genetics/iyac077"
   abstract: "Cultured cells are widely used in molecular biology despite poor understanding of how cell line genomes change in vitro over time. We sequenced the genomes of 25 Drosophila S2 cell sublines and show that transposable element insertions provide abundant markers for the phylogenetic reconstruction of diverse sublines. Our analysis revealed dramatically different patterns of genome organization across sublines and supported a model of ongoing transposition dominated by episodic activity of a small number of retrotransposon families. We conclude that substantial genome evolution occurs during long-term Drosophila cell culture, which may impact the reproducibility of experiments that do not control for subline identity."
+  abstract_zh: "尽管培养细胞被广泛用于分子生物学研究，但对细胞系基因组如何随时间在体外发生变化的认识仍然有限。我们对25个果蝇S2细胞亚系进行了基因组测序，证明转座元件插入可作为丰富的标记用于多种亚系的系统发育重建。分析揭示了各亚系间基因组组织的显著差异，并支持持续转座由少数反转录转座子家族间歇性活动主导的模型。我们得出结论：果蝇细胞长期培养过程中会发生实质性的基因组进化，这可能影响未对亚系身份进行控制的实验的重复性。"
 
 - type: journal
   year: 2022
   sort_date: "2022-02-01"
   title: "A novel transposable element-based authentication protocol for <em>Drosophila</em> cell lines."
+  title_zh: "一种基于转座元件的<em>果蝇</em>细胞系鉴定新方法"
   authors: "Mariyappa D, Rusch DB, <strong>Han S</strong>, Luhur A, Overton D, Miller DFB, Bergman CM, Zelhof AC."
   venue: "<em>G3: Genes, Genomes, Genetics</em>, 12(2), jkab403."
   doi: "https://doi.org/10.1093/g3journal/jkab403"
   abstract: "Drosophila cell lines are used by researchers to investigate various cell biological phenomena, yet methods to authenticate them are lacking. We developed a PCR-based next-generation sequencing protocol to cluster cell lines based on the genome-wide distribution of a limited number of diagnostic TE families. The protocol reliably identified various Drosophila cell lines during double-blind testing, and showed minimal changes with respect to TE family distribution when cells are passaged for at least 50 times. We conclude that this approach can accurately identify and distinguish the numerous Drosophila cell lines available to the research community, thereby aiding reproducible cell culture research."
+  abstract_zh: "果蝇细胞系被研究人员广泛用于研究各种细胞生物学现象，但目前尚缺乏对其进行鉴定的方法。我们开发了一种基于PCR的下一代测序方法，通过少数诊断性转座元件家族的全基因组分布对细胞系进行聚类。该方法在双盲测试中可靠地识别了各果蝇细胞系，且在细胞传代至少50次时，所关注转座元件家族的基因组分布变化极小。我们得出结论：该方法能够准确识别和区分研究界现有的众多果蝇细胞系，有助于提高果蝇细胞培养研究的重复性。"
 
 - type: journal
   year: 2021
   sort_date: "2021-09-01"
   title: "Transposable element profiles reveal cell line identity and loss of heterozygosity in <em>Drosophila</em> cell culture."
+  title_zh: "转座元件谱揭示<em>果蝇</em>细胞培养中细胞系身份及杂合性丢失"
   authors: "<strong>Han S</strong>, Basting PJ, Dias GB, Luhur A, Zelhof AC, Bergman CM."
   venue: "<em>Genetics</em>, 219(2), iyab113."
   doi: "https://doi.org/10.1093/genetics/iyab113"
   abstract: "We leverage the classical observation that transposable elements (TEs) proliferate in cultured Drosophila cells to demonstrate that genome-wide TE insertion profiles can reveal the identity and provenance of Drosophila cell lines. We identify multiple cases where TE profiles clarify the origin of cell lines (Sg4, mbn2, and OSS_E) relative to published reports, and provide evidence that insertions from only a subset of LTR retrotransposon families are necessary to mark cell line identity. We also develop ngs_te_mapper2, a bioinformatics approach to detect TE insertions and estimate intra-sample allele frequencies in legacy WGS data, which revealed loss of heterozygosity as a mechanism shaping the unique TE profiles that identify Drosophila cell lines."
+  abstract_zh: "我们利用转座元件在培养果蝇细胞中增殖的经典观察结果，证明全基因组转座元件插入谱可以揭示果蝇细胞系的身份和来源。我们在多个案例中通过转座元件谱澄清了细胞系（Sg4、mbn2和OSS_E）相对于已发表报告的来源，并提供证据表明仅需一部分LTR反转录转座子家族的插入即可标记果蝇细胞系身份。我们还开发了ngs_te_mapper2，一种可在传统全基因组测序数据中检测转座元件插入并估计样本内等位基因频率的生物信息学方法，揭示了杂合性丢失是塑造果蝇细胞系特征性转座元件谱的机制之一。"
 
 - type: journal
   year: 2017
   sort_date: "2017-09-01"
   title: "Genomic analysis of P elements in natural populations of <em>Drosophila melanogaster</em>."
+  title_zh: "<em>果蝇黑腹果蝇</em>自然种群中P元素的基因组分析"
   authors: "Bergman CM, <strong>Han S</strong>, Nelson MG, Bondarenko V, Kozeretska I."
   venue: "<em>PeerJ</em>, 5, e3824."
   doi: "https://doi.org/10.7717/peerj.3824"
   abstract: "We compared estimates of genomic P element content with gonadal dysgenesis phenotypes for isofemale strains from three worldwide populations of D. melanogaster. P element abundance is highly correlated across different bioinformatics approaches, but sensitive to method and filtering strategy. North American strains have fewer P elements but a higher proportion of full-length elements than European or African strains. However, geographic differences in P element abundance and structure are not associated with corresponding differences in dysgenesis. We conclude that genomic P element content alone is not sufficient to explain variation in gonadal dysgenesis across strains."
+  abstract_zh: "我们比较了来自全球三个黑腹果蝇自然种群（北美、欧洲、非洲）等雌系的基因组P元素含量与性腺发育不全表型估计值。不同生物信息学方法对P元素丰度的估计高度相关，但估计值对方法和过滤策略敏感。北美系的P元素数量少于欧洲或非洲系，但全长元素比例更高。然而，P元素丰度和结构的地理差异并不对应相应的性腺发育不全地理差异。我们得出结论：单独的基因组P元素含量不足以解释各品系间性腺发育不全的变异。"
 
 - type: patent
   year: 2024
   sort_date: "2024-11-28"
   title: "Methods and systems for determining copy number variant genotypes."
+  title_zh: "确定拷贝数变异基因型的方法和系统"
   authors: "<strong>Han S</strong>, Onuchic VF, Chen X."
   venue: "<em>WO Patent</em> WO2024010812A2."
   patent: "https://patents.google.com/patent/WO2024010812A2"
@@ -73,6 +88,7 @@
   year: 2024
   sort_date: "2024-11-28"
   title: "Region-ambiguous variant detection."
+  title_zh: "区域模糊变异检测"
   authors: "Onuchic VF, <strong>Han S</strong>."
   venue: "<em>US Patent Application</em> 18/674,538."
   patent: "https://patents.google.com/patent/US20240395359A1"
@@ -81,6 +97,7 @@
   year: 2024
   sort_date: "2024-11-28"
   title: "Multi-region joint detection."
+  title_zh: "多区域联合检测"
   authors: "<strong>Han S</strong>, Andrews D, Onuchic VF."
   venue: "<em>US Patent Application</em> 18/674,279."
   patent: "https://patents.google.com/patent/US20240395363A1"
@@ -89,6 +106,8 @@
   year: 2021
   sort_date: "2021-12-01"
   title: "Novel computational strategies for the analysis of transposable elements in <em>Drosophila</em> cell culture genomes."
+  title_zh: "分析<em>果蝇</em>细胞培养基因组中转座元件的新型计算策略"
   authors: "<strong>Han S.</strong>"
   venue: "Ph.D. Dissertation, University of Georgia."
+  venue_zh: "博士论文，美国乔治亚大学。"
   thesis: "https://www.proquest.com/docview/2627523092"
