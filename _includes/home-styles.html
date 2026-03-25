@@ -1,0 +1,78 @@
+<style>
+.about-link-text { cursor: default; color: #64748b; }
+.about-link-text:hover { color: #64748b; }
+html.dark .about-link-text { color: #64748b; }
+
+.home-news-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 22px 28px;
+  margin-top: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.home-section-title {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+.news-item {
+  display: flex;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  align-items: flex-start;
+}
+.news-item:last-of-type { border-bottom: none; }
+.news-year {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2e5b9e;
+  padding-top: 3px;
+  min-width: 36px;
+}
+.news-item-body { flex: 1; min-width: 0; }
+.news-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
+.badge-pub    { background: #e0f2fe; color: #0369a1; }
+.badge-talk   { background: #f0fdf4; color: #15803d; }
+.badge-poster { background: #fef9c3; color: #854d0e; }
+.news-title { font-size: 13px; font-weight: 500; color: #334155; line-height: 1.5; margin: 0 0 2px; }
+.news-title a { color: #334155; text-decoration: none; }
+.news-title a:hover { color: #2e5b9e; }
+.news-venue { font-size: 12px; color: #94a3b8; margin: 0; font-style: italic; }
+.contact-text { font-size: 15px; color: #475569; margin: 0; }
+.contact-email {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+html.dark .home-news-card { background: #1e293b; border-color: #334155; }
+html.dark .home-section-title { color: #e2e8f0; border-bottom-color: #334155; }
+html.dark .news-item { border-bottom-color: #334155; }
+html.dark .news-title, html.dark .news-title a { color: #cbd5e1; }
+html.dark .news-title a:hover { color: #7dd3fc; }
+html.dark .news-venue { color: #64748b; }
+html.dark .badge-pub    { background: #0c2d48; color: #7dd3fc; }
+html.dark .badge-talk   { background: #052e16; color: #86efac; }
+html.dark .badge-poster { background: #2d1a00; color: #fcd34d; }
+html.dark .contact-text { color: #94a3b8; }
+html.dark .contact-email { background: #334155; color: #e2e8f0; }
+@media (max-width: 640px) { .home-news-card { padding: 18px 16px; } }
+</style>
