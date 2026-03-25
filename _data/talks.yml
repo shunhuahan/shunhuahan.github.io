@@ -1,9 +1,7 @@
 - year: 2026
   type: "Platform Presentation"
   title: "A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."
-  title_zh: "利用流式芯片邻近测序和单倍型解析变异检测快速发现罕见病及临床遗传变异的新方法"
   venue: "ACMG Annual Clinical Genetics Meeting"
-  venue_zh: "美国医学遗传学与基因组学学会年会"
   location: "Baltimore, MD"
   date: "March 12, 2026"
   sort_date: "2026-03-12"
@@ -12,19 +10,15 @@
 - year: 2026
   type: "Poster"
   title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-Region Joint Detection with Illumina TruPath Genome."
-  title_zh: "利用Illumina TruPath Genome多区域联合检测实现医学相关旁系基因的单倍型解析变异检测"
   venue: "Biennial Meeting of the International Society for Gastrointestinal Hereditary Tumours (InSiGHT)"
-  venue_zh: "国际胃肠道遗传性肿瘤学会（InSiGHT）双年会"
   location: "Dusit Thani Laguna, Singapore"
   date: "March 7, 2026"
   sort_date: "2026-03-07"
 
 - year: 2026
   type: "Poster"
-  title: "Haplotype-resolved variant calling in paralogous \"dark\" regions with Illumina Constellation."
-  title_zh: "利用Illumina Constellation实现旁系"暗区"的单倍型解析变异检测"
+  title: 'Haplotype-resolved variant calling in paralogous "dark" regions with Illumina Constellation.'
   venue: "AGBT Advances in Genome Biology and Technology Meeting"
-  venue_zh: "基因组生物学与技术进展会议（AGBT）"
   location: "Orlando, Florida"
   date: "February 24, 2026"
   sort_date: "2026-02-24"
@@ -32,9 +26,7 @@
 - year: 2025
   type: "Poster"
   title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina constellation mapped reads."
-  title_zh: "利用Illumina constellation mapped reads多区域联合检测实现医学相关旁系基因的单倍型解析变异检测"
   venue: "American Society of Human Genetics (ASHG)"
-  venue_zh: "美国人类遗传学学会年会（ASHG）"
   location: "Boston, MA"
   date: "October 17, 2025"
   sort_date: "2025-10-17"
@@ -43,9 +35,7 @@
 - year: 2025
   type: "Poster"
   title: "A rapid, novel WGS approach detects pathogenic variants in high homology pseudogenes using on-flowcell proximity sequencing and haplotype-resolved variant calling."
-  title_zh: "一种利用流式芯片邻近测序和单倍型解析变异检测的快速新型全基因组测序方法，可检测高同源性假基因中的致病变异"
   venue: "American Society of Human Genetics (ASHG)"
-  venue_zh: "美国人类遗传学学会年会（ASHG）"
   location: "Boston, MA"
   date: "October 17, 2025"
   sort_date: "2025-10-17"
@@ -54,9 +44,7 @@
 - year: 2025
   type: "Poster"
   title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina on-flowcell proximity sequencing."
-  title_zh: "利用Illumina流式芯片邻近测序多区域联合检测实现医学相关旁系基因的单倍型解析变异检测"
   venue: "AGBT Precision Health"
-  venue_zh: "AGBT精准健康会议"
   location: "San Diego, CA"
   date: "September 9, 2025"
   sort_date: "2025-09-09"
@@ -64,9 +52,7 @@
 - year: 2023
   type: "Poster"
   title: "Overcoming the challenges of variant calling in <em>PMS2</em> high homology regions for improved Lynch syndrome diagnosis using whole-genome sequencing."
-  title_zh: "利用全基因组测序克服<em>PMS2</em>高同源性区域变异检测挑战，改善林奇综合征诊断"
   venue: "ISMB Intelligent Systems for Molecular Biology Conference"
-  venue_zh: "分子生物学智能系统国际会议（ISMB）"
   location: "Lyon, France"
   date: "July 25, 2023"
   sort_date: "2023-07-25"
@@ -75,9 +61,7 @@
 - year: 2022
   type: "Poster"
   title: "Targeted detection of clinically relevant variants in <em>HBA1/2</em> from whole-genome sequencing data."
-  title_zh: "从全基因组测序数据中靶向检测<em>HBA1/2</em>中的临床相关变异"
   venue: "AGBT Precision Health Meeting"
-  venue_zh: "AGBT精准健康会议"
   location: "San Diego, CA"
   date: "September 8, 2022"
   sort_date: "2022-09-08"
@@ -85,9 +69,7 @@
 - year: 2019
   type: "Invited Talk"
   title: "Predicting <em>P</em> element target site preferences using machine learning."
-  title_zh: "利用机器学习预测<em>P</em>元素靶位点偏好"
   venue: "Advancing Informatics in Government and Industry Symposium"
-  venue_zh: "政府与工业界信息学进展研讨会"
   location: "Athens, GA"
   date: "July 25, 2019"
   sort_date: "2019-07-25"
@@ -95,9 +77,7 @@
 - year: 2018
   type: "Invited Talk"
   title: "Genomic insights into the pattern of transposable element proliferation in <em>Drosophila</em> S2 cells."
-  title_zh: "果蝇S2细胞中转座元件增殖模式的基因组学洞见"
   venue: "Mobile Genetic Elements and Genome Plasticity Conference"
-  venue_zh: "移动遗传元件与基因组可塑性会议"
   location: "Santa Fe, NM"
   date: "February 11-15, 2018"
   sort_date: "2018-02-11"
@@ -105,9 +85,7 @@
 - year: 2017
   type: "Poster"
   title: "Genomic insights into the pattern of transposable element proliferation in <em>Drosophila</em> S2 cells."
-  title_zh: "果蝇S2细胞中转座元件增殖模式的基因组学洞见"
   venue: "Mobile Genetic Elements Conference"
-  venue_zh: "移动遗传元件会议"
   location: "Woods Hole, MA"
   date: "August 29-31, 2017"
   sort_date: "2017-08-29"
