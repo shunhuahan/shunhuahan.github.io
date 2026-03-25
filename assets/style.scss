@@ -1470,25 +1470,3 @@ html.dark #back-to-top:hover { background: #475569; }
 @media (prefers-reduced-motion: reduce) {
   .fade-in-ready { opacity: 1; transform: none; transition: none; }
 }
-
-/* ── Language toggle ── */
-.lang-toggle {
-  margin-left: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 9px;
-  border-radius: 4px;
-  border: 1.5px solid currentColor;
-  color: #64748b;
-  text-decoration: none !important;
-  transition: background 0.15s, color 0.15s;
-  vertical-align: middle;
-  letter-spacing: 0.03em;
-}
-.lang-toggle:hover {
-  background: #2e5b9e;
-  color: #fff !important;
-  border-color: #2e5b9e;
-}
-html.dark .lang-toggle { color: #94a3b8; }
-html.dark .lang-toggle:hover { background: #3b82f6; border-color: #3b82f6; color: #fff !important; }
