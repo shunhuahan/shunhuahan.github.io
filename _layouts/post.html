@@ -2,38 +2,41 @@
 layout: default
 ---
 
-<article class="post detailed">
-  <h1>{{ page.title }}</h1>
-
-  <div>
-    <p class="author_title">{{site.author}}  ·  {{ page.date | date: "%B %e, %Y" }}</p>
-    {% if page.last_modified_at %}
-    <p class="author_title" datetime="{{ page.last_modified_at | date_to_xmlschema }}">(Updated: {{ page.last_modified_at | date: "%b %-d, %Y" }})</p>
-    {% endif %}
-    <div class="post-tags">
-      {% if post %}
-        {% assign categories = post.categories %}
-      {% else %}
-        {% assign categories = page.categories %}
-      {% endif %}
-      {% for category in categories %}
-        <a href="{{site.baseurl}}/categories/#{{category|slugize}}">{{category}}</a>
-        {% unless forloop.last %}&nbsp;{% endunless %}
-      {% endfor %}
-    </div>
-  </div>
-    
-  <div class="entry">
+<article class="post content-card">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
+  </header>
+  <div class="post-content entry">
     {{ content }}
   </div>
-
-  <div>
-    <p><span class="share-box">Share:</span> <a href="http://twitter.com/share?text={{ page.title }}&url={{site.url}}{{page.url}}" target="_blank">Twitter</a>, <a href="https://www.facebook.com/sharer.php?u={{site.url}}{{page.url}}" target="_blank">Facebook</a></p>
+  <div class="post-back">
+    <a href="{{ site.baseurl }}/notes/">&larr; All notes</a>
   </div>
-
-  <!--<div class="date">
-    Written on {{ page.date | date: "%B %e, %Y" }}
-  </div>-->
-
-  {% include disqus.html %}
 </article>
+
+<style>
+.post-header { margin-bottom: 28px; border-bottom: 1px solid #e2e8f0; padding-bottom: 18px; }
+.post-title { font-size: 22px; font-weight: 700; color: #1e293b; margin: 0 0 8px; line-height: 1.4; }
+.post-meta { font-size: 13px; color: #94a3b8; margin: 0; }
+.post-content { font-size: 15px; line-height: 1.8; color: #334155; }
+.post-content h2 { font-size: 17px; font-weight: 700; color: #1e293b; margin: 32px 0 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
+.post-content h3 { font-size: 15px; font-weight: 600; color: #334155; margin: 24px 0 8px; }
+.post-content a { color: #2e5b9e; }
+.post-content a:hover { text-decoration: underline; }
+.post-content img { max-width: 100%; border-radius: 6px; margin: 16px 0; border: 1px solid #e2e8f0; }
+.post-content blockquote { border-left: 3px solid #2e5b9e; margin: 16px 0; padding: 8px 16px; background: #f8fafc; color: #475569; font-style: italic; border-radius: 0 4px 4px 0; }
+.post-content code { background: #f1f5f9; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+.post-back { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+.post-back a { font-size: 13px; color: #2e5b9e; text-decoration: none; }
+.post-back a:hover { text-decoration: underline; }
+html.dark .post-title { color: #e2e8f0; }
+html.dark .post-meta { color: #64748b; }
+html.dark .post-content { color: #cbd5e1; }
+html.dark .post-content h2 { color: #e2e8f0; border-bottom-color: #334155; }
+html.dark .post-content h3 { color: #cbd5e1; }
+html.dark .post-content blockquote { background: #1e293b; color: #94a3b8; }
+html.dark .post-content code { background: #334155; }
+html.dark .post-header { border-bottom-color: #334155; }
+html.dark .post-back { border-top-color: #334155; }
+</style>

@@ -1,0 +1,49 @@
+---
+layout: default
+title: Notes
+permalink: /notes/
+---
+
+<div class="content-card">
+  <h1 class="notes-heading">Notes</h1>
+  <p class="notes-sub">Reading notes and insights from recent papers in genomics and bioinformatics.</p>
+
+  {% if site.posts.size == 0 %}
+  <p class="notes-empty">No notes yet — check back soon.</p>
+  {% else %}
+  <div class="notes-list">
+    {% for post in site.posts %}
+    <div class="note-item">
+      <span class="note-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <div class="note-body">
+        <a href="{{ post.url }}" class="note-title">{{ post.title }}</a>
+        {% if post.excerpt %}
+        <p class="note-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<style>
+.notes-heading { font-size: 20px; font-weight: 700; color: #1e293b; margin: 0 0 6px; }
+.notes-sub { font-size: 14px; color: #64748b; margin: 0 0 24px; }
+.notes-empty { font-size: 14px; color: #94a3b8; font-style: italic; }
+.notes-list { display: flex; flex-direction: column; gap: 0; }
+.note-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; align-items: flex-start; }
+.note-item:last-child { border-bottom: none; }
+.note-date { flex-shrink: 0; font-size: 12px; color: #94a3b8; min-width: 80px; padding-top: 3px; }
+.note-body { flex: 1; }
+.note-title { font-size: 15px; font-weight: 600; color: #334155; text-decoration: none; }
+.note-title:hover { color: #2e5b9e; }
+.note-excerpt { font-size: 13px; color: #64748b; margin: 4px 0 0; line-height: 1.6; }
+html.dark .notes-heading { color: #e2e8f0; }
+html.dark .notes-sub { color: #64748b; }
+html.dark .note-item { border-bottom-color: #334155; }
+html.dark .note-title { color: #cbd5e1; }
+html.dark .note-title:hover { color: #7dd3fc; }
+html.dark .note-excerpt { color: #64748b; }
+html.dark .note-date { color: #475569; }
+</style>
