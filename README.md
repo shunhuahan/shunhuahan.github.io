@@ -1,17 +1,17 @@
 # shunhuahan.github.io
 
-Personal academic website for [Shunhua Han](https://shunhuahan.github.io), Ph.D. — Sr. Staff Bioinformatics Scientist at Illumina. Built with [Jekyll](https://jekyllrb.com/) and hosted on GitHub Pages, based on the [Reverie](https://github.com/amitmerchant1990/reverie) theme with a custom design (card layout, dark mode, data-driven publications/talks).
+Personal academic website for [Shunhua Han](https://shunhuahan.github.io), Ph.D., Sr. Staff Bioinformatics Scientist at Illumina. Built with [Jekyll](https://jekyllrb.com/) and hosted on GitHub Pages, based on the [Reverie](https://github.com/amitmerchant1990/reverie) theme with a custom design (card layout, dark mode, data-driven publications/talks).
 
 ## Structure
 
-- `_config.yml` — site name, description, social links (`footer-links`)
-- `_pages/` — About, Research, Publications, Talks (each a Markdown page with `layout: page`)
-- `_data/publications.yml` — journal articles, patents, and thesis entries rendered on the Publications page and in the homepage "Recent News" feed
-- `_data/talks.yml` — conference talks and posters rendered on the Talks page and in "Recent News"
-- `_layouts/` — `default.html` (shell, nav, footer, dark-mode toggle), `page.html`
-- `_includes/` — `home-styles.html` (homepage-specific CSS), `meta.html` (OpenGraph/Twitter tags), `analytics.html` / `analytics_head.html` (GA hooks, off by default)
-- `assets/style.scss` — main stylesheet (imports `_sass/*`)
-- `index.html` — homepage (About content + Recent News + Contact)
+- `_config.yml`: site name, description, social links (`footer-links`)
+- `_pages/`: About, Research, Publications, Talks (each a Markdown page with `layout: page`)
+- `_data/publications.yml`: journal articles, conference abstracts, patents, and thesis entries rendered on the Publications page and in the homepage "Recent News" feed
+- `_data/talks.yml`: conference talks and posters rendered on the Talks page and in "Recent News"
+- `_layouts/`: `default.html` (shell, nav, footer, dark-mode toggle), `page.html`
+- `_includes/`: `home-styles.html` (homepage-specific CSS), `meta.html` (OpenGraph/Twitter tags), `analytics.html` / `analytics_head.html` (GA hooks, off by default)
+- `assets/style.scss`: main stylesheet (imports `_sass/*`)
+- `index.html`: homepage (About content + Recent News + Contact)
 
 ## Updating content
 
