@@ -19,7 +19,12 @@ Many important genes reside in segmental duplications or highly repetitive genom
 
 TruPath Genome is an on-flowcell proximity sequencing technology. The proximity information from sequenced reads in nearby nanowells can help infer whether a group of reads belongs to the same original DNA molecule. I designed multi-region joint detection (MRJD) algorithm that can take advantage of this long-range information from TruPath Genome to produce haplotype-resolved variant calls in segmental duplications.
 
-I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext)
+<figure class="research-figure">
+  <img src="/images/research-mrjd-schematic.jpg" alt="MRJD algorithm schematic: joint pileups with proximity information from two paralogous regions, total copy number estimation, building individual copies, sorting into haplotypes, and outputting a phased genotype">
+  <figcaption>The MRJD algorithm. Reads from two paralogous regions are jointly piled up using proximity information from nearby nanowells (1), used to estimate total copy number (2), assembled into individual gene copies (3), sorted into region- or haplotype-resolved groups (4), and output as phased genotypes (5).</figcaption>
+</figure>
+
+I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext) &nbsp;·&nbsp; [[Slides (PDF)]](/assets/han-acmg2026-trupath-slides.pdf)
 
 **Other key projects:**
 
@@ -36,7 +41,12 @@ I presented this work as a platform talk at the 2026 ACMG Annual Clinical Geneti
 </div>
 <div class="research-section-body" markdown="1">
 
-Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D., I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies.
+Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D., I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies in [Casey Bergman](https://bergmanlab.github.io)'s lab at the University of Georgia.
+
+<figure class="research-figure">
+  <img src="/images/research-telr-workflow.jpg" alt="TELR workflow diagram showing four stages: identifying TE insertion candidate loci from structural variant calls, assembling and polishing a local TE contig, annotating the TE and its breakpoints against the reference genome, and estimating intra-sample TE allele frequency from read depth">
+  <figcaption>The TELR pipeline. Long reads are used to (1) identify candidate TE insertion loci from structural-variant calls, (2) locally assemble and polish a contig spanning the insertion, (3) annotate the TE and its breakpoints against the reference genome, and (4) estimate the insertion's intra-sample allele frequency from read depth. Figure 3 from Han <em>et al.</em> 2022, <em>Nucleic Acids Research</em>, reproduced under CC BY 4.0.</figcaption>
+</figure>
 
 **Key projects:**
 
@@ -68,6 +78,26 @@ Transposable elements (TEs) make up nearly half the human genome and are major d
 </div>
 
 <style>
+.research-figure {
+  margin: 20px 0;
+  text-align: center;
+}
+.research-figure img {
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+.research-figure figcaption {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #64748b;
+  text-align: left;
+  padding: 0 4px;
+}
+html.dark .research-figure img { border-color: #334155; }
+html.dark .research-figure figcaption { color: #94a3b8; }
+
 .research-section {
   margin: 28px 0;
   border-radius: 6px;

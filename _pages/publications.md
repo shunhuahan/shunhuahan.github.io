@@ -2,7 +2,7 @@
 layout: page
 title: Publications
 permalink: /publications/
-description: "Peer-reviewed journal articles, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
+description: "Peer-reviewed journal articles, conference abstracts, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
 ---
 
 For a full and up-to-date list, see my [Google Scholar](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en) profile.
@@ -28,6 +28,23 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     {% if pub.abstract %}
     <div class="pub-abstract" id="abstract-{{ forloop.index }}">{{ pub.abstract }}</div>
     {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+---
+
+## Conference Abstracts
+
+{% assign abstracts = site.data.publications | where: "type", "abstract" %}
+{% for pub in abstracts %}
+<div class="pub-entry">
+  <div class="pub-year">{{ pub.year }}</div>
+  <div class="pub-content">
+    <p class="pub-title">{{ pub.title }}</p>
+    <p class="pub-authors">{{ pub.authors }}</p>
+    <p class="pub-venue">{{ pub.venue }}</p>
+    {% if pub.url %}<a href="{{ pub.url }}" class="pub-link" target="_blank">Abstract</a>{% endif %}
   </div>
 </div>
 {% endfor %}

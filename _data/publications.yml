@@ -61,6 +61,46 @@
   doi: "https://doi.org/10.7717/peerj.3824"
   abstract: "We compared estimates of genomic P element content with gonadal dysgenesis phenotypes for isofemale strains from three worldwide populations of D. melanogaster. P element abundance is highly correlated across different bioinformatics approaches, but sensitive to method and filtering strategy. North American strains have fewer P elements but a higher proportion of full-length elements than European or African strains. However, geographic differences in P element abundance and structure are not associated with corresponding differences in dysgenesis. We conclude that genomic P element content alone is not sufficient to explain variation in gonadal dysgenesis across strains."
 
+- type: abstract
+  year: 2026
+  sort_date: "2026-03-05"
+  title: "O20: Benchmarking comprehensive variant detection in challenging genomic regions using Constellation mapped read technology."
+  authors: "Facio F, Johnson B, Onuchic VF, <strong>Han S</strong>, <em>et al.</em>"
+  venue: "<em>Genetics in Medicine Open</em>, 4."
+  url: "https://www.gimopen.org/article/S2949-7744(26)00817-4/fulltext"
+
+- type: abstract
+  year: 2025
+  sort_date: "2025-06-01"
+  title: "Accurate HBA and SMN genotyping within an integrated NGS workflow: a step toward accessible carrier screening."
+  authors: "Carroll A, Onuchic VF, <strong>Han S</strong>, <em>et al.</em>"
+  venue: "Abstracts from the 58th European Society of Human Genetics (ESHG) Conference, <em>European Journal of Human Genetics</em>, 33, 947&ndash;948."
+  url: "https://doi.org/10.1038/s41431-025-01932-8"
+
+- type: abstract
+  year: 2025
+  sort_date: "2025-06-01"
+  title: "Constellation mapped read technology, a novel on-flow-cell library prep for both high-quality short reads and proximity information in one prep delivering an expanded genome."
+  authors: "Kaper F, Weir J, Bekritsky M, <strong>Han S</strong>, <em>et al.</em>"
+  venue: "Abstracts from the 58th European Society of Human Genetics (ESHG) Conference, <em>European Journal of Human Genetics</em>, 33, 1160."
+  url: "https://doi.org/10.1038/s41431-025-01932-8"
+
+- type: patent
+  year: 2026
+  sort_date: "2026-04-02"
+  title: "Targeted variant calling using target enrichment sequencing data."
+  authors: "Onuchic VF, <strong>Han S</strong>, Carroll A, Halpern A."
+  venue: "<em>WO Patent</em> WO2026073129A1."
+  patent: "https://patents.google.com/patent/WO2026073129A1"
+
+- type: patent
+  year: 2025
+  sort_date: "2025-12-04"
+  title: "Two-copy allele detection."
+  authors: "Bernal CE, <strong>Han S</strong>, Onuchic VF."
+  venue: "<em>WO Patent</em> WO2025250794A1."
+  patent: "https://patents.google.com/patent/WO2025250794A1"
+
 - type: patent
   year: 2024
   sort_date: "2024-11-28"
