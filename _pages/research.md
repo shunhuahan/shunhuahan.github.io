@@ -14,15 +14,17 @@ My research sits at the intersection of computational method development and gen
 </div>
 <div class="research-section-body" markdown="1">
 
-Many important genes reside in segmental duplications or highly repetitive genomic regions where standard short-read aligners and variant callers fail. I develop targeted, haplotype-aware methods that leverage both short-read and long-read whole-genome sequencing to produce accurate calls in these challenging loci.
+Some of the most medically important genes in the human genome happen to sit in the hardest places to sequence. *SMN1*, the gene behind spinal muscular atrophy, has a near-identical neighbor called *SMN2*. *PMS2*, tied to Lynch syndrome, has *PMS2CL*. *CYP21A2*, behind congenital adrenal hyperplasia, has *CYP21A1P*. In each case the two copies share 98 to 99% of their sequence, more than enough to confuse a standard short-read aligner. Reads pile up in the wrong place, variant calls come out wrong or missing entirely, and clinical labs often fall back on slow, gene-specific workarounds like nested PCR just to get a trustworthy answer.
 
-**Haplotype-resolved variant calling in segmental duplications using TruPath Genome (formerly Constellation)**
+I work on TruPath Genome (formerly called Constellation), an Illumina on-flowcell proximity sequencing technology built to make these regions tractable without a separate workaround for every gene. As DNA is sequenced, TruPath also records a bit of proximity information: reads that land in nearby nanowells on the flow cell are more likely to have come from the same original DNA molecule. It's a subtle signal on its own, but it's exactly the kind of long-range clue that a single short read can't give you.
 
-TruPath Genome is an on-flowcell proximity sequencing technology. The proximity information from sequenced reads in nearby nanowells can help infer whether a group of reads belongs to the same original DNA molecule. I designed the multi-region joint detection (MRJD) algorithm, which takes advantage of this long-range information from TruPath Genome to produce haplotype-resolved variant calls in segmental duplications.
+I designed the multi-region joint detection (MRJD) algorithm to put that signal to use. Instead of looking at a gene and its paralog one at a time, MRJD looks at reads from both together, works out how many total copies are present, and sorts the reads back into the right copy and haplotype, untangling two or more look-alike genes back into their true, separate identities.
+
+Here's what that looks like on a real case. *PMS2* and *PMS2CL* are about as tangled as it gets: 98% identical, and *PMS2CL* even has a habit of "overwriting" *PMS2* through gene conversion, copying its own sequence into *PMS2* and quietly breaking it. In the figure below, MRJD cleanly separates a sample's two *PMS2* haplotypes. One of them turns out to carry exactly this kind of gene conversion event and is non-functional as a result, while the other is fully intact. Knowing which haplotype is broken and which one still works is exactly the detail that gets lost when the two genes are tangled together in standard short-read data.
 
 <figure class="research-figure">
   <img src="/images/research-pms2-schematic.jpg" alt="PMS2-PMS2CL ambiguity resolved: alignment tracks for two PMS2 haplotypes showing a PMS2CL-to-PMS2 gene conversion event, with haplotype 1 rendered non-functional and haplotype 2 functional, each with PMS2CL deleted">
-  <figcaption><strong>Figure.</strong> <em>PMS2</em>-<em>PMS2CL</em> ambiguity resolved. <em>PMS2</em> shares about 98% sequence identity with its pseudogene <em>PMS2CL</em>, which causes systematic misalignment and false variant calls with standard short-read sequencing. TruPath's haplotype-resolved calling separates the two haplotypes cleanly, revealing a <em>PMS2CL</em>-to-<em>PMS2</em> gene conversion event on one haplotype (rendering it non-functional) while the other haplotype remains functional.</figcaption>
+  <figcaption><strong>Figure.</strong> Read alignments for a sample's two <em>PMS2</em> haplotypes. Haplotype 1 carries a <em>PMS2CL</em>-to-<em>PMS2</em> gene conversion tract and is non-functional; haplotype 2 is unaffected and functional.</figcaption>
 </figure>
 
 I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext) &nbsp;·&nbsp; [[Slides (PDF)]](/assets/han-acmg2026-trupath-slides.pdf)
@@ -36,7 +38,7 @@ I presented this work as a platform talk at the 2026 ACMG Annual Clinical Geneti
   </div>
   <div class="project-item">
     <h4>Lynch syndrome (<em>PMS2</em>) variant detection</h4>
-    <p>Improved variant calling accuracy in <em>PMS2</em>, a mismatch-repair gene with a highly similar pseudogene (<em>PMS2CL</em>) that causes widespread misalignment and false variant calls. <a href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html" target="_blank">Blog post</a></p>
+    <p>Separately from the TruPath work above, I also improved small-variant calling accuracy in <em>PMS2</em> for standard whole-genome sequencing, addressing the same misalignment problem with a different approach. <a href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html" target="_blank">Blog post</a></p>
   </div>
 </div>
 
@@ -50,27 +52,36 @@ I presented this work as a platform talk at the 2026 ACMG Annual Clinical Geneti
 </div>
 <div class="research-section-body" markdown="1">
 
-Transposable elements (TEs) make up nearly half the human genome and are major drivers of genomic variation. During my Ph.D., I developed computational methods to detect, characterize, and study TEs using long-read sequencing technologies in [Casey Bergman](https://bergmanlab.github.io)'s lab at the University of Georgia.
+Transposable elements, or TEs, are stretches of DNA that can copy themselves and jump around the genome. They make up nearly half of the human genome and are a major source of genetic variation across animals, *Drosophila* included. For my Ph.D. in [Casey Bergman](https://bergmanlab.github.io)'s lab at the University of Georgia, I spent a lot of time thinking about how to find and study them, especially in genomes that are unusually messy: cultured cell lines, which tend to pick up extra chromosome copies, structural rearrangements, and brand-new TE insertions the longer they sit in a flask.
+
+Short reads struggle with TEs for a simple reason: many TEs are longer than a single read, so a read that lands inside one usually can't be placed back on the genome with any confidence. Long reads solve that by spanning the whole insertion in one go, but that alone still isn't enough to know exactly where a TE landed, which family it belongs to, or how many copies of it a sample carries. So I built TELR, a pipeline that takes long-read sequencing data, flags candidate TE insertion sites from structural variant calls, locally assembles just that region into a clean contig, and then pins down the TE's exact boundaries and family against the reference genome. TELR also keeps track of how many reads support each insertion, which lets it estimate what fraction of a cell's genome copies actually carry it, handy in a cell line that might have three or four copies of a chromosome instead of the usual two.
 
 <figure class="research-figure">
   <img src="/images/research-telr-workflow.png" alt="TELR workflow diagram showing four stages: identifying TE insertion candidate loci from structural variant calls, assembling and polishing a local TE contig, identifying the TE insertion family and reference coordinates, and estimating intra-sample allele frequency">
-  <figcaption><strong>Figure.</strong> The TELR pipeline. Long reads are used to (1) identify candidate TE insertion loci from structural-variant calls, (2) locally assemble and polish a contig spanning the insertion, (3) identify the TE family and its coordinates on the reference genome, and (4) estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
+  <figcaption><strong>Figure.</strong> The TELR pipeline. Long reads are used to identify candidate TE insertion loci from structural variant calls, locally assemble and polish a contig spanning the insertion, identify the TE family and its coordinates on the reference genome, and estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
+</figure>
+
+Once TELR existed, the natural next step was to see what it could reveal about TE activity itself. Applying it to S2R+, a widely used but famously messy *Drosophila* cell line, turned up thousands of TE insertions that were completely absent from the reference genome. Because TELR reconstructs the actual sequence of each insertion rather than just its location, we could also build family trees for the most active TE families and ask where all these new copies were coming from. For most of the expanded families, the answer was a single common ancestor: once a TE family got a foothold in this cell line, it appears to have proliferated rapidly from that one entry point rather than jumping in independently over and over again.
+
+<figure class="research-figure">
+  <img src="/images/research-telr-phylogeny.jpg" alt="Phylogenetic trees for four transposable element families (1731, 297, jockey, and Juan) built from TELR-assembled insertion sequences, with highlighted clades marking single-source lineage expansions in the S2R+ cell line">
+  <figcaption><strong>Figure.</strong> Family trees for four TE families built from sequences that TELR assembled directly from long reads. The highlighted clades mark expansions in S2R+ that trace back to a single source lineage rather than many independent insertions.</figcaption>
 </figure>
 
 **Key projects**
 
 <div class="project-list">
   <div class="project-item">
-    <h4><a href="https://github.com/bergmanlab/TELR" target="_blank">TELR</a></h4>
-    <p>A software pipeline for detecting non-reference TE insertions in long-read (PacBio / Oxford Nanopore) sequencing data using local assembly. TELR enables phylogenomic analysis of TE insertions at base-pair resolution. Published in <em>Nucleic Acids Research</em> (2022).</p>
+    <h4>Local assembly and phylogenomics of TEs in a polyploid cell line</h4>
+    <p>The manuscript introducing TELR and applying it to reveal single-lineage TE expansions in the S2R+ cell line (the two figures above). Published in <em>Nucleic Acids Research</em> (2022). <a href="https://doi.org/10.1093/nar/gkac794" target="_blank">Paper</a></p>
   </div>
   <div class="project-item">
-    <h4><a href="https://github.com/bergmanlab/ngs_te_mapper2" target="_blank">ngs_te_mapper2</a></h4>
-    <p>A cell-line authentication tool based on TE insertion profiles, used to identify <em>Drosophila</em> cell lines and detect loss of heterozygosity.</p>
+    <h4>TE profiles as a fingerprint for cell line identity</h4>
+    <p>Introduced ngs_te_mapper2 and used genome-wide TE insertion profiles to authenticate <em>Drosophila</em> cell lines, uncovering misidentification events and loss-of-heterozygosity patterns along the way. Published in <em>Genetics</em> (2021). <a href="https://doi.org/10.1093/genetics/iyab113" target="_blank">Paper</a></p>
   </div>
   <div class="project-item">
     <h4>TE dynamics in <em>Drosophila</em> S2 cell lines</h4>
-    <p>Genomic analysis of 32 whole-genome datasets from <em>D. melanogaster</em> S2 sublines, characterizing ongoing transposition and phylogenetic relationships among laboratory cell cultures.</p>
+    <p>Genomic analysis of 32 whole-genome datasets from <em>D. melanogaster</em> S2 sublines, characterizing ongoing transposition and phylogenetic relationships among laboratory cell cultures. Published in <em>Genetics</em> (2022). <a href="https://doi.org/10.1093/genetics/iyac077" target="_blank">Paper</a></p>
   </div>
   <div class="project-item">
     <h4><em>P</em> element target site prediction</h4>

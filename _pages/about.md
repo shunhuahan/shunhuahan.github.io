@@ -7,7 +7,7 @@ description: "About Shunhua Han, Ph.D.: education, professional experience at Il
 
 ## Shunhua Han, Ph.D.
 
-I am a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com), based in San Diego, CA. My work focuses on developing computational methods to detect genetic variants in medically important but algorithmically challenging regions of the genome: segmental duplications, gene families, and structurally complex loci.
+I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com), based in San Diego, CA. I work on detecting genetic variants in the parts of the genome that give standard tools the most trouble: segmental duplications, gene families, and other structurally complex regions that are medically important but hard to pin down algorithmically.
 
 ---
 
