@@ -78,6 +78,10 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     <p class="pub-title">{{ pub.title }}</p>
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
+    <div class="pub-actions">
+      {% if pub.pdf %}<a href="{{ pub.pdf }}" class="pub-link" target="_blank">PDF</a>{% endif %}
+      {% if pub.thesis %}<a href="{{ pub.thesis }}" class="pub-link" target="_blank">ProQuest</a>{% endif %}
+    </div>
   </div>
 </div>
 {% endfor %}

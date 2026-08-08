@@ -14,7 +14,7 @@ I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com)
 ## Education
 
 **Ph.D. in Bioinformatics** · University of Georgia (December 2021)
-Dissertation: *Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes*
+Dissertation: *Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes* ([PDF](/assets/shunhuahan-phd-thesis.pdf))
 Advisor: Casey Bergman
 
 **B.S. in Pharmaceutical Sciences** · East China University of Science and Technology, Shanghai (June 2015)
