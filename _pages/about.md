@@ -2,6 +2,7 @@
 layout: page
 title: About
 permalink: /about/
+description: "About Shunhua Han, Ph.D. — education, professional experience at Illumina, and skills in computational genomics and variant calling."
 ---
 
 ## Shunhua Han, Ph.D.
@@ -52,3 +53,4 @@ Developed TELR (long-read TE detection), ngs_te_mapper2 (cell-line authenticatio
 - GitHub: [shunhuahan](https://github.com/shunhuahan)
 - LinkedIn: [shunhua-han](https://www.linkedin.com/in/shunhua-han/)
 - Google Scholar: [profile](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en)
+- CV: [Download PDF](/assets/shunhuahan-cv.pdf)

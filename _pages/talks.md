@@ -2,6 +2,7 @@
 layout: page
 title: Talks & Presentations
 permalink: /talks/
+description: "Conference talks and posters by Shunhua Han on haplotype-resolved variant calling and transposable element biology."
 ---
 
 {% assign grouped = site.data.talks | group_by: "year" | sort: "name" | reverse %}

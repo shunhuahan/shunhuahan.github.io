@@ -2,6 +2,7 @@
 layout: page
 title: Publications
 permalink: /publications/
+description: "Peer-reviewed journal articles, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
 ---
 
 For a full and up-to-date list, see my [Google Scholar](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en) profile.
