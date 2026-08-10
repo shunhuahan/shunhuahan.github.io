@@ -1,29 +1,80 @@
 <div class="demo-box" id="mappability-demo">
   <p class="demo-eyebrow">Try it yourself</p>
   <h3 class="demo-title">Why do short reads fail here?</h3>
-  <p class="demo-intro">Drag the sliders. As two loci get more similar, or reads get shorter, more of them become statistically impossible to place with confidence.</p>
+  <p class="demo-intro">This is a live alignment simulation. Pick a paralog size, sequence identity, and read length; the demo simulates a gene and its paralog, sequences both to 30&times; coverage, and aligns every read back. Reads are colored by mapping quality. Faint orange lines mark the few positions where the two copies actually differ; those are the only anchors an aligner has.</p>
+
+  <div class="demo-chips" role="group" aria-label="Real gene presets">
+    <span class="demo-chips-label">Presets:</span>
+    <button type="button" class="demo-chip" data-identity="98.0"><em>PMS2</em> / <em>PMS2CL</em> &middot; 98%</button>
+    <button type="button" class="demo-chip" data-identity="98.5"><em>CYP21A2</em> / <em>CYP21A1P</em> &middot; 98.5%</button>
+    <button type="button" class="demo-chip" data-identity="99.9"><em>SMN1</em> / <em>SMN2</em> &middot; 99.9%</button>
+  </div>
 
   <div class="demo-controls">
     <div class="demo-control">
-      <label for="demo-identity">Paralog sequence identity <span class="demo-value" id="demo-identity-value">98.0%</span></label>
-      <input type="range" id="demo-identity" min="90" max="100" step="0.1" value="98" aria-describedby="demo-math">
+      <label for="sim-size">Paralog size <span class="demo-value" id="sim-size-value">2,000 bp</span></label>
+      <input type="range" id="sim-size" min="500" max="5000" step="100" value="2000">
     </div>
     <div class="demo-control">
-      <label for="demo-readlen">Read length <span class="demo-value" id="demo-readlen-value">150 bp</span></label>
-      <input type="range" id="demo-readlen" min="50" max="300" step="1" value="150" aria-describedby="demo-math">
+      <label for="sim-identity">Sequence identity <span class="demo-value" id="sim-identity-value">98.0%</span></label>
+      <input type="range" id="sim-identity" min="95" max="100" step="0.1" value="98">
+    </div>
+    <div class="demo-control">
+      <label for="sim-readlen">Read length <span class="demo-value" id="sim-readlen-value">150 bp</span></label>
+      <input type="range" id="sim-readlen" min="50" max="300" step="10" value="150">
     </div>
   </div>
 
-  <div class="demo-result">
-    <div class="demo-readout">
-      <span class="demo-readout-value" id="demo-readout-value">&hellip;</span>
-      <span class="demo-readout-label">uniquely mappable</span>
+  <div class="demo-sim" id="sim-wrap">
+    <div class="sim-track">
+      <div class="sim-track-head">
+        <span class="sim-track-name">Gene A <span class="sim-track-sub">the gene you care about</span></span>
+        <span class="sim-track-meta" id="sim-meta-a"></span>
+      </div>
+      <canvas class="sim-canvas" id="sim-canvas-a" role="img" aria-label="Simulated read pileup on Gene A, colored by mapping quality"></canvas>
     </div>
-    <div class="demo-reads" id="demo-reads" role="img" aria-label="Grid of simulated reads, colored by whether each one maps to a unique location or is ambiguous between the two paralogs"></div>
+    <div class="sim-track">
+      <div class="sim-track-head">
+        <span class="sim-track-name">Gene B <span class="sim-track-sub">its paralog</span></span>
+        <span class="sim-track-meta" id="sim-meta-b"></span>
+      </div>
+      <canvas class="sim-canvas" id="sim-canvas-b" role="img" aria-label="Simulated read pileup on Gene B, colored by mapping quality"></canvas>
+    </div>
+    <div class="sim-tooltip" id="sim-tooltip" aria-hidden="true"></div>
   </div>
 
-  <p class="demo-math" id="demo-math"></p>
-  <p class="demo-footnote">Simplified, illustrative model, not a real aligner. It assumes independent per-base mismatches at the stated identity, and an aligner that confidently and uniquely places a read only when it has roughly 2% or fewer mismatches to the true locus, which is in the ballpark of common short-read aligner behavior. The core phenomenon it captures is real: past a certain identity, a read genuinely cannot be told apart from its paralog by sequence alone.</p>
+  <div class="demo-legend">
+    <span class="legend-item"><span class="legend-swatch sw-60"></span>MAPQ 60</span>
+    <span class="legend-item"><span class="legend-swatch sw-40"></span>MAPQ 40</span>
+    <span class="legend-item"><span class="legend-swatch sw-20"></span>MAPQ 20</span>
+    <span class="legend-item"><span class="legend-swatch sw-0"></span>MAPQ 0 (ambiguous)</span>
+    <span class="legend-item"><span class="legend-swatch sw-impostor"></span>outlined = placed on the wrong copy</span>
+    <button type="button" class="demo-dice" id="sim-dice" title="Re-run the simulation with new random reads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      Re-simulate
+    </button>
+  </div>
+
+  <div class="demo-stats" id="sim-stats" aria-live="polite">
+    <div class="demo-stat">
+      <span class="demo-stat-value" id="sim-stat-callable">&hellip;</span>
+      <span class="demo-stat-label">of Gene A is callable</span>
+    </div>
+    <div class="demo-stat">
+      <span class="demo-stat-value" id="sim-stat-ambiguous">&hellip;</span>
+      <span class="demo-stat-label">of reads are ambiguous (MAPQ 0)</span>
+    </div>
+    <div class="demo-stat">
+      <span class="demo-stat-value" id="sim-stat-impostor">&hellip;</span>
+      <span class="demo-stat-label">reads placed on the wrong copy</span>
+    </div>
+    <div class="demo-stat">
+      <span class="demo-stat-value" id="sim-stat-psv">&hellip;</span>
+      <span class="demo-stat-label">differences between the copies</span>
+    </div>
+  </div>
+
+  <p class="demo-footnote">Simplified but honest model. The two copies differ at positions drawn independently at a rate of (1 &minus; identity); reads are error-free and single-end at fixed 30&times; coverage per copy, and may extend into the unique sequence flanking the duplication, which anchors them to their true copy (this is why the edges usually stay callable even when the interior collapses). Each read is placed on whichever copy it matches best. A read covering zero distinguishing positions fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ 0. Otherwise MAPQ = &minus;10&middot;log<sub>10</sub> P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Callable" means covered by at least 8 reads with MAPQ &ge; 20, a typical variant-calling filter. Real aligners add indels, sequencing errors, and paired-end rescue, but the collapse you see here is the same one that happens in real data.</p>
 </div>
 
 <style>
@@ -52,18 +103,46 @@
   border: none;
 }
 .demo-intro {
-  margin: 0 0 22px;
+  margin: 0 0 18px;
   font-size: 14.5px;
   line-height: 1.6;
   color: #5b6472;
-  max-width: 560px;
+  max-width: 640px;
 }
 
-.demo-controls {
+.demo-chips {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-bottom: 22px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.demo-chips-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #5b6472;
+}
+.demo-chip {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3d4451;
+  background: #ffffff;
+  border: 1px solid #e4e7ee;
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.demo-chip em { font-style: italic; }
+.demo-chip:hover { border-color: #2f5fe0; color: #2f5fe0; }
+.demo-chip.active { border-color: #2f5fe0; color: #2f5fe0; background: #eef3ff; }
+
+.demo-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px 22px;
+  margin-bottom: 20px;
 }
 .demo-control label {
   display: flex;
@@ -78,6 +157,7 @@
   font-weight: 700;
   color: #2f5fe0;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 .demo-control input[type="range"] {
   width: 100%;
@@ -109,184 +189,496 @@
   cursor: pointer;
 }
 
-.demo-result {
+.demo-sim { position: relative; }
+.sim-track { margin-bottom: 14px; }
+.sim-track-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.sim-track-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #14171f;
+}
+.sim-track-sub {
+  font-weight: 500;
+  color: #8790a0;
+  font-size: 12px;
+  margin-left: 4px;
+}
+.sim-track-meta {
+  font-size: 11.5px;
+  color: #8790a0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.sim-canvas {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e4e7ee;
+  background: #ffffff;
+}
+.sim-tooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  z-index: 10;
+  background: #14171f;
+  color: #fff;
+  font-size: 11.5px;
+  line-height: 1.5;
+  padding: 6px 9px;
+  border-radius: 6px;
+  max-width: 240px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.demo-legend {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 24px;
-  padding: 20px 0 6px;
+  gap: 8px 16px;
+  margin: 4px 0 18px;
+  font-size: 11.5px;
+  color: #5b6472;
+}
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 8px;
+  border-radius: 2px;
+}
+.sw-60 { background: #0d9488; }
+.sw-40 { background: #45b8ab; }
+.sw-20 { background: #d97706; }
+.sw-0  { background: #e11d48; opacity: 0.8; }
+.sw-impostor { background: #e11d48; opacity: 0.8; outline: 1.5px solid #14171f; outline-offset: -1px; }
+.demo-dice {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2f5fe0;
+  background: #ffffff;
+  border: 1px solid #2f5fe0;
+  border-radius: 999px;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.demo-dice svg { width: 13px; height: 13px; }
+.demo-dice:hover { background: #2f5fe0; color: #fff; }
+
+.demo-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  padding: 16px 0 4px;
   border-top: 1px solid #e4e7ee;
 }
-.demo-readout { flex-shrink: 0; min-width: 118px; }
-.demo-readout-value {
+.demo-stat-value {
   display: block;
   font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
-  font-size: 2.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   color: #14171f;
-  transition: color 0.2s;
-}
-.demo-readout-value.state-good { color: #0d9488; }
-.demo-readout-value.state-mid  { color: #c2760c; }
-.demo-readout-value.state-bad  { color: #e11d48; }
-.demo-readout-label {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: #5b6472;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.demo-reads {
-  flex: 1;
-  min-width: 220px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-content: flex-start;
-}
-.demo-read-tick {
-  width: 12px;
-  height: 20px;
-  border-radius: 3px;
-  background: #dde1ea;
-  transition: background-color 0.25s;
-}
-.demo-read-tick.is-confident { background: #0d9488; }
-.demo-read-tick.is-ambiguous { background: #e11d48; opacity: 0.85; }
-
-.demo-math {
-  margin: 18px 0 4px;
-  font-size: 12.5px;
-  color: #5b6472;
   font-variant-numeric: tabular-nums;
 }
+.demo-stat-value.state-good { color: #0d9488; }
+.demo-stat-value.state-mid  { color: #c2760c; }
+.demo-stat-value.state-bad  { color: #e11d48; }
+.demo-stat-label {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #5b6472;
+}
+
 .demo-footnote {
-  margin: 6px 0 0;
+  margin: 14px 0 0;
   font-size: 12px;
   line-height: 1.65;
   color: #8790a0;
 }
 
 @media (max-width: 640px) {
-  .demo-box { padding: 22px 18px 20px; }
-  .demo-result { flex-direction: column; align-items: flex-start; }
+  .demo-box { padding: 22px 16px 20px; }
+  .demo-dice { margin-left: 0; }
 }
 
 html.dark .demo-box { background: linear-gradient(180deg, #141824 0%, #10131c 100%); border-color: #262b3a; }
 html.dark .demo-eyebrow { color: #5b8dff; }
 html.dark .demo-title { color: #e7e9ee; }
 html.dark .demo-intro { color: #98a2b3; }
+html.dark .demo-chips-label { color: #98a2b3; }
+html.dark .demo-chip { background: #171b28; border-color: #262b3a; color: #cbd0dc; }
+html.dark .demo-chip:hover { border-color: #5b8dff; color: #5b8dff; }
+html.dark .demo-chip.active { border-color: #5b8dff; color: #5b8dff; background: #1a2340; }
 html.dark .demo-control label { color: #e7e9ee; }
 html.dark .demo-value { color: #5b8dff; }
 html.dark .demo-control input[type="range"] { background: #2a3040; }
 html.dark .demo-control input[type="range"]::-webkit-slider-thumb { background: #5b8dff; border-color: #141824; }
 html.dark .demo-control input[type="range"]::-moz-range-thumb { background: #5b8dff; border-color: #141824; }
-html.dark .demo-result { border-top-color: #262b3a; }
-html.dark .demo-readout-value { color: #e7e9ee; }
-html.dark .demo-readout-value.state-good { color: #2dd4bf; }
-html.dark .demo-readout-value.state-mid  { color: #fbbf24; }
-html.dark .demo-readout-value.state-bad  { color: #fb7185; }
-html.dark .demo-readout-label { color: #98a2b3; }
-html.dark .demo-read-tick { background: #2a3040; }
-html.dark .demo-read-tick.is-confident { background: #2dd4bf; }
-html.dark .demo-read-tick.is-ambiguous { background: #fb7185; opacity: 0.85; }
-html.dark .demo-math { color: #98a2b3; }
+html.dark .sim-track-name { color: #e7e9ee; }
+html.dark .sim-track-sub { color: #6b7385; }
+html.dark .sim-track-meta { color: #6b7385; }
+html.dark .sim-canvas { background: #10131c; border-color: #262b3a; }
+html.dark .sim-tooltip { background: #e7e9ee; color: #14171f; }
+html.dark .demo-legend { color: #98a2b3; }
+html.dark .sw-60 { background: #2dd4bf; }
+html.dark .sw-40 { background: #5eead4; }
+html.dark .sw-20 { background: #fbbf24; }
+html.dark .sw-0  { background: #fb7185; }
+html.dark .sw-impostor { background: #fb7185; outline-color: #e7e9ee; }
+html.dark .demo-dice { background: #171b28; border-color: #5b8dff; color: #5b8dff; }
+html.dark .demo-dice:hover { background: #5b8dff; color: #0b0d12; }
+html.dark .demo-stats { border-top-color: #262b3a; }
+html.dark .demo-stat-value { color: #e7e9ee; }
+html.dark .demo-stat-value.state-good { color: #2dd4bf; }
+html.dark .demo-stat-value.state-mid  { color: #fbbf24; }
+html.dark .demo-stat-value.state-bad  { color: #fb7185; }
+html.dark .demo-stat-label { color: #98a2b3; }
 html.dark .demo-footnote { color: #6b7385; }
 </style>
 
 <script>
 (function() {
-  var identitySlider = document.getElementById('demo-identity');
-  var readlenSlider = document.getElementById('demo-readlen');
-  var identityValueEl = document.getElementById('demo-identity-value');
-  var readlenValueEl = document.getElementById('demo-readlen-value');
-  var readoutValueEl = document.getElementById('demo-readout-value');
-  var readsEl = document.getElementById('demo-reads');
-  var mathEl = document.getElementById('demo-math');
+  function $(id) { return document.getElementById(id); }
 
-  if (!identitySlider || !readlenSlider || !readsEl) return;
+  var sizeSlider = $('sim-size');
+  var identitySlider = $('sim-identity');
+  var readlenSlider = $('sim-readlen');
+  if (!sizeSlider || !identitySlider || !readlenSlider) return;
 
-  var NUM_READS = 48;
-  var ticks = [];
-  for (var i = 0; i < NUM_READS; i++) {
-    var tick = document.createElement('span');
-    tick.className = 'demo-read-tick';
-    readsEl.appendChild(tick);
-    ticks.push(tick);
-  }
+  var sizeValueEl = $('sim-size-value');
+  var identityValueEl = $('sim-identity-value');
+  var readlenValueEl = $('sim-readlen-value');
+  var canvasA = $('sim-canvas-a');
+  var canvasB = $('sim-canvas-b');
+  var metaA = $('sim-meta-a');
+  var metaB = $('sim-meta-b');
+  var tooltip = $('sim-tooltip');
+  var simWrap = $('sim-wrap');
+  var statCallable = $('sim-stat-callable');
+  var statAmbiguous = $('sim-stat-ambiguous');
+  var statImpostor = $('sim-stat-impostor');
+  var statPsv = $('sim-stat-psv');
 
-  // P(X <= t) for X ~ Binomial(n, q), via direct iterative PMF summation.
-  // n and t stay small enough here (n <= 300, t typically single digits)
-  // that this is numerically stable without log-space tricks.
-  function binomialCDF(n, q, t) {
-    // q = 0: every base matches deterministically, so the read is
-    // identical to the paralog too (0 mismatches, always <= t) -> fully ambiguous.
-    if (q <= 0) return 1;
-    if (q >= 1) return t >= n ? 1 : 0;
-    var pmf = Math.pow(1 - q, n);
-    var cdf = pmf;
-    for (var k = 0; k < t; k++) {
-      pmf = pmf * (n - k) / (k + 1) * (q / (1 - q));
-      cdf += pmf;
-    }
-    return Math.min(1, cdf);
-  }
+  var COVERAGE = 30;      // fixed sequencing depth per copy
+  var ERR = 0.01;         // assumed chance a sequencing error masks a difference
+  var GOOD_MAPQ = 20;     // variant-calling MAPQ filter
+  var MIN_DEPTH = 8;      // min confident depth for a position to be "callable"
+  var READ_H = 4;         // read bar height in px
+  var ROW_GAP = 1;
+  var REF_H = 7;          // reference bar height
+  var MAX_ROWS = 60;
 
-  // Deterministic PRNG (mulberry32) seeded from the slider position, so the
-  // read-tick pattern is stable for a given identity/length rather than
-  // reshuffling randomly on every input event.
-  function mulberry32(seed) {
+  var seed = 42;
+  var sim = null;         // cached simulation result, redrawn on resize/theme
+
+  function mulberry32(a) {
     return function() {
-      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
       t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
 
-  function render() {
-    var identity = parseFloat(identitySlider.value);
-    var L = parseInt(readlenSlider.value, 10);
-    var q = 1 - identity / 100;
-    var t = Math.max(2, Math.round(0.02 * L));
-    var pAmbiguous = binomialCDF(L, q, t);
-    var pConfident = 1 - pAmbiguous;
-    var pct = Math.round(pConfident * 100);
+  function mapqForDiffs(k) {
+    if (k === 0) return 0;
+    // P(read is really from the other copy) if it covers k differing sites
+    var pWrong = Math.pow(ERR, k) / (Math.pow(ERR, k) + Math.pow(1 - ERR, k));
+    return Math.min(60, Math.round(-10 * Math.log(pWrong) / Math.LN10));
+  }
 
-    identityValueEl.textContent = identity.toFixed(1) + '%';
-    readlenValueEl.textContent = L + ' bp';
-    readoutValueEl.textContent = pct + '%';
-
-    var expected = (q * L).toFixed(1);
-    mathEl.textContent = '≈ ' + expected + ' expected mismatches over ' + L + ' bp of true sequence; this simplified aligner accepts up to ' + t + '.';
-
-    var state = pct >= 80 ? 'good' : (pct >= 40 ? 'mid' : 'bad');
-    readoutValueEl.className = 'demo-readout-value state-' + state;
-
-    var seed = Math.round(identity * 10) * 100000 + L;
-    var rng = mulberry32(seed);
-    var confidentCount = Math.round(pConfident * NUM_READS);
-
-    var indices = [];
-    for (var i = 0; i < NUM_READS; i++) indices.push(i);
-    for (var i = indices.length - 1; i > 0; i--) {
-      var j = Math.floor(rng() * (i + 1));
-      var tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+  // Greedy first-fit pileup packing, same idea as IGV
+  function pack(reads, L) {
+    reads.sort(function(a, b) { return a.s - b.s; });
+    var rowEnds = [];
+    for (var i = 0; i < reads.length; i++) {
+      var r = reads[i];
+      r.row = -1;
+      for (var j = 0; j < rowEnds.length; j++) {
+        if (rowEnds[j] + 2 < r.s) { r.row = j; rowEnds[j] = r.s + L; break; }
+      }
+      if (r.row === -1 && rowEnds.length < MAX_ROWS) {
+        r.row = rowEnds.length;
+        rowEnds.push(r.s + L);
+      }
     }
-    var confidentSet = {};
-    for (var i = 0; i < confidentCount; i++) confidentSet[indices[i]] = true;
+    return rowEnds.length;
+  }
 
-    for (var i = 0; i < NUM_READS; i++) {
-      ticks[i].className = 'demo-read-tick ' + (confidentSet[i] ? 'is-confident' : 'is-ambiguous');
+  function simulate() {
+    var N = parseInt(sizeSlider.value, 10);
+    var identity = parseFloat(identitySlider.value);
+    var L = Math.min(parseInt(readlenSlider.value, 10), N);
+    var q = 1 - identity / 100;
+
+    // Differing positions (PSVs). Each position gets a fixed random draw for
+    // this seed, so dragging the identity slider adds/removes differences
+    // smoothly instead of reshuffling everything.
+    var rngP = mulberry32(seed);
+    var psvList = [];
+    var prefix = new Int32Array(N + 1);
+    for (var i = 0; i < N; i++) {
+      var isPsv = rngP() < q ? 1 : 0;
+      if (isPsv) psvList.push(i);
+      prefix[i + 1] = prefix[i] + isPsv;
+    }
+
+    // Reads from both copies. Starts may overhang the duplicated region into
+    // the surrounding unique sequence: those overhanging bases anchor a read
+    // to its true copy (which is why real segdup edges stay callable), and
+    // they also keep simulated coverage uniform instead of dipping at edges.
+    var rngR = mulberry32((seed ^ 0x9e3779b9) >>> 0);
+    var nPer = Math.max(1, Math.round((N + L - 1) * COVERAGE / L));
+    var reads = [];
+    var nAmbiguous = 0, nImpostor = 0;
+    for (var origin = 0; origin < 2; origin++) {
+      for (var r = 0; r < nPer; r++) {
+        var s = Math.floor(rngR() * (N + L - 1)) - (L - 1);
+        var lo = Math.max(0, s), hi = Math.min(N, s + L);
+        var k = prefix[hi] - prefix[lo];          // differing sites covered
+        var flank = (lo - s) + (s + L - hi);       // bases in unique flanking sequence
+        var anchors = k + flank;
+        var assigned, mapq;
+        if (anchors === 0) {
+          // Fits both copies equally well: aligner picks at random, MAPQ 0
+          assigned = rngR() < 0.5 ? origin : 1 - origin;
+          mapq = 0;
+          nAmbiguous++;
+          if (assigned !== origin) nImpostor++;
+        } else {
+          assigned = origin;
+          mapq = mapqForDiffs(anchors);
+        }
+        reads.push({ s: s, lo: lo, hi: hi, k: k, flank: flank, mapq: mapq, origin: origin, assigned: assigned });
+      }
+    }
+
+    var readsA = reads.filter(function(r) { return r.assigned === 0; });
+    var readsB = reads.filter(function(r) { return r.assigned === 1; });
+    var rowsA = pack(readsA, L);
+    var rowsB = pack(readsB, L);
+
+    // Callable fraction of Gene A: positions with >= MIN_DEPTH reads at MAPQ >= GOOD_MAPQ
+    var depthDelta = new Int32Array(N + 1);
+    for (var i = 0; i < readsA.length; i++) {
+      if (readsA[i].mapq >= GOOD_MAPQ) {
+        depthDelta[readsA[i].lo]++;
+        depthDelta[readsA[i].hi]--;
+      }
+    }
+    var depth = 0, callablePositions = 0;
+    for (var i = 0; i < N; i++) {
+      depth += depthDelta[i];
+      if (depth >= MIN_DEPTH) callablePositions++;
+    }
+
+    return {
+      N: N, L: L, identity: identity,
+      psvList: psvList,
+      readsA: readsA, readsB: readsB,
+      rowsA: rowsA, rowsB: rowsB,
+      totalReads: reads.length,
+      nAmbiguous: nAmbiguous,
+      nImpostor: nImpostor,
+      callableFrac: callablePositions / N
+    };
+  }
+
+  function palette() {
+    var dark = document.documentElement.classList.contains('dark');
+    return dark ? {
+      mapq60: '#2dd4bf', mapq40: '#5eead4', mapq20: '#fbbf24', mapq0: 'rgba(251,113,133,0.85)',
+      refBar: '#2a3040', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.14)',
+      impostorOutline: 'rgba(231,233,238,0.8)'
+    } : {
+      mapq60: '#0d9488', mapq40: '#45b8ab', mapq20: '#d97706', mapq0: 'rgba(225,29,72,0.75)',
+      refBar: '#dde1ea', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.13)',
+      impostorOutline: 'rgba(20,23,31,0.6)'
+    };
+  }
+
+  function colorFor(mapq, pal) {
+    if (mapq >= 60) return pal.mapq60;
+    if (mapq >= 40) return pal.mapq40;
+    if (mapq >= GOOD_MAPQ) return pal.mapq20;
+    return pal.mapq0;
+  }
+
+  var hitRects = { a: [], b: [] };
+
+  function drawTrack(canvas, reads, rows, key) {
+    var pal = palette();
+    var dpr = window.devicePixelRatio || 1;
+    var cssW = canvas.clientWidth || canvas.parentNode.clientWidth;
+    var rowsShown = Math.max(rows, 1);
+    var cssH = REF_H + 6 + rowsShown * (READ_H + ROW_GAP) + 4;
+    canvas.style.height = cssH + 'px';
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    var xScale = cssW / sim.N;
+
+    // PSV guide lines through the whole pileup: the aligner's only anchors
+    ctx.fillStyle = pal.psvGuide;
+    for (var i = 0; i < sim.psvList.length; i++) {
+      ctx.fillRect(sim.psvList[i] * xScale, 0, Math.max(1, xScale), cssH);
+    }
+
+    // Reference bar with PSV ticks
+    ctx.fillStyle = pal.refBar;
+    ctx.fillRect(0, 0, cssW, REF_H);
+    ctx.fillStyle = pal.psvTick;
+    for (var i = 0; i < sim.psvList.length; i++) {
+      ctx.fillRect(sim.psvList[i] * xScale - 0.5, 0, Math.max(1.5, xScale), REF_H);
+    }
+
+    // Reads
+    var y0 = REF_H + 6;
+    hitRects[key] = [];
+    for (var i = 0; i < reads.length; i++) {
+      var r = reads[i];
+      if (r.row < 0) continue;
+      var x = r.s * xScale;
+      var w = Math.max(2, sim.L * xScale);
+      var y = y0 + r.row * (READ_H + ROW_GAP);
+      ctx.fillStyle = colorFor(r.mapq, pal);
+      ctx.fillRect(x, y, w, READ_H);
+      if (r.assigned !== r.origin) {
+        ctx.strokeStyle = pal.impostorOutline;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x + 0.5, y + 0.5, w - 1, READ_H - 1);
+      }
+      hitRects[key].push({ x: x, y: y, w: w, h: READ_H, read: r });
     }
   }
 
+  function stateClass(pctGood) {
+    return pctGood >= 70 ? 'state-good' : (pctGood >= 30 ? 'state-mid' : 'state-bad');
+  }
+
+  function render() {
+    sim = simulate();
+
+    sizeValueEl.textContent = sim.N.toLocaleString() + ' bp';
+    identityValueEl.textContent = sim.identity.toFixed(1) + '%';
+    readlenValueEl.textContent = sim.L + ' bp';
+
+    drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
+    drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+
+    var impA = sim.readsA.filter(function(r) { return r.origin !== 0; }).length;
+    var impB = sim.readsB.filter(function(r) { return r.origin !== 1; }).length;
+    metaA.textContent = sim.readsA.length.toLocaleString() + ' reads · ' + impA + ' from Gene B';
+    metaB.textContent = sim.readsB.length.toLocaleString() + ' reads · ' + impB + ' from Gene A';
+
+    var callablePct = Math.round(sim.callableFrac * 100);
+    statCallable.textContent = callablePct + '%';
+    statCallable.className = 'demo-stat-value ' + stateClass(callablePct);
+
+    var ambPct = Math.round(sim.nAmbiguous / sim.totalReads * 100);
+    statAmbiguous.textContent = ambPct + '%';
+    statAmbiguous.className = 'demo-stat-value ' + stateClass(100 - ambPct);
+
+    var impPct = Math.round(sim.nImpostor / sim.totalReads * 100);
+    statImpostor.textContent = sim.nImpostor.toLocaleString() + ' (' + impPct + '%)';
+    statImpostor.className = 'demo-stat-value ' + stateClass(100 - impPct * 2);
+
+    var nPsv = sim.psvList.length;
+    statPsv.textContent = nPsv.toLocaleString();
+    statPsv.className = 'demo-stat-value';
+
+    // Sync preset chip highlight with the identity slider
+    var chips = document.querySelectorAll('#mappability-demo .demo-chip');
+    for (var i = 0; i < chips.length; i++) {
+      var match = parseFloat(chips[i].getAttribute('data-identity')) === sim.identity;
+      chips[i].className = 'demo-chip' + (match ? ' active' : '');
+    }
+  }
+
+  // Tooltip: inspect individual reads
+  function handleMove(e, canvas, key) {
+    var rect = canvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left;
+    var my = e.clientY - rect.top;
+    var rects = hitRects[key];
+    var hit = null;
+    for (var i = rects.length - 1; i >= 0; i--) {
+      var h = rects[i];
+      if (mx >= h.x && mx <= h.x + h.w && my >= h.y && my <= h.y + h.h) { hit = h.read; break; }
+    }
+    if (!hit) { tooltip.style.display = 'none'; return; }
+    var originName = hit.origin === 0 ? 'Gene A' : 'Gene B';
+    var msg = 'MAPQ ' + hit.mapq + ' · covers ' + hit.k + ' difference' + (hit.k === 1 ? '' : 's');
+    if (hit.flank > 0) msg += ' + ' + hit.flank + ' bp of unique flank';
+    msg += ' · from ' + originName;
+    if (hit.assigned !== hit.origin) msg += ' · misplaced!';
+    tooltip.textContent = msg;
+    tooltip.style.display = 'block';
+    var wrapRect = simWrap.getBoundingClientRect();
+    var tx = e.clientX - wrapRect.left + 12;
+    var ty = e.clientY - wrapRect.top - 30;
+    if (tx > wrapRect.width - 190) tx = wrapRect.width - 190;
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+  }
+
+  canvasA.addEventListener('mousemove', function(e) { handleMove(e, canvasA, 'a'); });
+  canvasB.addEventListener('mousemove', function(e) { handleMove(e, canvasB, 'b'); });
+  canvasA.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+  canvasB.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+  sizeSlider.addEventListener('input', render);
   identitySlider.addEventListener('input', render);
   readlenSlider.addEventListener('input', render);
+
+  $('sim-dice').addEventListener('click', function() {
+    seed = (Math.random() * 4294967296) >>> 0;
+    render();
+  });
+
+  var chips = document.querySelectorAll('#mappability-demo .demo-chip');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].addEventListener('click', function() {
+      identitySlider.value = this.getAttribute('data-identity');
+      render();
+    });
+  }
+
+  // Redraw (cached sim) on resize; re-render colors on theme toggle
+  var resizeTimer = null;
+  window.addEventListener('resize', function() {
+    if (resizeTimer) cancelAnimationFrame(resizeTimer);
+    resizeTimer = requestAnimationFrame(function() {
+      if (!sim) return;
+      drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
+      drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+    });
+  });
+  new MutationObserver(function() {
+    if (!sim) return;
+    drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
+    drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
   render();
 })();
 </script>
