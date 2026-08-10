@@ -14,7 +14,7 @@ My research sits at the intersection of computational method development and gen
 </div>
 <div class="research-section-body" markdown="1">
 
-Some of the most medically important genes in the human genome happen to sit in the hardest places to sequence. *SMN1*, the gene behind spinal muscular atrophy, has a near-identical neighbor called *SMN2*. *PMS2*, tied to Lynch syndrome, has *PMS2CL*. *CYP21A2*, behind congenital adrenal hyperplasia, has *CYP21A1P*. In each case the two copies share 98 to 99% of their sequence, more than enough to confuse a standard short-read aligner. Reads pile up in the wrong place, variant calls come out wrong or missing entirely, and clinical labs often fall back on slow, gene-specific workarounds like nested PCR just to get a trustworthy answer.
+Some of the most medically important genes in the human genome happen to sit in the hardest places to sequence. *SMN1*, the gene behind spinal muscular atrophy, has a near-identical neighbor called *SMN2*. *PMS2*, tied to Lynch syndrome, has *PMS2CL*. *CYP21A2*, behind congenital adrenal hyperplasia, has *CYP21A1P*. In each case the two copies share anywhere from 98% to more than 99.9% of their sequence, more than enough to confuse a standard short-read aligner. Reads pile up in the wrong place, variant calls come out wrong or missing entirely, and clinical labs often fall back on slow, gene-specific workarounds like nested PCR just to get a trustworthy answer.
 
 {% include mappability-demo.html %}
 
@@ -260,4 +260,117 @@ html.dark .tool-card { border-color: #262b3a; }
 html.dark .tool-card:hover { border-color: #5b8dff; }
 html.dark .tool-name { color: #e7e9ee; }
 html.dark .tool-desc { color: #98a2b3; }
+
+/* Click-to-zoom lightbox for research figures */
+.research-figure img { cursor: zoom-in; }
+.figure-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px 24px;
+  background: rgba(9, 11, 16, 0.93);
+  cursor: zoom-out;
+}
+.figure-lightbox.open { display: flex; }
+@media (prefers-reduced-motion: no-preference) {
+  .figure-lightbox.open { animation: lightbox-fade 0.18s ease; }
+  @keyframes lightbox-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+.figure-lightbox img {
+  max-width: min(94vw, 1400px);
+  max-height: 80vh;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  cursor: default;
+}
+.figure-lightbox-caption {
+  max-width: min(90vw, 900px);
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b7bfcc;
+  text-align: center;
+  cursor: default;
+}
+.figure-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.figure-lightbox-close:hover { background: rgba(255, 255, 255, 0.24); }
 </style>
+
+<script>
+(function() {
+  var figures = document.querySelectorAll('.research-figure img');
+  if (!figures.length) return;
+
+  var overlay = document.createElement('div');
+  overlay.className = 'figure-lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Enlarged figure');
+  overlay.innerHTML = '<button type="button" class="figure-lightbox-close" aria-label="Close enlarged figure">&times;</button>' +
+    '<img alt=""><p class="figure-lightbox-caption"></p>';
+  document.body.appendChild(overlay);
+
+  var overlayImg = overlay.querySelector('img');
+  var overlayCaption = overlay.querySelector('.figure-lightbox-caption');
+  var closeBtn = overlay.querySelector('.figure-lightbox-close');
+  var lastFocus = null;
+
+  function open(img) {
+    overlayImg.src = img.src;
+    overlayImg.alt = img.alt || '';
+    var fig = img.closest('figure');
+    var cap = fig ? fig.querySelector('figcaption') : null;
+    overlayCaption.innerHTML = cap ? cap.innerHTML : '';
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    closeBtn.focus();
+  }
+
+  function close() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  for (var i = 0; i < figures.length; i++) {
+    (function(img) {
+      img.addEventListener('click', function() { open(img); });
+      // Keyboard access: figures become focusable zoom triggers
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', 'Enlarge figure');
+      img.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+      });
+    })(figures[i]);
+  }
+
+  overlay.addEventListener('click', function(e) {
+    // Close on backdrop or the close button, not on the image/caption
+    if (e.target === overlay || e.target === closeBtn) close();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+})();
+</script>

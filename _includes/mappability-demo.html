@@ -1,27 +1,31 @@
 <div class="demo-box" id="mappability-demo">
   <p class="demo-eyebrow">Try it yourself</p>
-  <h3 class="demo-title">Why do short reads fail here?</h3>
-  <p class="demo-intro">This is a live alignment simulation. Pick a paralog size, sequence identity, and read length; the demo simulates a gene and its paralog, sequences both to 30&times; coverage, and aligns every read back. Reads are colored by mapping quality. Faint orange lines mark the few positions where the two copies actually differ; those are the only anchors an aligner has.</p>
+  <h3 class="demo-title">Why standard short reads don't work here</h3>
+  <p class="demo-intro">This is a live alignment simulation. Pick a duplication size, sequence identity, and read setup; the demo simulates a gene and its paralog, sequences both to 30&times; coverage with paired-end short reads, and aligns every pair back. Reads are colored by mapping quality. Faint orange lines mark the positions where the two copies actually differ; together with the unique sequence flanking the duplication, those are the only anchors an aligner has. Notice how much paired reads rescue at 98% identity, and how completely things collapse by 99.9%: the genes that break pipelines are the ones where gene conversion pushes local identity toward 100%.</p>
 
   <div class="demo-chips" role="group" aria-label="Real gene presets">
-    <span class="demo-chips-label">Presets:</span>
-    <button type="button" class="demo-chip" data-identity="98.0"><em>PMS2</em> / <em>PMS2CL</em> &middot; 98%</button>
-    <button type="button" class="demo-chip" data-identity="98.5"><em>CYP21A2</em> / <em>CYP21A1P</em> &middot; 98.5%</button>
-    <button type="button" class="demo-chip" data-identity="99.9"><em>SMN1</em> / <em>SMN2</em> &middot; 99.9%</button>
+    <span class="demo-chips-label">Real examples:</span>
+    <button type="button" class="demo-chip" data-size="20000" data-identity="98.0"><em>PMS2</em> / <em>PMS2CL</em> &middot; 20 kb &middot; 98%</button>
+    <button type="button" class="demo-chip" data-size="30000" data-identity="98.0"><em>CYP21A2</em> / <em>CYP21A1P</em> &middot; 30 kb &middot; 98%</button>
+    <button type="button" class="demo-chip" data-size="28000" data-identity="99.9"><em>SMN1</em> / <em>SMN2</em> &middot; 28 kb &middot; 99.9%</button>
   </div>
 
   <div class="demo-controls">
     <div class="demo-control">
-      <label for="sim-size">Paralog size <span class="demo-value" id="sim-size-value">2,000 bp</span></label>
-      <input type="range" id="sim-size" min="500" max="5000" step="100" value="2000">
+      <label for="sim-size">Duplication size <span class="demo-value" id="sim-size-value">28,000 bp</span></label>
+      <input type="range" id="sim-size" min="1000" max="30000" step="500" value="28000">
     </div>
     <div class="demo-control">
-      <label for="sim-identity">Sequence identity <span class="demo-value" id="sim-identity-value">98.0%</span></label>
-      <input type="range" id="sim-identity" min="95" max="100" step="0.1" value="98">
+      <label for="sim-identity">Sequence identity <span class="demo-value" id="sim-identity-value">99.9%</span></label>
+      <input type="range" id="sim-identity" min="95" max="100" step="0.1" value="99.9">
     </div>
     <div class="demo-control">
-      <label for="sim-readlen">Read length <span class="demo-value" id="sim-readlen-value">150 bp</span></label>
+      <label for="sim-readlen">Read length <span class="demo-value" id="sim-readlen-value">2 &times; 150 bp</span></label>
       <input type="range" id="sim-readlen" min="50" max="300" step="10" value="150">
+    </div>
+    <div class="demo-control">
+      <label for="sim-fragment">Mean fragment size <span class="demo-value" id="sim-fragment-value">450 bp</span></label>
+      <input type="range" id="sim-fragment" min="200" max="1000" step="25" value="450">
     </div>
   </div>
 
@@ -48,7 +52,7 @@
     <span class="legend-item"><span class="legend-swatch sw-40"></span>MAPQ 40</span>
     <span class="legend-item"><span class="legend-swatch sw-20"></span>MAPQ 20</span>
     <span class="legend-item"><span class="legend-swatch sw-0"></span>MAPQ 0 (ambiguous)</span>
-    <span class="legend-item"><span class="legend-swatch sw-impostor"></span>outlined = placed on the wrong copy</span>
+    <span class="legend-item"><span class="legend-swatch sw-impostor"></span>MAPQ 0, placed on the wrong copy</span>
     <button type="button" class="demo-dice" id="sim-dice" title="Re-run the simulation with new random reads">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
       Re-simulate
@@ -62,11 +66,11 @@
     </div>
     <div class="demo-stat">
       <span class="demo-stat-value" id="sim-stat-ambiguous">&hellip;</span>
-      <span class="demo-stat-label">of reads are ambiguous (MAPQ 0)</span>
+      <span class="demo-stat-label">of read pairs are ambiguous (MAPQ 0)</span>
     </div>
     <div class="demo-stat">
       <span class="demo-stat-value" id="sim-stat-impostor">&hellip;</span>
-      <span class="demo-stat-label">reads placed on the wrong copy</span>
+      <span class="demo-stat-label">pairs placed on the wrong copy</span>
     </div>
     <div class="demo-stat">
       <span class="demo-stat-value" id="sim-stat-psv">&hellip;</span>
@@ -74,7 +78,7 @@
     </div>
   </div>
 
-  <p class="demo-footnote">Simplified but honest model. The two copies differ at positions drawn independently at a rate of (1 &minus; identity); reads are error-free and single-end at fixed 30&times; coverage per copy, and may extend into the unique sequence flanking the duplication, which anchors them to their true copy (this is why the edges usually stay callable even when the interior collapses). Each read is placed on whichever copy it matches best. A read covering zero distinguishing positions fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ 0. Otherwise MAPQ = &minus;10&middot;log<sub>10</sub> P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Callable" means covered by at least 8 reads with MAPQ &ge; 20, a typical variant-calling filter. Real aligners add indels, sequencing errors, and paired-end rescue, but the collapse you see here is the same one that happens in real data.</p>
+  <p class="demo-footnote">Simplified but honest model. The two copies differ at positions drawn independently at a rate of (1 &minus; identity); preset sizes and identities are approximate literature values for each duplication. Reads are error-free paired-end mates at fixed 30&times; coverage per copy, with fragment sizes jittered around the mean. A pair is anchored by any differing position either mate covers, and by any sequenced bases extending into the unique flanks of the duplication (paired-end rescue and flank rescue are both modeled; this is why the edges usually stay callable when the interior collapses). A pair covering zero distinguishing positions fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ 0. Otherwise MAPQ = &minus;10&middot;log<sub>10</sub> P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Callable" means covered by at least 8 reads with MAPQ &ge; 20, a typical variant-calling filter. Real aligners add indels and sequencing errors, and real duplications have locally varying identity, but the collapse you see here is the same one that happens in real data.</p>
 </div>
 
 <style>
@@ -107,7 +111,7 @@
   font-size: 14.5px;
   line-height: 1.6;
   color: #5b6472;
-  max-width: 640px;
+  max-width: 660px;
 }
 
 .demo-chips {
@@ -140,7 +144,7 @@
 
 .demo-controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px 22px;
   margin-bottom: 20px;
 }
@@ -148,6 +152,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: 8px;
   font-size: 13px;
   font-weight: 600;
   color: #14171f;
@@ -233,7 +238,7 @@
   line-height: 1.5;
   padding: 6px 9px;
   border-radius: 6px;
-  max-width: 240px;
+  max-width: 260px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 
@@ -257,7 +262,7 @@
 .sw-40 { background: #45b8ab; }
 .sw-20 { background: #d97706; }
 .sw-0  { background: #e11d48; opacity: 0.8; }
-.sw-impostor { background: #e11d48; opacity: 0.8; outline: 1.5px solid #14171f; outline-offset: -1px; }
+.sw-impostor { background: #7c3aed; }
 .demo-dice {
   margin-left: auto;
   display: inline-flex;
@@ -340,7 +345,7 @@ html.dark .sw-60 { background: #2dd4bf; }
 html.dark .sw-40 { background: #5eead4; }
 html.dark .sw-20 { background: #fbbf24; }
 html.dark .sw-0  { background: #fb7185; }
-html.dark .sw-impostor { background: #fb7185; outline-color: #e7e9ee; }
+html.dark .sw-impostor { background: #a78bfa; }
 html.dark .demo-dice { background: #171b28; border-color: #5b8dff; color: #5b8dff; }
 html.dark .demo-dice:hover { background: #5b8dff; color: #0b0d12; }
 html.dark .demo-stats { border-top-color: #262b3a; }
@@ -359,11 +364,13 @@ html.dark .demo-footnote { color: #6b7385; }
   var sizeSlider = $('sim-size');
   var identitySlider = $('sim-identity');
   var readlenSlider = $('sim-readlen');
-  if (!sizeSlider || !identitySlider || !readlenSlider) return;
+  var fragmentSlider = $('sim-fragment');
+  if (!sizeSlider || !identitySlider || !readlenSlider || !fragmentSlider) return;
 
   var sizeValueEl = $('sim-size-value');
   var identityValueEl = $('sim-identity-value');
   var readlenValueEl = $('sim-readlen-value');
+  var fragmentValueEl = $('sim-fragment-value');
   var canvasA = $('sim-canvas-a');
   var canvasB = $('sim-canvas-b');
   var metaA = $('sim-meta-a');
@@ -379,10 +386,10 @@ html.dark .demo-footnote { color: #6b7385; }
   var ERR = 0.01;         // assumed chance a sequencing error masks a difference
   var GOOD_MAPQ = 20;     // variant-calling MAPQ filter
   var MIN_DEPTH = 8;      // min confident depth for a position to be "callable"
-  var READ_H = 4;         // read bar height in px
+  var READ_H = 5;         // read bar height in px
   var ROW_GAP = 1;
   var REF_H = 7;          // reference bar height
-  var MAX_ROWS = 60;
+  var MAX_ROWS = 55;      // display cap; stats always use every simulated pair
 
   var seed = 42;
   var sim = null;         // cached simulation result, redrawn on resize/theme
@@ -396,26 +403,26 @@ html.dark .demo-footnote { color: #6b7385; }
     };
   }
 
-  function mapqForDiffs(k) {
+  function mapqForAnchors(k) {
     if (k === 0) return 0;
-    // P(read is really from the other copy) if it covers k differing sites
+    // P(pair is really from the other copy) if it covers k distinguishing sites
     var pWrong = Math.pow(ERR, k) / (Math.pow(ERR, k) + Math.pow(1 - ERR, k));
     return Math.min(60, Math.round(-10 * Math.log(pWrong) / Math.LN10));
   }
 
-  // Greedy first-fit pileup packing, same idea as IGV
-  function pack(reads, L) {
-    reads.sort(function(a, b) { return a.s - b.s; });
+  // Greedy first-fit pileup packing over pair spans, same idea as IGV
+  function pack(pairs) {
+    pairs.sort(function(a, b) { return a.s - b.s; });
     var rowEnds = [];
-    for (var i = 0; i < reads.length; i++) {
-      var r = reads[i];
-      r.row = -1;
+    for (var i = 0; i < pairs.length; i++) {
+      var p = pairs[i];
+      p.row = -1;
       for (var j = 0; j < rowEnds.length; j++) {
-        if (rowEnds[j] + 2 < r.s) { r.row = j; rowEnds[j] = r.s + L; break; }
+        if (rowEnds[j] + 4 < p.s) { p.row = j; rowEnds[j] = p.s + p.F; break; }
       }
-      if (r.row === -1 && rowEnds.length < MAX_ROWS) {
-        r.row = rowEnds.length;
-        rowEnds.push(r.s + L);
+      if (p.row === -1 && rowEnds.length < MAX_ROWS) {
+        p.row = rowEnds.length;
+        rowEnds.push(p.s + p.F);
       }
     }
     return rowEnds.length;
@@ -424,7 +431,8 @@ html.dark .demo-footnote { color: #6b7385; }
   function simulate() {
     var N = parseInt(sizeSlider.value, 10);
     var identity = parseFloat(identitySlider.value);
-    var L = Math.min(parseInt(readlenSlider.value, 10), N);
+    var L = parseInt(readlenSlider.value, 10);
+    var Fmean = Math.max(parseInt(fragmentSlider.value, 10), L);
     var q = 1 - identity / 100;
 
     // Differing positions (PSVs). Each position gets a fixed random draw for
@@ -439,47 +447,63 @@ html.dark .demo-footnote { color: #6b7385; }
       prefix[i + 1] = prefix[i] + isPsv;
     }
 
-    // Reads from both copies. Starts may overhang the duplicated region into
-    // the surrounding unique sequence: those overhanging bases anchor a read
-    // to its true copy (which is why real segdup edges stay callable), and
-    // they also keep simulated coverage uniform instead of dipping at edges.
+    // Anchoring evidence in a sequenced window [a, b): distinguishing sites
+    // inside the duplication plus any bases extending into the unique flanks.
+    function anchorsIn(a, b) {
+      if (b <= a) return 0;
+      var lo = Math.max(0, a), hi = Math.min(N, b);
+      var psv = hi > lo ? prefix[hi] - prefix[lo] : 0;
+      var flank = (b - a) - Math.max(0, hi - lo);
+      return psv + flank;
+    }
+
+    // Paired-end fragments from both copies. Fragment starts may overhang the
+    // duplication into unique flanking sequence (flank rescue), which also
+    // keeps simulated coverage uniform instead of dipping at the edges.
     var rngR = mulberry32((seed ^ 0x9e3779b9) >>> 0);
-    var nPer = Math.max(1, Math.round((N + L - 1) * COVERAGE / L));
-    var reads = [];
+    var nPer = Math.max(1, Math.round((N + Fmean - 1) * COVERAGE / (2 * L)));
+    var pairs = [];
     var nAmbiguous = 0, nImpostor = 0;
     for (var origin = 0; origin < 2; origin++) {
       for (var r = 0; r < nPer; r++) {
-        var s = Math.floor(rngR() * (N + L - 1)) - (L - 1);
-        var lo = Math.max(0, s), hi = Math.min(N, s + L);
-        var k = prefix[hi] - prefix[lo];          // differing sites covered
-        var flank = (lo - s) + (s + L - hi);       // bases in unique flanking sequence
-        var anchors = k + flank;
+        // Fixed number of RNG draws per pair so slider drags stay smooth
+        var startDraw = rngR(), jitterDraw = rngR(), tieDraw = rngR();
+        var F = Math.max(L, Math.round(Fmean * (0.85 + 0.3 * jitterDraw)));
+        var s = Math.floor(startDraw * (N + F - 1)) - (F - 1);
+        // Sequenced windows: mate 1 and mate 2; drop any double-counted overlap
+        var k = anchorsIn(s, s + L) + anchorsIn(s + F - L, s + F) - anchorsIn(s + F - L, s + L);
         var assigned, mapq;
-        if (anchors === 0) {
+        if (k === 0) {
           // Fits both copies equally well: aligner picks at random, MAPQ 0
-          assigned = rngR() < 0.5 ? origin : 1 - origin;
+          assigned = tieDraw < 0.5 ? origin : 1 - origin;
           mapq = 0;
           nAmbiguous++;
           if (assigned !== origin) nImpostor++;
         } else {
           assigned = origin;
-          mapq = mapqForDiffs(anchors);
+          mapq = mapqForAnchors(k);
         }
-        reads.push({ s: s, lo: lo, hi: hi, k: k, flank: flank, mapq: mapq, origin: origin, assigned: assigned });
+        pairs.push({ s: s, F: F, k: k, mapq: mapq, origin: origin, assigned: assigned });
       }
     }
 
-    var readsA = reads.filter(function(r) { return r.assigned === 0; });
-    var readsB = reads.filter(function(r) { return r.assigned === 1; });
-    var rowsA = pack(readsA, L);
-    var rowsB = pack(readsB, L);
+    var pairsA = pairs.filter(function(p) { return p.assigned === 0; });
+    var pairsB = pairs.filter(function(p) { return p.assigned === 1; });
+    var rowsA = pack(pairsA);
+    var rowsB = pack(pairsB);
 
-    // Callable fraction of Gene A: positions with >= MIN_DEPTH reads at MAPQ >= GOOD_MAPQ
+    // Callable fraction of Gene A: positions with >= MIN_DEPTH sequenced bases
+    // from MAPQ >= GOOD_MAPQ pairs (both mates contribute)
     var depthDelta = new Int32Array(N + 1);
-    for (var i = 0; i < readsA.length; i++) {
-      if (readsA[i].mapq >= GOOD_MAPQ) {
-        depthDelta[readsA[i].lo]++;
-        depthDelta[readsA[i].hi]--;
+    function addWindow(a, b) {
+      var lo = Math.max(0, a), hi = Math.min(N, b);
+      if (hi > lo) { depthDelta[lo]++; depthDelta[hi]--; }
+    }
+    for (var i = 0; i < pairsA.length; i++) {
+      var p = pairsA[i];
+      if (p.mapq >= GOOD_MAPQ) {
+        addWindow(p.s, p.s + L);
+        addWindow(Math.max(p.s + p.F - L, p.s + L), p.s + p.F);
       }
     }
     var depth = 0, callablePositions = 0;
@@ -489,11 +513,11 @@ html.dark .demo-footnote { color: #6b7385; }
     }
 
     return {
-      N: N, L: L, identity: identity,
+      N: N, L: L, identity: identity, Fmean: Fmean,
       psvList: psvList,
-      readsA: readsA, readsB: readsB,
+      pairsA: pairsA, pairsB: pairsB,
       rowsA: rowsA, rowsB: rowsB,
-      totalReads: reads.length,
+      totalPairs: pairs.length,
       nAmbiguous: nAmbiguous,
       nImpostor: nImpostor,
       callableFrac: callablePositions / N
@@ -504,25 +528,26 @@ html.dark .demo-footnote { color: #6b7385; }
     var dark = document.documentElement.classList.contains('dark');
     return dark ? {
       mapq60: '#2dd4bf', mapq40: '#5eead4', mapq20: '#fbbf24', mapq0: 'rgba(251,113,133,0.85)',
-      refBar: '#2a3040', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.14)',
-      impostorOutline: 'rgba(231,233,238,0.8)'
+      impostor: '#a78bfa', connector: 'rgba(152,162,179,0.35)',
+      refBar: '#2a3040', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.16)'
     } : {
       mapq60: '#0d9488', mapq40: '#45b8ab', mapq20: '#d97706', mapq0: 'rgba(225,29,72,0.75)',
-      refBar: '#dde1ea', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.13)',
-      impostorOutline: 'rgba(20,23,31,0.6)'
+      impostor: '#7c3aed', connector: 'rgba(91,100,114,0.3)',
+      refBar: '#dde1ea', psvTick: '#f59e0b', psvGuide: 'rgba(245,158,11,0.13)'
     };
   }
 
-  function colorFor(mapq, pal) {
-    if (mapq >= 60) return pal.mapq60;
-    if (mapq >= 40) return pal.mapq40;
-    if (mapq >= GOOD_MAPQ) return pal.mapq20;
+  function colorFor(pair, pal) {
+    if (pair.assigned !== pair.origin) return pal.impostor;
+    if (pair.mapq >= 60) return pal.mapq60;
+    if (pair.mapq >= 40) return pal.mapq40;
+    if (pair.mapq >= GOOD_MAPQ) return pal.mapq20;
     return pal.mapq0;
   }
 
   var hitRects = { a: [], b: [] };
 
-  function drawTrack(canvas, reads, rows, key) {
+  function drawTrack(canvas, pairs, rows, key) {
     var pal = palette();
     var dpr = window.devicePixelRatio || 1;
     var cssW = canvas.clientWidth || canvas.parentNode.clientWidth;
@@ -551,23 +576,32 @@ html.dark .demo-footnote { color: #6b7385; }
       ctx.fillRect(sim.psvList[i] * xScale - 0.5, 0, Math.max(1.5, xScale), REF_H);
     }
 
-    // Reads
+    // Read pairs: two mates joined by a thin connector line
     var y0 = REF_H + 6;
     hitRects[key] = [];
-    for (var i = 0; i < reads.length; i++) {
-      var r = reads[i];
-      if (r.row < 0) continue;
-      var x = r.s * xScale;
-      var w = Math.max(2, sim.L * xScale);
-      var y = y0 + r.row * (READ_H + ROW_GAP);
-      ctx.fillStyle = colorFor(r.mapq, pal);
-      ctx.fillRect(x, y, w, READ_H);
-      if (r.assigned !== r.origin) {
-        ctx.strokeStyle = pal.impostorOutline;
+    var L = sim.L;
+    for (var i = 0; i < pairs.length; i++) {
+      var p = pairs[i];
+      if (p.row < 0) continue;
+      var y = y0 + p.row * (READ_H + ROW_GAP);
+      var x1 = p.s * xScale;
+      var w1 = Math.max(2, L * xScale);
+      var x2 = (p.s + p.F - L) * xScale;
+      var w2 = Math.max(2, L * xScale);
+      var color = colorFor(p, pal);
+      if (x2 > x1 + w1) {
+        ctx.strokeStyle = pal.connector;
         ctx.lineWidth = 1;
-        ctx.strokeRect(x + 0.5, y + 0.5, w - 1, READ_H - 1);
+        ctx.beginPath();
+        ctx.moveTo(x1 + w1, y + READ_H / 2);
+        ctx.lineTo(x2, y + READ_H / 2);
+        ctx.stroke();
       }
-      hitRects[key].push({ x: x, y: y, w: w, h: READ_H, read: r });
+      ctx.fillStyle = color;
+      ctx.fillRect(x1, y, w1, READ_H);
+      ctx.fillRect(x2, y, w2, READ_H);
+      hitRects[key].push({ x: x1, y: y, w: w1, h: READ_H, pair: p });
+      hitRects[key].push({ x: x2, y: y, w: w2, h: READ_H, pair: p });
     }
   }
 
@@ -580,41 +614,42 @@ html.dark .demo-footnote { color: #6b7385; }
 
     sizeValueEl.textContent = sim.N.toLocaleString() + ' bp';
     identityValueEl.textContent = sim.identity.toFixed(1) + '%';
-    readlenValueEl.textContent = sim.L + ' bp';
+    readlenValueEl.innerHTML = '2 &times; ' + sim.L + ' bp';
+    fragmentValueEl.textContent = sim.Fmean + ' bp';
 
-    drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
-    drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+    drawTrack(canvasA, sim.pairsA, sim.rowsA, 'a');
+    drawTrack(canvasB, sim.pairsB, sim.rowsB, 'b');
 
-    var impA = sim.readsA.filter(function(r) { return r.origin !== 0; }).length;
-    var impB = sim.readsB.filter(function(r) { return r.origin !== 1; }).length;
-    metaA.textContent = sim.readsA.length.toLocaleString() + ' reads · ' + impA + ' from Gene B';
-    metaB.textContent = sim.readsB.length.toLocaleString() + ' reads · ' + impB + ' from Gene A';
+    var impA = sim.pairsA.filter(function(p) { return p.origin !== 0; }).length;
+    var impB = sim.pairsB.filter(function(p) { return p.origin !== 1; }).length;
+    metaA.textContent = sim.pairsA.length.toLocaleString() + ' pairs · ' + impA.toLocaleString() + ' from Gene B';
+    metaB.textContent = sim.pairsB.length.toLocaleString() + ' pairs · ' + impB.toLocaleString() + ' from Gene A';
 
     var callablePct = Math.round(sim.callableFrac * 100);
     statCallable.textContent = callablePct + '%';
     statCallable.className = 'demo-stat-value ' + stateClass(callablePct);
 
-    var ambPct = Math.round(sim.nAmbiguous / sim.totalReads * 100);
+    var ambPct = Math.round(sim.nAmbiguous / sim.totalPairs * 100);
     statAmbiguous.textContent = ambPct + '%';
     statAmbiguous.className = 'demo-stat-value ' + stateClass(100 - ambPct);
 
-    var impPct = Math.round(sim.nImpostor / sim.totalReads * 100);
+    var impPct = Math.round(sim.nImpostor / sim.totalPairs * 100);
     statImpostor.textContent = sim.nImpostor.toLocaleString() + ' (' + impPct + '%)';
     statImpostor.className = 'demo-stat-value ' + stateClass(100 - impPct * 2);
 
-    var nPsv = sim.psvList.length;
-    statPsv.textContent = nPsv.toLocaleString();
+    statPsv.textContent = sim.psvList.length.toLocaleString();
     statPsv.className = 'demo-stat-value';
 
-    // Sync preset chip highlight with the identity slider
+    // Sync preset chip highlight with the current size + identity
     var chips = document.querySelectorAll('#mappability-demo .demo-chip');
     for (var i = 0; i < chips.length; i++) {
-      var match = parseFloat(chips[i].getAttribute('data-identity')) === sim.identity;
+      var match = parseFloat(chips[i].getAttribute('data-identity')) === sim.identity &&
+                  parseInt(chips[i].getAttribute('data-size'), 10) === sim.N;
       chips[i].className = 'demo-chip' + (match ? ' active' : '');
     }
   }
 
-  // Tooltip: inspect individual reads
+  // Tooltip: inspect individual pairs
   function handleMove(e, canvas, key) {
     var rect = canvas.getBoundingClientRect();
     var mx = e.clientX - rect.left;
@@ -623,20 +658,18 @@ html.dark .demo-footnote { color: #6b7385; }
     var hit = null;
     for (var i = rects.length - 1; i >= 0; i--) {
       var h = rects[i];
-      if (mx >= h.x && mx <= h.x + h.w && my >= h.y && my <= h.y + h.h) { hit = h.read; break; }
+      if (mx >= h.x && mx <= h.x + h.w && my >= h.y && my <= h.y + h.h) { hit = h.pair; break; }
     }
     if (!hit) { tooltip.style.display = 'none'; return; }
     var originName = hit.origin === 0 ? 'Gene A' : 'Gene B';
-    var msg = 'MAPQ ' + hit.mapq + ' · covers ' + hit.k + ' difference' + (hit.k === 1 ? '' : 's');
-    if (hit.flank > 0) msg += ' + ' + hit.flank + ' bp of unique flank';
-    msg += ' · from ' + originName;
+    var msg = 'MAPQ ' + hit.mapq + ' · pair anchored by ' + hit.k + ' site' + (hit.k === 1 ? '' : 's') + ' · from ' + originName;
     if (hit.assigned !== hit.origin) msg += ' · misplaced!';
     tooltip.textContent = msg;
     tooltip.style.display = 'block';
     var wrapRect = simWrap.getBoundingClientRect();
     var tx = e.clientX - wrapRect.left + 12;
     var ty = e.clientY - wrapRect.top - 30;
-    if (tx > wrapRect.width - 190) tx = wrapRect.width - 190;
+    if (tx > wrapRect.width - 210) tx = wrapRect.width - 210;
     tooltip.style.left = tx + 'px';
     tooltip.style.top = ty + 'px';
   }
@@ -649,6 +682,7 @@ html.dark .demo-footnote { color: #6b7385; }
   sizeSlider.addEventListener('input', render);
   identitySlider.addEventListener('input', render);
   readlenSlider.addEventListener('input', render);
+  fragmentSlider.addEventListener('input', render);
 
   $('sim-dice').addEventListener('click', function() {
     seed = (Math.random() * 4294967296) >>> 0;
@@ -658,6 +692,7 @@ html.dark .demo-footnote { color: #6b7385; }
   var chips = document.querySelectorAll('#mappability-demo .demo-chip');
   for (var i = 0; i < chips.length; i++) {
     chips[i].addEventListener('click', function() {
+      sizeSlider.value = this.getAttribute('data-size');
       identitySlider.value = this.getAttribute('data-identity');
       render();
     });
@@ -669,14 +704,14 @@ html.dark .demo-footnote { color: #6b7385; }
     if (resizeTimer) cancelAnimationFrame(resizeTimer);
     resizeTimer = requestAnimationFrame(function() {
       if (!sim) return;
-      drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
-      drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+      drawTrack(canvasA, sim.pairsA, sim.rowsA, 'a');
+      drawTrack(canvasB, sim.pairsB, sim.rowsB, 'b');
     });
   });
   new MutationObserver(function() {
     if (!sim) return;
-    drawTrack(canvasA, sim.readsA, sim.rowsA, 'a');
-    drawTrack(canvasB, sim.readsB, sim.rowsB, 'b');
+    drawTrack(canvasA, sim.pairsA, sim.rowsA, 'a');
+    drawTrack(canvasB, sim.pairsB, sim.rowsB, 'b');
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
   render();
