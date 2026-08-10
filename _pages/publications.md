@@ -91,7 +91,7 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
   display: flex;
   gap: 20px;
   padding: 16px 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #eef0f4;
 }
 .pub-entry:last-of-type { border-bottom: none; }
 .pub-year {
@@ -99,7 +99,7 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
   width: 44px;
   font-weight: 700;
   font-size: 13px;
-  color: #2e5b9e;
+  color: #2f5fe0;
   padding-top: 2px;
 }
 .pub-content { flex: 1; }
@@ -107,11 +107,11 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
 .pub-title {
   font-weight: 600;
   font-size: 15px;
-  color: #1e293b;
+  color: #14171f;
   line-height: 1.5;
 }
-.pub-authors { font-size: 14px; color: #64748b; }
-.pub-venue { font-size: 14px; color: #64748b; }
+.pub-authors { font-size: 14px; color: #5b6472; }
+.pub-venue { font-size: 14px; color: #5b6472; }
 .pub-link {
   display: inline-block;
   margin-top: 6px;
@@ -119,37 +119,41 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
   font-size: 12px;
   font-weight: 600;
   padding: 2px 10px;
-  border: 1px solid #2e5b9e;
-  border-radius: 4px;
-  color: #2e5b9e;
+  border: 1px solid #2f5fe0;
+  border-radius: 5px;
+  color: #2f5fe0;
   text-decoration: none !important;
   transition: background 0.15s, color 0.15s;
 }
 .pub-link:hover {
-  background: #2e5b9e;
+  background: #2f5fe0;
   color: #fff !important;
   text-decoration: none !important;
 }
-html.dark .pub-title { color: #e2e8f0; }
+html.dark .pub-title { color: #e7e9ee; }
 html.dark .pub-authors,
-html.dark .pub-venue { color: #94a3b8; }
-html.dark .pub-entry { border-bottom-color: #334155; }
+html.dark .pub-venue { color: #98a2b3; }
+html.dark .pub-entry { border-bottom-color: #262b3a; }
 .pub-actions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
 .pub-abstract-toggle { cursor: pointer; background: none; }
-.pub-abstract-toggle.open { background: #2e5b9e; color: #fff; }
+.pub-abstract-toggle.open { background: #2f5fe0; color: #fff; }
 .pub-abstract {
   display: none;
   margin-top: 10px;
   font-size: 13.5px;
-  color: #475569;
+  color: #3d4451;
   line-height: 1.65;
-  background: #f8fafc;
-  border-left: 3px solid #2e5b9e;
+  background: #f4f6fb;
+  border-left: 3px solid #2f5fe0;
   padding: 10px 14px;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 5px 5px 0;
 }
 .pub-abstract.open { display: block; }
-html.dark .pub-abstract { background: #0f172a; color: #94a3b8; border-left-color: #3b82f6; }
+html.dark .pub-abstract { background: #10131c; color: #98a2b3; border-left-color: #5b8dff; }
+html.dark .pub-link { border-color: #5b8dff; color: #5b8dff; }
+html.dark .pub-link:hover { background: #5b8dff; color: #0b0d12 !important; }
+html.dark .pub-year { color: #5b8dff; }
+html.dark .pub-abstract-toggle.open { background: #5b8dff; color: #0b0d12; }
 </style>
 
 <script>

@@ -1,0 +1,292 @@
+<div class="demo-box" id="mappability-demo">
+  <p class="demo-eyebrow">Try it yourself</p>
+  <h3 class="demo-title">Why do short reads fail here?</h3>
+  <p class="demo-intro">Drag the sliders. As two loci get more similar, or reads get shorter, more of them become statistically impossible to place with confidence.</p>
+
+  <div class="demo-controls">
+    <div class="demo-control">
+      <label for="demo-identity">Paralog sequence identity <span class="demo-value" id="demo-identity-value">98.0%</span></label>
+      <input type="range" id="demo-identity" min="90" max="100" step="0.1" value="98" aria-describedby="demo-math">
+    </div>
+    <div class="demo-control">
+      <label for="demo-readlen">Read length <span class="demo-value" id="demo-readlen-value">150 bp</span></label>
+      <input type="range" id="demo-readlen" min="50" max="300" step="1" value="150" aria-describedby="demo-math">
+    </div>
+  </div>
+
+  <div class="demo-result">
+    <div class="demo-readout">
+      <span class="demo-readout-value" id="demo-readout-value">&hellip;</span>
+      <span class="demo-readout-label">uniquely mappable</span>
+    </div>
+    <div class="demo-reads" id="demo-reads" role="img" aria-label="Grid of simulated reads, colored by whether each one maps to a unique location or is ambiguous between the two paralogs"></div>
+  </div>
+
+  <p class="demo-math" id="demo-math"></p>
+  <p class="demo-footnote">Simplified, illustrative model, not a real aligner. It assumes independent per-base mismatches at the stated identity, and an aligner that confidently and uniquely places a read only when it has roughly 2% or fewer mismatches to the true locus, which is in the ballpark of common short-read aligner behavior. The core phenomenon it captures is real: past a certain identity, a read genuinely cannot be told apart from its paralog by sequence alone.</p>
+</div>
+
+<style>
+.demo-box {
+  margin: 28px 0 8px;
+  padding: 28px 28px 26px;
+  border-radius: 14px;
+  border: 1px solid #e4e7ee;
+  background: linear-gradient(180deg, #fbfcfe 0%, #f4f6fb 100%);
+}
+.demo-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2f5fe0;
+}
+.demo-title {
+  margin: 0 0 8px;
+  font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #14171f;
+  border: none;
+}
+.demo-intro {
+  margin: 0 0 22px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #5b6472;
+  max-width: 560px;
+}
+
+.demo-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.demo-control label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  font-weight: 600;
+  color: #14171f;
+  margin-bottom: 9px;
+}
+.demo-value {
+  font-weight: 700;
+  color: #2f5fe0;
+  font-variant-numeric: tabular-nums;
+}
+.demo-control input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: #dde1ea;
+  outline: none;
+  display: block;
+}
+.demo-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f5fe0;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(20, 23, 31, 0.3);
+  cursor: pointer;
+}
+.demo-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f5fe0;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(20, 23, 31, 0.3);
+  cursor: pointer;
+}
+
+.demo-result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0 6px;
+  border-top: 1px solid #e4e7ee;
+}
+.demo-readout { flex-shrink: 0; min-width: 118px; }
+.demo-readout-value {
+  display: block;
+  font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #14171f;
+  transition: color 0.2s;
+}
+.demo-readout-value.state-good { color: #0d9488; }
+.demo-readout-value.state-mid  { color: #c2760c; }
+.demo-readout-value.state-bad  { color: #e11d48; }
+.demo-readout-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #5b6472;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.demo-reads {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-content: flex-start;
+}
+.demo-read-tick {
+  width: 12px;
+  height: 20px;
+  border-radius: 3px;
+  background: #dde1ea;
+  transition: background-color 0.25s;
+}
+.demo-read-tick.is-confident { background: #0d9488; }
+.demo-read-tick.is-ambiguous { background: #e11d48; opacity: 0.85; }
+
+.demo-math {
+  margin: 18px 0 4px;
+  font-size: 12.5px;
+  color: #5b6472;
+  font-variant-numeric: tabular-nums;
+}
+.demo-footnote {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #8790a0;
+}
+
+@media (max-width: 640px) {
+  .demo-box { padding: 22px 18px 20px; }
+  .demo-result { flex-direction: column; align-items: flex-start; }
+}
+
+html.dark .demo-box { background: linear-gradient(180deg, #141824 0%, #10131c 100%); border-color: #262b3a; }
+html.dark .demo-eyebrow { color: #5b8dff; }
+html.dark .demo-title { color: #e7e9ee; }
+html.dark .demo-intro { color: #98a2b3; }
+html.dark .demo-control label { color: #e7e9ee; }
+html.dark .demo-value { color: #5b8dff; }
+html.dark .demo-control input[type="range"] { background: #2a3040; }
+html.dark .demo-control input[type="range"]::-webkit-slider-thumb { background: #5b8dff; border-color: #141824; }
+html.dark .demo-control input[type="range"]::-moz-range-thumb { background: #5b8dff; border-color: #141824; }
+html.dark .demo-result { border-top-color: #262b3a; }
+html.dark .demo-readout-value { color: #e7e9ee; }
+html.dark .demo-readout-value.state-good { color: #2dd4bf; }
+html.dark .demo-readout-value.state-mid  { color: #fbbf24; }
+html.dark .demo-readout-value.state-bad  { color: #fb7185; }
+html.dark .demo-readout-label { color: #98a2b3; }
+html.dark .demo-read-tick { background: #2a3040; }
+html.dark .demo-read-tick.is-confident { background: #2dd4bf; }
+html.dark .demo-read-tick.is-ambiguous { background: #fb7185; opacity: 0.85; }
+html.dark .demo-math { color: #98a2b3; }
+html.dark .demo-footnote { color: #6b7385; }
+</style>
+
+<script>
+(function() {
+  var identitySlider = document.getElementById('demo-identity');
+  var readlenSlider = document.getElementById('demo-readlen');
+  var identityValueEl = document.getElementById('demo-identity-value');
+  var readlenValueEl = document.getElementById('demo-readlen-value');
+  var readoutValueEl = document.getElementById('demo-readout-value');
+  var readsEl = document.getElementById('demo-reads');
+  var mathEl = document.getElementById('demo-math');
+
+  if (!identitySlider || !readlenSlider || !readsEl) return;
+
+  var NUM_READS = 48;
+  var ticks = [];
+  for (var i = 0; i < NUM_READS; i++) {
+    var tick = document.createElement('span');
+    tick.className = 'demo-read-tick';
+    readsEl.appendChild(tick);
+    ticks.push(tick);
+  }
+
+  // P(X <= t) for X ~ Binomial(n, q), via direct iterative PMF summation.
+  // n and t stay small enough here (n <= 300, t typically single digits)
+  // that this is numerically stable without log-space tricks.
+  function binomialCDF(n, q, t) {
+    // q = 0: every base matches deterministically, so the read is
+    // identical to the paralog too (0 mismatches, always <= t) -> fully ambiguous.
+    if (q <= 0) return 1;
+    if (q >= 1) return t >= n ? 1 : 0;
+    var pmf = Math.pow(1 - q, n);
+    var cdf = pmf;
+    for (var k = 0; k < t; k++) {
+      pmf = pmf * (n - k) / (k + 1) * (q / (1 - q));
+      cdf += pmf;
+    }
+    return Math.min(1, cdf);
+  }
+
+  // Deterministic PRNG (mulberry32) seeded from the slider position, so the
+  // read-tick pattern is stable for a given identity/length rather than
+  // reshuffling randomly on every input event.
+  function mulberry32(seed) {
+    return function() {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function render() {
+    var identity = parseFloat(identitySlider.value);
+    var L = parseInt(readlenSlider.value, 10);
+    var q = 1 - identity / 100;
+    var t = Math.max(2, Math.round(0.02 * L));
+    var pAmbiguous = binomialCDF(L, q, t);
+    var pConfident = 1 - pAmbiguous;
+    var pct = Math.round(pConfident * 100);
+
+    identityValueEl.textContent = identity.toFixed(1) + '%';
+    readlenValueEl.textContent = L + ' bp';
+    readoutValueEl.textContent = pct + '%';
+
+    var expected = (q * L).toFixed(1);
+    mathEl.textContent = '≈ ' + expected + ' expected mismatches over ' + L + ' bp of true sequence; this simplified aligner accepts up to ' + t + '.';
+
+    var state = pct >= 80 ? 'good' : (pct >= 40 ? 'mid' : 'bad');
+    readoutValueEl.className = 'demo-readout-value state-' + state;
+
+    var seed = Math.round(identity * 10) * 100000 + L;
+    var rng = mulberry32(seed);
+    var confidentCount = Math.round(pConfident * NUM_READS);
+
+    var indices = [];
+    for (var i = 0; i < NUM_READS; i++) indices.push(i);
+    for (var i = indices.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+    }
+    var confidentSet = {};
+    for (var i = 0; i < confidentCount; i++) confidentSet[indices[i]] = true;
+
+    for (var i = 0; i < NUM_READS; i++) {
+      ticks[i].className = 'demo-read-tick ' + (confidentSet[i] ? 'is-confident' : 'is-ambiguous');
+    }
+  }
+
+  identitySlider.addEventListener('input', render);
+  readlenSlider.addEventListener('input', render);
+  render();
+})();
+</script>

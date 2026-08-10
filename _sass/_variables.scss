@@ -3,23 +3,31 @@
 // VARIABLES
 //
 
-// Colors
-$blue: #2e5b9e;
-$accent: #2e5b9e;
-$accentLight: #eaf0f8;
+// Fonts
+$displayFont: 'Google Sans Flex', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+$bodyFont: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-// Grays
-$black: #0f172a;
-$darkerGray: #1e293b;
-$darkGray: #334155;
-$gray: #64748b;
-$lightGray: #e2e8f0;
-$white: #fff;
+// Light mode
+$ink: #14171f;
+$ink-soft: #5b6472;
+$surface: #f7f8fb;
+$surface-card: #ffffff;
+$hairline: #e4e7ee;
 
-// Font stacks
-$helvetica: Helvetica, Arial, sans-serif;
-$helveticaNeue: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$georgia: Georgia, serif;
+// Accent colors
+$accent: #2f5fe0;
+$accent-dark: #2347b3;
+$accent-confident: #0d9488;
+$accent-ambiguous: #e11d48;
+
+// Dark mode
+$ink-dark-bg: #0b0d12;
+$surface-dark: #141824;
+$surface-dark-card: #171b28;
+$text-dark: #e7e9ee;
+$text-dark-soft: #98a2b3;
+$hairline-dark: #262b3a;
+$accent-bright: #5b8dff;
 
 // Mobile breakpoints
 @mixin mobile {

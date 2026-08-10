@@ -16,6 +16,8 @@ My research sits at the intersection of computational method development and gen
 
 Some of the most medically important genes in the human genome happen to sit in the hardest places to sequence. *SMN1*, the gene behind spinal muscular atrophy, has a near-identical neighbor called *SMN2*. *PMS2*, tied to Lynch syndrome, has *PMS2CL*. *CYP21A2*, behind congenital adrenal hyperplasia, has *CYP21A1P*. In each case the two copies share 98 to 99% of their sequence, more than enough to confuse a standard short-read aligner. Reads pile up in the wrong place, variant calls come out wrong or missing entirely, and clinical labs often fall back on slow, gene-specific workarounds like nested PCR just to get a trustworthy answer.
 
+{% include mappability-demo.html %}
+
 I work on TruPath Genome (formerly called Constellation), an Illumina on-flowcell proximity sequencing technology built to make these regions tractable without a separate workaround for every gene. As DNA is sequenced, TruPath also records a bit of proximity information: reads that land in nearby nanowells on the flow cell are more likely to have come from the same original DNA molecule. It's a subtle signal on its own, but it's exactly the kind of long-range clue that a single short read can't give you.
 
 I designed the multi-region joint detection (MRJD) algorithm to put that signal to use. Instead of looking at a gene and its paralog one at a time, MRJD looks at reads from both together, works out how many total copies are present, and sorts the reads back into the right copy and haplotype, untangling two or more look-alike genes back into their true, separate identities.
@@ -119,40 +121,40 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 
 <style>
 .research-section {
-  margin: 32px 0;
-  border-radius: 10px;
+  margin: 36px 0;
+  border-radius: 14px;
   overflow: hidden;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4e7ee;
   background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(20,23,31,0.03), 0 12px 28px -18px rgba(20,23,31,0.1);
 }
 
 .research-section-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 22px 24px 16px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 24px 26px 16px;
+  border-bottom: 1px solid #eef0f4;
 }
 
 .research-icon {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  color: #2e5b9e;
+  color: #2f5fe0;
 }
 
 .research-section-header h2 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #1e293b;
+  color: #14171f;
   border: none;
 }
 
 .research-section-body {
   background: #ffffff;
-  padding: 22px 24px 26px;
+  padding: 22px 26px 28px;
 }
 
 .research-section-body p:first-child { margin-top: 0; }
@@ -165,7 +167,7 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 .research-figure img {
   max-width: 100%;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4e7ee;
   background: #fff;
   padding: 10px;
 }
@@ -173,11 +175,11 @@ Once TELR existed, the natural next step was to see what it could reveal about T
   margin-top: 10px;
   font-size: 12.5px;
   line-height: 1.65;
-  color: #64748b;
+  color: #5b6472;
   text-align: left;
   padding: 0 4px;
 }
-.research-figure figcaption strong { color: #475569; }
+.research-figure figcaption strong { color: #3d4451; }
 
 .project-list {
   display: flex;
@@ -187,19 +189,19 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 }
 .project-item {
   padding-left: 16px;
-  border-left: 3px solid #dbe6f3;
+  border-left: 3px solid #d7e0f7;
 }
 .project-item h4 {
   margin: 0 0 4px;
   font-size: 15px;
   font-weight: 600;
-  color: #1e293b;
+  color: #14171f;
 }
 .project-item p {
   margin: 0;
   font-size: 14px;
   line-height: 1.65;
-  color: #475569;
+  color: #5b6472;
 }
 .project-item a { font-weight: 600; }
 
@@ -214,47 +216,48 @@ Once TELR existed, the natural next step was to see what it could reveal about T
   flex-direction: column;
   gap: 3px;
   padding: 14px 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
   text-decoration: none !important;
   transition: border-color 0.15s, transform 0.15s;
 }
 .tool-card:hover {
-  border-color: #2e5b9e;
+  border-color: #2f5fe0;
   transform: translateY(-1px);
 }
-.tool-name { font-size: 14px; font-weight: 700; color: #1e293b; }
-.tool-desc { font-size: 12.5px; color: #64748b; }
+.tool-name { font-size: 14px; font-weight: 700; color: #14171f; }
+.tool-desc { font-size: 12.5px; color: #5b6472; }
 
 /* Dark mode */
 html.dark .research-section {
-  background: #1e293b;
-  border-color: #334155;
+  background: #171b28;
+  border-color: #262b3a;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 12px 28px -18px rgba(0,0,0,0.4);
 }
 html.dark .research-section-header {
-  border-bottom-color: #334155;
+  border-bottom-color: #262b3a;
 }
-html.dark .research-icon { color: #7dd3fc; }
-html.dark .research-section-header h2 { color: #e2e8f0; }
+html.dark .research-icon { color: #5b8dff; }
+html.dark .research-section-header h2 { color: #e7e9ee; }
 html.dark .research-section-body {
-  background: #1e293b;
+  background: #171b28;
 }
 html.dark .research-section-body,
 html.dark .research-section-body p,
 html.dark .research-section-body li {
-  color: #cbd5e1;
+  color: #cbd0dc;
 }
 html.dark .research-section-body strong {
-  color: #e2e8f0;
+  color: #e7e9ee;
 }
-html.dark .research-figure img { border-color: #334155; background: #0f172a; }
-html.dark .research-figure figcaption { color: #94a3b8; }
-html.dark .research-figure figcaption strong { color: #cbd5e1; }
-html.dark .project-item { border-left-color: #334155; }
-html.dark .project-item h4 { color: #e2e8f0; }
-html.dark .project-item p { color: #94a3b8; }
-html.dark .tool-card { border-color: #334155; }
-html.dark .tool-card:hover { border-color: #7dd3fc; }
-html.dark .tool-name { color: #e2e8f0; }
-html.dark .tool-desc { color: #94a3b8; }
+html.dark .research-figure img { border-color: #262b3a; background: #10131c; }
+html.dark .research-figure figcaption { color: #98a2b3; }
+html.dark .research-figure figcaption strong { color: #cbd0dc; }
+html.dark .project-item { border-left-color: #262b3a; }
+html.dark .project-item h4 { color: #e7e9ee; }
+html.dark .project-item p { color: #98a2b3; }
+html.dark .tool-card { border-color: #262b3a; }
+html.dark .tool-card:hover { border-color: #5b8dff; }
+html.dark .tool-name { color: #e7e9ee; }
+html.dark .tool-desc { color: #98a2b3; }
 </style>
