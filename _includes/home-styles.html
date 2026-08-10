@@ -1,26 +1,60 @@
 <style>
 /* ── Hero ── */
 .hero {
-  padding: 4px 4px 8px;
+  position: relative;
+  /* Own stacking context so the z-index:-1 glows stay inside the hero
+     instead of being painted behind the body background. */
+  isolation: isolate;
+  padding: 12px 4px 8px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -140px;
+  left: -180px;
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(circle, rgba(47, 95, 224, 0.09), transparent 62%);
+  pointer-events: none;
+  z-index: -1;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -140px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.07), transparent 62%);
+  pointer-events: none;
+  z-index: -1;
 }
 .hero-top {
   display: flex;
   align-items: center;
-  gap: 22px;
-  margin-bottom: 26px;
+  gap: 26px;
+  margin-bottom: 28px;
 }
 .hero-photo {
-  width: 84px;
-  height: 84px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center top;
   flex-shrink: 0;
   border: 3px solid #ffffff;
-  box-shadow: 0 2px 12px rgba(20, 23, 31, 0.14);
+  box-shadow: 0 2px 14px rgba(20, 23, 31, 0.16);
+}
+.hero-rule {
+  width: 52px;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+  margin: 0 0 12px;
+  background: linear-gradient(90deg, #2f5fe0, #0d9488);
 }
 .hero-eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.07em;
@@ -30,15 +64,15 @@
 .hero-name {
   margin: 0;
   font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
-  font-size: clamp(2.4rem, 6vw, 3.75rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: clamp(2.6rem, 7vw, 4.3rem);
+  font-weight: 720;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
   color: #14171f;
   border: none;
 }
 .hero-tagline {
-  max-width: 640px;
+  max-width: 660px;
   font-size: 17.5px;
   line-height: 1.7;
   color: #3d4451;
@@ -51,10 +85,12 @@
 }
 
 @media (max-width: 600px) {
-  .hero-top { gap: 16px; }
-  .hero-photo { width: 64px; height: 64px; }
+  .hero-top { gap: 18px; }
+  .hero-photo { width: 68px; height: 68px; }
 }
 
+html.dark .hero::before { background: radial-gradient(circle, rgba(91, 141, 255, 0.10), transparent 62%); }
+html.dark .hero::after { background: radial-gradient(circle, rgba(45, 212, 191, 0.07), transparent 62%); }
 html.dark .hero-photo { border-color: #171b28; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
 html.dark .hero-eyebrow { color: #5b8dff; }
 html.dark .hero-name { color: #e7e9ee; }
@@ -119,10 +155,6 @@ html.dark .hero-tagline { color: #b7bfcc; }
   padding: 1px 6px;
   border-radius: 4px;
 }
-
-.about-link-text { cursor: default; color: #8790a0; }
-.about-link-text:hover { color: #8790a0; }
-html.dark .about-link-text { color: #8790a0; }
 
 html.dark .home-news-card { border-top-color: #262b3a; }
 html.dark .home-section-title { color: #5b8dff; }

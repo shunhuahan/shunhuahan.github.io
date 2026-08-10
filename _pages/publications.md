@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Publications
+headline: "Papers, patents, and abstracts"
 permalink: /publications/
 description: "Peer-reviewed journal articles, conference abstracts, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
 ---
@@ -154,6 +155,23 @@ html.dark .pub-link { border-color: #5b8dff; color: #5b8dff; }
 html.dark .pub-link:hover { background: #5b8dff; color: #0b0d12 !important; }
 html.dark .pub-year { color: #5b8dff; }
 html.dark .pub-abstract-toggle.open { background: #5b8dff; color: #0b0d12; }
+
+/* Section labels: eyebrow style instead of default h2 */
+.page .entry h2 {
+  margin: 2.4em 0 0.6em;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2f5fe0;
+}
+.page .entry hr {
+  border: none;
+  border-top: 1px solid #e4e7ee;
+  margin: 30px 0 6px;
+}
+html.dark .page .entry h2 { color: #5b8dff; }
+html.dark .page .entry hr { border-top-color: #262b3a; }
 </style>
 
 <script>

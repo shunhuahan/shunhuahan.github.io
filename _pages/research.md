@@ -1,18 +1,19 @@
 ---
 layout: page
 title: Research
+headline: "Calling variants where the genome repeats itself"
 permalink: /research/
 description: "Research on haplotype-resolved variant calling in complex genomic regions and transposable element detection in Drosophila, by Shunhua Han."
 ---
 
 My research sits at the intersection of computational method development and genomics. I build algorithms and software to detect genetic variants in regions of the genome that are too complex, repetitive, or structurally variable for standard approaches.
 
-<div class="research-section">
-<div class="research-section-header">
-<svg class="research-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+<section class="research-block">
+<div class="research-block-head">
+<span class="research-num">01</span>
 <h2>Haplotype-resolved variant calling in complex genomic regions</h2>
 </div>
-<div class="research-section-body" markdown="1">
+<div class="research-block-body" markdown="1">
 
 Some of the most medically important genes in the human genome happen to sit in the hardest places to sequence. *SMN1*, the gene behind spinal muscular atrophy, has a near-identical neighbor called *SMN2*. *PMS2*, tied to Lynch syndrome, has *PMS2CL*. *CYP21A2*, behind congenital adrenal hyperplasia, has *CYP21A1P*. In each case the two copies share anywhere from 98% to more than 99.9% of their sequence, more than enough to confuse a standard short-read aligner. Reads pile up in the wrong place, variant calls come out wrong or missing entirely, and clinical labs often fall back on slow, gene-specific workarounds like nested PCR just to get a trustworthy answer.
 
@@ -45,14 +46,14 @@ I presented this work as a platform talk at the 2026 ACMG Annual Clinical Geneti
 </div>
 
 </div>
-</div>
+</section>
 
-<div class="research-section">
-<div class="research-section-header">
-<svg class="research-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4c4 4 4 12 0 16"/><path d="M20 4c-4 4-4 12 0 16"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="18" y2="16"/></svg>
+<section class="research-block">
+<div class="research-block-head">
+<span class="research-num">02</span>
 <h2>Detecting and analyzing transposable elements in Drosophila</h2>
 </div>
-<div class="research-section-body" markdown="1">
+<div class="research-block-body" markdown="1">
 
 Transposable elements, or TEs, are stretches of DNA that can copy themselves and jump around the genome. They make up nearly half of the human genome and are a major source of genetic variation across animals, *Drosophila* included. For my Ph.D. in [Casey Bergman](https://bergmanlab.github.io)'s lab at the University of Georgia, I spent a lot of time thinking about how to find and study them, especially in genomes that are unusually messy: cultured cell lines, which tend to pick up extra chromosome copies, structural rearrangements, and brand-new TE insertions the longer they sit in a flask.
 
@@ -92,14 +93,14 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 </div>
 
 </div>
-</div>
+</section>
 
-<div class="research-section">
-<div class="research-section-header">
-<svg class="research-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+<section class="research-block">
+<div class="research-block-head">
+<span class="research-num">03</span>
 <h2>Software &amp; Resources</h2>
 </div>
-<div class="research-section-body" markdown="1">
+<div class="research-block-body" markdown="1">
 
 <div class="tool-grid">
   <a href="https://github.com/bergmanlab/TELR" target="_blank" class="tool-card">
@@ -117,48 +118,44 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 </div>
 
 </div>
-</div>
+</section>
 
 <style>
-.research-section {
-  margin: 36px 0;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #e4e7ee;
-  background: #ffffff;
-  box-shadow: 0 1px 2px rgba(20,23,31,0.03), 0 12px 28px -18px rgba(20,23,31,0.1);
+.research-block {
+  margin: 48px 0 0;
+  padding-top: 38px;
+  border-top: 1px solid #e4e7ee;
 }
 
-.research-section-header {
+.research-block-head {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 24px 26px 16px;
-  border-bottom: 1px solid #eef0f4;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.research-icon {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  color: #2f5fe0;
-}
-
-.research-section-header h2 {
-  margin: 0;
-  font-size: 18px;
+.research-num {
+  font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
   font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #2f5fe0;
+  flex-shrink: 0;
+}
+
+.research-block-head h2 {
+  margin: 0;
+  font-family: 'Google Sans Flex', 'Inter', -apple-system, sans-serif;
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
   color: #14171f;
   border: none;
 }
 
-.research-section-body {
-  background: #ffffff;
-  padding: 22px 26px 28px;
-}
-
-.research-section-body p:first-child { margin-top: 0; }
-.research-section-body p:last-child  { margin-bottom: 0; }
+.research-block-body p:first-child { margin-top: 0; }
+.research-block-body p:last-child  { margin-bottom: 0; }
 
 .research-figure {
   margin: 20px 0;
@@ -229,27 +226,11 @@ Once TELR existed, the natural next step was to see what it could reveal about T
 .tool-desc { font-size: 12.5px; color: #5b6472; }
 
 /* Dark mode */
-html.dark .research-section {
-  background: #171b28;
-  border-color: #262b3a;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 12px 28px -18px rgba(0,0,0,0.4);
+html.dark .research-block {
+  border-top-color: #262b3a;
 }
-html.dark .research-section-header {
-  border-bottom-color: #262b3a;
-}
-html.dark .research-icon { color: #5b8dff; }
-html.dark .research-section-header h2 { color: #e7e9ee; }
-html.dark .research-section-body {
-  background: #171b28;
-}
-html.dark .research-section-body,
-html.dark .research-section-body p,
-html.dark .research-section-body li {
-  color: #cbd0dc;
-}
-html.dark .research-section-body strong {
-  color: #e7e9ee;
-}
+html.dark .research-num { color: #5b8dff; }
+html.dark .research-block-head h2 { color: #e7e9ee; }
 html.dark .research-figure img { border-color: #262b3a; background: #10131c; }
 html.dark .research-figure figcaption { color: #98a2b3; }
 html.dark .research-figure figcaption strong { color: #cbd0dc; }

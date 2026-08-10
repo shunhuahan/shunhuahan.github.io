@@ -263,114 +263,43 @@ footer {
   color: $ink-soft;
 }
 
-/* ── Card used by secondary pages (About/Research/Publications/Talks/404) ── */
-.content-card {
-  background: $surface-card;
-  border-radius: 14px;
-  padding: 44px 48px;
-  border: 1px solid $hairline;
-  box-shadow: 0 1px 2px rgba(20, 23, 31, 0.03), 0 12px 28px -16px rgba(20, 23, 31, 0.08);
+/* ── Open page header: eyebrow + large display headline ── */
+.page-head {
+  margin: 8px 0 40px;
 }
 
-/* ── About/homepage two-column layout (used on /about/) ── */
-.about-layout {
-  display: flex;
-  gap: 48px;
-  align-items: flex-start;
-}
-
-.about-sidebar {
-  flex-shrink: 0;
-  width: 190px;
-  text-align: center;
-}
-
-.about-photo {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-  margin: 0 auto 16px;
-  border: 3px solid $hairline;
-}
-
-.about-name {
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  color: $ink !important;
-  margin: 0 0 4px !important;
-  text-align: center;
-  border: none !important;
-}
-
-.about-title {
-  font-size: 13px;
-  color: $ink-soft;
-  margin: 0 0 2px;
-  line-height: 1.4;
-}
-
-.about-links {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-}
-
-.about-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13px;
-  font-weight: 500;
-  color: $ink-soft;
-  text-decoration: none !important;
-  transition: color 0.15s;
-
-  svg {
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-  }
-
-  &:hover {
-    color: $accent;
-    text-decoration: none !important;
-  }
-}
-
-.about-body {
-  flex: 1;
-  min-width: 0;
-  padding-top: 4px;
-
-  p:first-child { margin-top: 0; }
-}
-
-@media (max-width: 600px) {
-  .about-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-  .about-sidebar { width: 100%; }
-  .about-body { width: 100%; }
-  .content-card { padding: 28px 22px; }
+.page-eyebrow {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: $accent;
 }
 
 .page h1 {
   font-family: $displayFont;
   text-align: left;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
-  margin: 0 0 28px;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  margin: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
+
+/* Lead paragraph: the standfirst under a page headline */
+.page .entry > p:first-child {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.65;
+  color: $ink-soft;
+  margin-top: 0;
+  margin-bottom: 28px;
+}
+
+html.dark .page-eyebrow { color: $accent-bright; }
+html.dark .page .entry > p:first-child { color: $text-dark-soft; }
 
 /* ════════════════════════════════════════
    UTILITY: PILL BUTTONS
@@ -529,13 +458,6 @@ html.dark nav a:hover { color: $accent-bright; }
 html.dark .theme-toggle { color: $text-dark-soft; }
 html.dark .theme-toggle:hover { color: $accent-bright; }
 
-/* Content cards */
-html.dark .content-card {
-  background: $surface-dark-card;
-  border-color: $hairline-dark;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 12px 28px -16px rgba(0,0,0,0.4);
-}
-
 .btn-pill {
   html.dark & {
     background: $surface-dark-card;
@@ -560,13 +482,6 @@ html.dark h6 {
 /* Links */
 html.dark a { color: $accent-bright; }
 html.dark a:hover { color: #8fb0ff; }
-
-/* About sidebar */
-html.dark .about-photo { border-color: $hairline-dark; }
-html.dark .about-name { color: $text-dark !important; }
-html.dark .about-title { color: $text-dark-soft; }
-html.dark .about-link { color: $text-dark-soft; }
-html.dark .about-link:hover { color: $accent-bright; }
 
 /* Publication entries */
 html.dark .pub-entry { border-bottom-color: $hairline-dark; }

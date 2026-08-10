@@ -1,13 +1,16 @@
 ---
 layout: page
 title: About
+headline: "Shunhua Han, Ph.D."
 permalink: /about/
 description: "About Shunhua Han, Ph.D.: education, professional experience at Illumina, and skills in computational genomics and variant calling."
 ---
 
-## Shunhua Han, Ph.D.
+I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com) in San Diego, where I build variant-calling methods for the parts of the genome that standard pipelines get wrong. My current focus is TruPath Genome, an on-flowcell proximity sequencing technology, and the algorithms that turn its long-range signal into haplotype-resolved variant calls in segmental duplications. Before that I built targeted callers for the alpha-globin locus and *PMS2*, two of the most requested and most frustrating targets in carrier screening and hereditary cancer testing.
 
-I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com), based in San Diego, CA. I work on detecting genetic variants in the parts of the genome that give standard tools the most trouble: segmental duplications, gene families, and other structurally complex regions that are medically important but hard to pin down algorithmically.
+I came to this problem through transposable elements. During my Ph.D. with [Casey Bergman](https://bergmanlab.github.io) at the University of Georgia, I studied how TEs reshape the genomes of *Drosophila* cell lines, and built the software (TELR, ngs_te_mapper2) to find insertions that standard tools miss. Repetitive DNA has a way of breaking every assumption a pipeline makes, and I found I liked working exactly where things break.
+
+The through-line of my work is simple: a lot of medically important genetic variation sits in places where the genome carries two nearly identical copies of the same sequence, and someone has to figure out which copy a read came from. That puzzle, in different forms, has kept me busy for a decade.
 
 ---
 
@@ -54,3 +57,22 @@ Developed TELR (long-read TE detection), ngs_te_mapper2 (cell-line authenticatio
 - LinkedIn: [shunhua-han](https://www.linkedin.com/in/shunhua-han/)
 - Google Scholar: [profile](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en)
 - CV: [Download PDF](/assets/shunhuahan-cv.pdf)
+
+<style>
+/* Section labels: eyebrow style, matching the Publications page */
+.page .entry h2 {
+  margin: 2.4em 0 0.6em;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2f5fe0;
+}
+.page .entry hr {
+  border: none;
+  border-top: 1px solid #e4e7ee;
+  margin: 30px 0 6px;
+}
+html.dark .page .entry h2 { color: #5b8dff; }
+html.dark .page .entry hr { border-top-color: #262b3a; }
+</style>

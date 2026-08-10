@@ -1,23 +1,23 @@
 <div class="demo-box" id="mappability-demo">
   <p class="demo-eyebrow">Try it yourself</p>
   <h3 class="demo-title">Why standard short reads don't work here</h3>
-  <p class="demo-intro">This is a live alignment simulation. Pick a duplication size, sequence identity, and read setup; the demo simulates a gene and its paralog, sequences both to 30&times; coverage with paired-end short reads, and aligns every pair back. Reads are colored by mapping quality. Faint orange lines mark the positions where the two copies actually differ; together with the unique sequence flanking the duplication, those are the only anchors an aligner has. Notice how much paired reads rescue at 98% identity, and how completely things collapse by 99.9%: the genes that break pipelines are the ones where gene conversion pushes local identity toward 100%.</p>
+  <p class="demo-intro">This is a live alignment simulation. Pick a duplication size, sequence identity, and read setup; the demo simulates a gene and its paralog, sequences both to 30&times; coverage with paired-end short reads, and aligns every pair back. Reads are colored by mapping quality. Faint orange lines mark the positions where the two copies actually differ; together with the unique sequence flanking the duplication, those are the only anchors an aligner has. The presets use the real difference map between each gene pair in the hg38 reference, and the clustering you see is the whole story: gene conversion keeps long stretches nearly identical, and those are the stretches where mapping collapses.</p>
 
   <div class="demo-chips" role="group" aria-label="Real gene presets">
-    <span class="demo-chips-label">Real examples:</span>
-    <button type="button" class="demo-chip" data-size="20000" data-identity="98.0"><em>PMS2</em> / <em>PMS2CL</em> &middot; 20 kb &middot; 98%</button>
-    <button type="button" class="demo-chip" data-size="30000" data-identity="98.0"><em>CYP21A2</em> / <em>CYP21A1P</em> &middot; 30 kb &middot; 98%</button>
-    <button type="button" class="demo-chip" data-size="28000" data-identity="99.9"><em>SMN1</em> / <em>SMN2</em> &middot; 28 kb &middot; 99.9%</button>
+    <span class="demo-chips-label">Real hg38 pairs:</span>
+    <button type="button" class="demo-chip" data-preset="smn"><em>SMN1</em> / <em>SMN2</em> &middot; 41 kb &middot; 99.8%</button>
+    <button type="button" class="demo-chip" data-preset="pms2"><em>PMS2</em> / <em>PMS2CL</em> &middot; 19.3 kb &middot; 95.3%</button>
+    <button type="button" class="demo-chip" data-preset="cyp21"><em>CYP21A2</em> / <em>CYP21A1P</em> &middot; 7.9 kb &middot; 94.8%</button>
   </div>
 
   <div class="demo-controls">
     <div class="demo-control">
-      <label for="sim-size">Duplication size <span class="demo-value" id="sim-size-value">28,000 bp</span></label>
-      <input type="range" id="sim-size" min="1000" max="30000" step="500" value="28000">
+      <label for="sim-size">Duplication size <span class="demo-value" id="sim-size-value">40,992 bp</span></label>
+      <input type="range" id="sim-size" min="1000" max="42000" step="500" value="40992">
     </div>
     <div class="demo-control">
-      <label for="sim-identity">Sequence identity <span class="demo-value" id="sim-identity-value">99.9%</span></label>
-      <input type="range" id="sim-identity" min="95" max="100" step="0.1" value="99.9">
+      <label for="sim-identity">Sequence identity <span class="demo-value" id="sim-identity-value">99.8%</span></label>
+      <input type="range" id="sim-identity" min="94" max="100" step="0.1" value="99.8">
     </div>
     <div class="demo-control">
       <label for="sim-readlen">Read length <span class="demo-value" id="sim-readlen-value">2 &times; 150 bp</span></label>
@@ -78,7 +78,7 @@
     </div>
   </div>
 
-  <p class="demo-footnote">Simplified but honest model. The two copies differ at positions drawn independently at a rate of (1 &minus; identity); preset sizes and identities are approximate literature values for each duplication. Reads are error-free paired-end mates at fixed 30&times; coverage per copy, with fragment sizes jittered around the mean. A pair is anchored by any differing position either mate covers, and by any sequenced bases extending into the unique flanks of the duplication (paired-end rescue and flank rescue are both modeled; this is why the edges usually stay callable when the interior collapses). A pair covering zero distinguishing positions fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ 0. Otherwise MAPQ = &minus;10&middot;log<sub>10</sub> P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Callable" means covered by at least 8 reads with MAPQ &ge; 20, a typical variant-calling filter. Real aligners add indels and sequencing errors, and real duplications have locally varying identity, but the collapse you see here is the same one that happens in real data.</p>
+  <p class="demo-footnote">Simplified but honest model. Preset difference maps come from aligning each gene pair in the hg38 reference (sequences from NCBI; differences and indel events binned at 500 bp), so their clustered, non-uniform layout is the real thing, not a simulation choice; moving the size or identity slider switches to a uniform random model at your chosen values. Reads are error-free paired-end mates at fixed 30&times; coverage per copy, with fragment sizes jittered around the mean. A pair is anchored by any differing position either mate covers, and by any sequenced bases extending into the unique flanks of the duplication (paired-end rescue and flank rescue are both modeled; this is why the edges usually stay callable when the interior collapses). A pair covering zero distinguishing positions fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ 0. Otherwise MAPQ = &minus;10&middot;log<sub>10</sub> P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Callable" means covered by at least 8 reads with MAPQ &ge; 20, a typical variant-calling filter. Real aligners add indels and sequencing errors, but the collapse you see here is the same one that happens in real data.</p>
 </div>
 
 <style>
@@ -394,6 +394,24 @@ html.dark .demo-footnote { color: #6b7385; }
   var seed = 42;
   var sim = null;         // cached simulation result, redrawn on resize/theme
 
+  // Real difference maps from aligning each pair in the hg38 reference
+  // (NCBI sequences; PSVs + indel events counted in 500 bp bins).
+  var PRESETS = {
+    smn: {
+      size: 40992, binSize: 500, identity: 99.8,
+      bins: [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,1,0,0,0,5,1,4,2,3,1,3,0,0,23,4,2,1,3,0,3,0,3,8,2,5,2,0,0,0,0,0,9,1,0,0,0]
+    },
+    pms2: {
+      size: 19292, binSize: 500, identity: 95.3,
+      bins: [0,1,1,4,4,0,9,0,1,1,7,1,3,9,113,8,29,9,0,1,8,6,7,6,6,9,23,11,32,10,4,48,63,7,49,219,125,55,21]
+    },
+    cyp21: {
+      size: 7852, binSize: 500, identity: 94.8,
+      bins: [0,1,4,16,13,122,97,10,34,2,3,6,16,0,0,87]
+    }
+  };
+  var activePreset = 'smn';
+
   function mulberry32(a) {
     return function() {
       a |= 0; a = (a + 0x6D2B79F5) | 0;
@@ -429,20 +447,27 @@ html.dark .demo-footnote { color: #6b7385; }
   }
 
   function simulate() {
-    var N = parseInt(sizeSlider.value, 10);
-    var identity = parseFloat(identitySlider.value);
+    var preset = activePreset ? PRESETS[activePreset] : null;
+    var N = preset ? preset.size : parseInt(sizeSlider.value, 10);
+    var identity = preset ? preset.identity : parseFloat(identitySlider.value);
     var L = parseInt(readlenSlider.value, 10);
     var Fmean = Math.max(parseInt(fragmentSlider.value, 10), L);
     var q = 1 - identity / 100;
 
-    // Differing positions (PSVs). Each position gets a fixed random draw for
-    // this seed, so dragging the identity slider adds/removes differences
-    // smoothly instead of reshuffling everything.
+    // Differing positions (PSVs). Presets sample from the real per-bin
+    // difference density of the hg38 alignment; custom settings use a
+    // uniform rate. Each position gets a fixed random draw for this seed,
+    // so dragging sliders stays smooth instead of reshuffling everything.
     var rngP = mulberry32(seed);
     var psvList = [];
     var prefix = new Int32Array(N + 1);
     for (var i = 0; i < N; i++) {
-      var isPsv = rngP() < q ? 1 : 0;
+      var rate = q;
+      if (preset) {
+        var b = Math.min(preset.bins.length - 1, Math.floor(i / preset.binSize));
+        rate = preset.bins[b] / preset.binSize;
+      }
+      var isPsv = rngP() < rate ? 1 : 0;
       if (isPsv) psvList.push(i);
       prefix[i + 1] = prefix[i] + isPsv;
     }
@@ -640,11 +665,10 @@ html.dark .demo-footnote { color: #6b7385; }
     statPsv.textContent = sim.psvList.length.toLocaleString();
     statPsv.className = 'demo-stat-value';
 
-    // Sync preset chip highlight with the current size + identity
+    // Chip highlight follows preset state
     var chips = document.querySelectorAll('#mappability-demo .demo-chip');
     for (var i = 0; i < chips.length; i++) {
-      var match = parseFloat(chips[i].getAttribute('data-identity')) === sim.identity &&
-                  parseInt(chips[i].getAttribute('data-size'), 10) === sim.N;
+      var match = chips[i].getAttribute('data-preset') === activePreset;
       chips[i].className = 'demo-chip' + (match ? ' active' : '');
     }
   }
@@ -679,8 +703,12 @@ html.dark .demo-footnote { color: #6b7385; }
   canvasA.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
   canvasB.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
 
-  sizeSlider.addEventListener('input', render);
-  identitySlider.addEventListener('input', render);
+  // Touching the region itself (size or identity) leaves preset mode and
+  // switches to the uniform model at the chosen values; read setup sliders
+  // keep the preset's real difference map.
+  function leavePreset() { activePreset = null; render(); }
+  sizeSlider.addEventListener('input', leavePreset);
+  identitySlider.addEventListener('input', leavePreset);
   readlenSlider.addEventListener('input', render);
   fragmentSlider.addEventListener('input', render);
 
@@ -692,8 +720,10 @@ html.dark .demo-footnote { color: #6b7385; }
   var chips = document.querySelectorAll('#mappability-demo .demo-chip');
   for (var i = 0; i < chips.length; i++) {
     chips[i].addEventListener('click', function() {
-      sizeSlider.value = this.getAttribute('data-size');
-      identitySlider.value = this.getAttribute('data-identity');
+      activePreset = this.getAttribute('data-preset');
+      var p = PRESETS[activePreset];
+      sizeSlider.value = p.size;
+      identitySlider.value = p.identity;
       render();
     });
   }

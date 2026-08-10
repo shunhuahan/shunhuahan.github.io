@@ -125,7 +125,10 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Fade-in on scroll
+        // Fade-in on scroll. Threshold must be 0: with a fractional threshold,
+        // an element much taller than the viewport can never reach the required
+        // visible ratio and would stay invisible forever (this happened to the
+        // research page on phones).
         var observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
@@ -133,9 +136,9 @@
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.08 });
+        }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
-        document.querySelectorAll('.content-card, .home-news-card, .research-section, .pub-entry, .talk-year-group').forEach(function(el) {
+        document.querySelectorAll('.hero, .home-news-card, .page-head, .research-block, .pub-entry').forEach(function(el) {
           el.classList.add('fade-in-ready');
           observer.observe(el);
         });
