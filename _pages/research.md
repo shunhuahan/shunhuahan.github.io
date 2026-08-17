@@ -32,10 +32,6 @@ Here's what that looks like on a real case. *PMS2* and *PMS2CL* are about as tan
 
 I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext) &nbsp;·&nbsp; [[Slides (PDF)]](/assets/han-acmg2026-trupath-slides.pdf)
 
-**The loci this had to work on**
-
-{% include loci-gallery.html %}
-
 **Other key projects**
 
 <div class="project-list">
