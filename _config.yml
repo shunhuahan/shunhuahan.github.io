@@ -44,7 +44,7 @@ disqus:
 # Put your site code here (just the subdomain you picked at goatcounter.com,
 # not the full URL). Leave blank to disable tracking entirely.
 # Do not use a placeholder like "none": any non-empty string enables it.
-goatcounter:
+goatcounter: shunhuahan
 
 # Your website URL (e.g. http://amitmerchant1990.github.io or http://www.amitmerchant.com)
 # Used for Sitemap.xml and your RSS feed
