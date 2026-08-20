@@ -70,6 +70,24 @@
   url: "https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf"
   abstract: "TruPath Genome encodes long-range molecular linkage directly on the flow cell during sequencing, and the DRAGEN Multi-Region Joint Detection (MRJD) algorithm uses that linkage to call haplotype-resolved, copy-aware small variants in paralogous regions from a standard short-read WGS workflow. Evaluated across 31 samples spanning eight paralogous loci with 98.2-99.9% sequence homology and sizes from 18 to 357 kb, the approach resolved the known pathogenic variant in every case, produced phased locus-wide haplotypes, and clarified allelic configuration, gene-pseudogene assignment, and CNV context. Results agreed with orthogonal methods including long-read sequencing, and were generated within three days of DNA extraction, replacing cascades of secondary assays such as MLPA and long-range PCR that typically add days to weeks."
 
+- type: article
+  year: 2024
+  sort_date: "2024-06-17"
+  title: "Overcoming the challenges in <em>PMS2</em> high-homology regions for improved detection of pathogenic variants associated with Lynch syndrome."
+  authors: "Illumina DRAGEN research team"
+  venue: "<em>Illumina Genomics Research</em> article, June 17, 2024."
+  url: "https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html"
+  abstract: "PMS2 shares high sequence identity with its pseudogene PMS2CL, so reads from the two loci map ambiguously and pathogenic variants associated with Lynch syndrome are missed or assigned to the wrong copy. This article describes the multi-region joint detection (MRJD) approach to the problem, reporting approximately 99.7% sensitivity for single nucleotide variants and recovery of all expected pathogenic variants across 22 real clinical samples from whole-genome sequencing."
+
+- type: article
+  year: 2022
+  sort_date: "2022-09-08"
+  title: "Genotyping of high homology <em>HBA1</em> and <em>HBA2</em> from Illumina whole-genome sequencing."
+  authors: "<strong>Han S</strong>, Onuchic V, Rossi M, Roller E, Cameron D."
+  venue: "<em>Illumina Genomics Research</em> article, September 8, 2022."
+  url: "https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html"
+  abstract: "The alpha-globin locus is one of the most structurally complex and clinically important regions of the genome, and its two near-identical genes defeat standard short-read genotyping. This article introduces the DRAGEN HBA caller, a targeted method that genotypes HBA1 and HBA2 from standard whole-genome sequencing. Calls showed high concordance with long-read sequencing and perfect Mendelian consistency across family trios, and applying the caller to a large, diverse population cohort recovered the elevated alpha-thalassemia carrier frequencies previously reported in African and South Asian populations."
+
 - type: abstract
   year: 2026
   sort_date: "2026-03-05"

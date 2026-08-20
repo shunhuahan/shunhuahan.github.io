@@ -3,7 +3,7 @@ layout: page
 title: Publications
 headline: "Papers, patents, and abstracts"
 permalink: /publications/
-description: "Peer-reviewed journal articles, conference abstracts, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
+description: "Peer-reviewed journal articles, application notes, conference abstracts, patents, and dissertation by Shunhua Han in genomics, variant calling, and transposable element biology."
 ---
 
 For a full and up-to-date list, see my [Google Scholar](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en) profile.
@@ -35,10 +35,12 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
 
 ---
 
-## Application Notes
+## Application Notes & Research Articles
 
 {% assign appnotes = site.data.publications | where: "type", "appnote" %}
-{% for pub in appnotes %}
+{% assign articles = site.data.publications | where: "type", "article" %}
+{% assign industry = appnotes | concat: articles | sort: "sort_date" | reverse %}
+{% for pub in industry %}
 <div class="pub-entry">
   <div class="pub-year">{{ pub.year }}</div>
   <div class="pub-content">
