@@ -35,6 +35,29 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
 
 ---
 
+## Application Notes
+
+{% assign appnotes = site.data.publications | where: "type", "appnote" %}
+{% for pub in appnotes %}
+<div class="pub-entry">
+  <div class="pub-year">{{ pub.year }}</div>
+  <div class="pub-content">
+    <p class="pub-title">{{ pub.title }}</p>
+    <p class="pub-authors">{{ pub.authors }}</p>
+    <p class="pub-venue">{{ pub.venue }}</p>
+    <div class="pub-actions">
+      {% if pub.url %}<a href="{{ pub.url }}" class="pub-link" target="_blank">PDF</a>{% endif %}
+      {% if pub.abstract %}<button class="pub-link pub-abstract-toggle" data-target="appnote-{{ forloop.index }}">Abstract</button>{% endif %}
+    </div>
+    {% if pub.abstract %}
+    <div class="pub-abstract" id="appnote-{{ forloop.index }}">{{ pub.abstract }}</div>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+---
+
 ## Conference Abstracts
 
 {% assign abstracts = site.data.publications | where: "type", "abstract" %}

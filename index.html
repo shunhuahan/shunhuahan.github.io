@@ -49,7 +49,8 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
 
 <!-- ── Recent News ── -->
 {% assign journal_pubs = site.data.publications | where: "type", "journal" %}
-{% assign all_news = journal_pubs | concat: site.data.talks | sort: "sort_date" | reverse %}
+{% assign app_notes = site.data.publications | where: "type", "appnote" %}
+{% assign all_news = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse %}
 
 <div class="home-news-card">
   <h3 class="home-section-title">Recent News</h3>
@@ -59,6 +60,8 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
     <div class="news-item-body">
       {% if item.type == "journal" %}
         <span class="news-badge badge-pub">Publication</span>
+      {% elsif item.type == "appnote" %}
+        <span class="news-badge badge-note">Application Note</span>
       {% elsif item.type == "Platform Presentation" %}
         <span class="news-badge badge-talk">Platform Talk</span>
       {% elsif item.type == "Poster" %}

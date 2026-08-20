@@ -30,7 +30,9 @@ Here's what that looks like on a real case. *PMS2* and *PMS2CL* are about as tan
   <figcaption><strong>Figure.</strong> Read alignments for a sample's two <em>PMS2</em> haplotypes. Haplotype 1 carries a <em>PMS2CL</em>-to-<em>PMS2</em> gene conversion tract and is non-functional; haplotype 2 is unaffected and functional.</figcaption>
 </figure>
 
-I presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext) &nbsp;·&nbsp; [[Slides (PDF)]](/assets/han-acmg2026-trupath-slides.pdf)
+We evaluated the approach across 31 samples spanning eight paralogous loci, ranging from 18 to 357 kb in size and 98.2% to 99.9% in homology. It resolved the known pathogenic variant in every case, and the results agreed with orthogonal methods including long-read sequencing, but arrived within three days of DNA extraction instead of the weeks a cascade of MLPA and long-range PCR usually takes. I wrote this up as an Illumina application note: [*Deliver haplotype-resolved, copy-aware small variant detection in paralogous regions within a single WGS workflow*](https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf).
+
+I also presented this work as a platform talk at the 2026 ACMG Annual Clinical Genetics Meeting: *"A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."* [[Abstract]](https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext) &nbsp;·&nbsp; [[Slides (PDF)]](/assets/han-acmg2026-trupath-slides.pdf)
 
 **Other key projects**
 
