@@ -35,22 +35,6 @@ Do not set it to a placeholder like `none`: any non-empty string counts as
 enabled, which is how the previous Google Analytics setup ended up firing a
 request on every pageview with a tracking ID of `none`.
 
-### Excluding your own visits
-
-Two independent mechanisms, both built into GoatCounter. Using both is
-sensible, since each covers the other's blind spot.
-
-**Per browser.** Visit <https://shunhuahan.github.io/#toggle-goatcounter> and
-reload. This sets a `skipgc` flag in that browser's localStorage and shows a
-confirmation dialog; visiting the same URL again toggles tracking back on.
-Repeat once per browser and device you use (laptop, phone, work machine).
-Clearing site data resets it, so it needs redoing if you wipe storage.
-
-**Per IP.** In the GoatCounter dashboard, go to Settings → Tracking and add
-your IP to "Ignore IPs". This is server side, so it survives storage clears
-and needs no per-browser setup, but it only covers the networks you list and
-will miss you on mobile data or while travelling.
-
 ## Local development
 
 ```bash

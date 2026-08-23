@@ -1,21 +1,17 @@
 <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 
-{% if page.excerpt %}
-<meta property="og:description" content="{{ page.excerpt| strip_html }}" />
-{% elsif page.description %}
-<meta property="og:description" content="{{ page.description }}" />
-{% else %}
-<meta property="og:description" content="{{ site.description }}" />
-{% endif %}
 <meta name="author" content="{{ site.name }}" />
 
-{% if page.title %}
-<meta property="og:title" content="{{ page.title }}" />
-<meta property="twitter:title" content="{{ page.title }}" />
-{% endif %}
+{% comment %}
+  jekyll-seo-tag ({% seo %} in default.html) already emits og:title,
+  og:description, og:url, og:type, og:site_name, twitter:card, twitter:title
+  and the canonical link. Only tags it does NOT produce belong here.
 
+  og:image is one of those: seo-tag emits it only when `image` is set in
+  _config.yml or in a page's front matter, and this site points at
+  `avatar` instead.
+{% endcomment %}
 {% if page.image %}
 <meta property="og:image" content="{{ site.url }}{{ page.image }}"/>
 <meta property="twitter:image" content="{{ site.url }}{{ page.image }}"/>

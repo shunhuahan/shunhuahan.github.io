@@ -46,10 +46,9 @@ disqus:
 # Do not use a placeholder like "none": any non-empty string enables it.
 goatcounter: shunhuahan
 
-# Your website URL (e.g. http://amitmerchant1990.github.io or http://www.amitmerchant.com)
-# Used for Sitemap.xml and your RSS feed
-url: http://shunhuahan.github.io
-enforce_ssl: https://shunhuahan.github.io
+# Your website URL. Must be https: it feeds the canonical link, og:url, the
+# sitemap and the RSS feed, and the site is served over https.
+url: https://shunhuahan.github.io
 
 #
 # !! You don't need to change any of the configuration flags below !!
