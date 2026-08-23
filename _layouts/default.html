@@ -13,7 +13,12 @@
 
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/assets/style.css" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
-    <!-- No <link rel="canonical"> here: {% seo %} above already emits one. -->
+    {% comment %}
+      No <link rel="canonical"> here: the SEO tag at the top of <head>
+      already emits one. Keep this note inside a Liquid comment, not an
+      HTML one -- Liquid runs first and would expand any tag named in an
+      HTML comment, emitting the whole SEO block a second time.
+    {% endcomment %}
 
     <meta name="theme-color" content="#2f5fe0">
     <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/images/favicon.svg">
