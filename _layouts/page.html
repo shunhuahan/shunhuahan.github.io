@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<article class="page">
+<article class="page{% if page.wide %} is-wide{% endif %}">
   {% if page.headline %}
   <header class="page-head">
     <p class="page-eyebrow">{{ page.title }}</p>

@@ -3,14 +3,11 @@ layout: default
 description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina, developing variant-calling methods for complex and repetitive regions of the genome."
 ---
 
-{% include home-styles.html %}
-
 <div class="hero">
   <div class="hero-top">
-    <img src="/images/profile.jpg" alt="Shunhua Han" class="hero-photo">
+    <img src="/images/profile.jpg" alt="Shunhua Han" class="hero-photo" width="92" height="92">
     <div class="hero-heading">
-      <hr class="hero-rule">
-      <p class="hero-eyebrow">Bioinformatics &middot; Illumina &middot; San Diego, CA</p>
+      <p class="hero-eyebrow">Bioinformatics &middot; Illumina &middot; San Diego</p>
       <h1 class="hero-name">Shunhua Han</h1>
     </div>
   </div>
@@ -52,32 +49,32 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
 {% assign app_notes = site.data.publications | where: "type", "appnote" %}
 {% assign all_news = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse %}
 
-<div class="home-news-card">
-  <h3 class="home-section-title">Recent News</h3>
+<section class="home-section">
+  <h2 class="home-section-title">Recent</h2>
   {% for item in all_news limit:5 %}
   <div class="news-item">
     <span class="news-year">{{ item.year }}</span>
     <div class="news-item-body">
       {% if item.type == "journal" %}
-        <span class="news-badge badge-pub">Publication</span>
+        <span class="news-kind">Publication</span>
       {% elsif item.type == "appnote" %}
-        <span class="news-badge badge-note">Application Note</span>
+        <span class="news-kind">Application note</span>
       {% elsif item.type == "Platform Presentation" %}
-        <span class="news-badge badge-talk">Platform Talk</span>
+        <span class="news-kind">Platform talk</span>
       {% elsif item.type == "Poster" %}
-        <span class="news-badge badge-poster">Poster</span>
+        <span class="news-kind">Poster</span>
       {% else %}
-        <span class="news-badge badge-talk">Talk</span>
+        <span class="news-kind">Talk</span>
       {% endif %}
       <p class="news-title">{% if item.url %}<a href="{{ item.url }}" target="_blank">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</p>
       <p class="news-venue">{{ item.venue }}{% if item.location %}, {{ item.location }}{% endif %}</p>
     </div>
   </div>
   {% endfor %}
-</div>
+</section>
 
 <!-- ── Contact ── -->
-<div class="home-news-card">
-  <h3 class="home-section-title">Contact</h3>
+<section class="home-section">
+  <h2 class="home-section-title">Contact</h2>
   <p class="contact-text">Please reach out to me by email: <span class="contact-email">hanshunhua0829 [at] gmail [.] com</span></p>
-</div>
+</section>

@@ -12,67 +12,80 @@ I came to this problem through transposable elements. During my Ph.D. with [Case
 
 The through-line of my work is simple: a lot of medically important genetic variation sits in places where the genome carries two nearly identical copies of the same sequence, and someone has to figure out which copy a read came from. That puzzle, in different forms, has kept me busy for a decade.
 
----
-
 ## Education
 
-**Ph.D. in Bioinformatics** · University of Georgia (December 2021)
-Dissertation: *Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes* ([PDF](/assets/shunhuahan-phd-thesis.pdf))
-Advisor: Casey Bergman
+<div class="cv-item">
+  <p class="cv-when">2016 &ndash; 2021</p>
+  <div class="cv-what">
+    <h3>Ph.D. in Bioinformatics</h3>
+    <p class="cv-org">University of Georgia</p>
+    <p>Dissertation: <em>Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes</em> (<a href="/assets/shunhuahan-phd-thesis.pdf">PDF</a>). Advisor: Casey Bergman.</p>
+  </div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">2011 &ndash; 2015</p>
+  <div class="cv-what">
+    <h3>B.S. in Pharmaceutical Sciences</h3>
+    <p class="cv-org">East China University of Science and Technology, Shanghai</p>
+  </div>
+</div>
 
-**B.S. in Pharmaceutical Sciences** · East China University of Science and Technology, Shanghai (June 2015)
+## Professional experience
 
----
-
-## Professional Experience
-
-**Sr. Staff Bioinformatics Scientist** · Illumina (November 2025 – present)
-Resolving challenging and disease-causing genes using constellation mapped reads and whole-genome sequencing.
-
-**Staff Bioinformatics Scientist** · Illumina (November 2023 – October 2025)
-Improved variant calling accuracy for *PMS2* (Lynch syndrome diagnostics); published research blog on PMS2 detection.
-
-**Senior Bioinformatics Scientist** · Illumina (January 2022 – October 2023)
-Led development of HBA1/2 copy number genotyping method for alpha-thalassemia diagnosis.
-
-**Graduate Research Assistant** · University of Georgia (August 2016 – December 2021)
-Developed TELR (long-read TE detection), ngs_te_mapper2 (cell-line authentication), and machine learning models for P element target site prediction.
-
----
+<div class="cv-item">
+  <p class="cv-when">2025 &ndash; now</p>
+  <div class="cv-what">
+    <h3>Sr. Staff Bioinformatics Scientist</h3>
+    <p class="cv-org">Illumina</p>
+    <p>Resolving challenging and disease-causing genes using constellation mapped reads and whole-genome sequencing.</p>
+  </div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">2023 &ndash; 2025</p>
+  <div class="cv-what">
+    <h3>Staff Bioinformatics Scientist</h3>
+    <p class="cv-org">Illumina</p>
+    <p>Improved variant calling accuracy for <em>PMS2</em> (Lynch syndrome diagnostics); published a research blog post on <em>PMS2</em> detection.</p>
+  </div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">2022 &ndash; 2023</p>
+  <div class="cv-what">
+    <h3>Senior Bioinformatics Scientist</h3>
+    <p class="cv-org">Illumina</p>
+    <p>Led development of the <em>HBA1/2</em> copy number genotyping method for alpha-thalassemia diagnosis.</p>
+  </div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">2016 &ndash; 2021</p>
+  <div class="cv-what">
+    <h3>Graduate Research Assistant</h3>
+    <p class="cv-org">University of Georgia</p>
+    <p>Developed TELR (long-read TE detection), ngs_te_mapper2 (cell-line authentication), and machine learning models for <em>P</em> element target site prediction.</p>
+  </div>
+</div>
 
 ## Skills
 
-**Languages:** Python · R · C++ · Bash
-
-**Infrastructure:** Nextflow · Docker · AWS
-
-**Specializations:** Genomic variant calling in complex/repetitive regions · Long-read sequencing · Copy number analysis · Transposable element biology
-
----
+<div class="cv-item">
+  <p class="cv-when">Languages</p>
+  <div class="cv-what"><p>Python · R · C++ · Bash</p></div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">Infrastructure</p>
+  <div class="cv-what"><p>Nextflow · Docker · AWS</p></div>
+</div>
+<div class="cv-item">
+  <p class="cv-when">Focus</p>
+  <div class="cv-what"><p>Variant calling in complex and repetitive regions · Long-read sequencing · Copy number analysis · Transposable element biology</p></div>
+</div>
 
 ## Contact
 
-- Email: [hanshunhua0829@gmail.com](mailto:hanshunhua0829@gmail.com)
-- GitHub: [shunhuahan](https://github.com/shunhuahan)
-- LinkedIn: [shunhua-han](https://www.linkedin.com/in/shunhua-han/)
-- Google Scholar: [profile](https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en)
-- CV: [Download PDF](/assets/shunhuahan-cv.pdf)
-
-<style>
-/* Section labels: eyebrow style, matching the Publications page */
-.page .entry h2 {
-  margin: 2.4em 0 0.6em;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: #2f5fe0;
-}
-.page .entry hr {
-  border: none;
-  border-top: 1px solid #e4e7ee;
-  margin: 30px 0 6px;
-}
-html.dark .page .entry h2 { color: #5b8dff; }
-html.dark .page .entry hr { border-top-color: #262b3a; }
-</style>
+<div class="link-row">
+  <a class="btn-pill" href="mailto:hanshunhua0829@gmail.com">Email</a>
+  <a class="btn-pill" href="https://github.com/shunhuahan" target="_blank">GitHub</a>
+  <a class="btn-pill" href="https://www.linkedin.com/in/shunhua-han/" target="_blank">LinkedIn</a>
+  <a class="btn-pill" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en" target="_blank">Google Scholar</a>
+  <a class="btn-pill btn-pill-accent" href="/assets/shunhuahan-cv.pdf" target="_blank">Download CV</a>
+</div>

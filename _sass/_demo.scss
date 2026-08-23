@@ -1,0 +1,310 @@
+/* ════════════════════════════════════════
+   ALIGNMENT DEMO
+   One panel, one slider, one two-colour key. Everything that used to be
+   chrome (five MAPQ swatches, four sliders, a paragraph of caveats) is
+   either gone or folded into the disclosure at the bottom.
+   ════════════════════════════════════════ */
+
+.demo {
+  margin: 40px 0 44px;
+  padding: 34px 36px 30px;
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+
+  @include mobile { padding: 24px 18px 22px; border-radius: var(--r-md); }
+}
+
+.demo-title {
+  margin: 0 0 8px;
+  font-family: $displayFont;
+  font-size: 1.3125rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.demo-sub {
+  margin: 0;
+  max-width: 58ch;
+  font-size: var(--t-meta);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* ── Control bar ── */
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  margin: 24px 0 18px;
+}
+
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  border: 1px solid var(--line);
+
+  @include mobile { flex-wrap: wrap; border-radius: var(--r-md); }
+}
+
+.seg-btn {
+  border: none;
+  background: none;
+  border-radius: var(--r-pill);
+  padding: 7px 15px;
+  font-family: $bodyFont;
+  font-size: var(--t-small);
+  font-weight: 550;
+  line-height: 1;
+  color: var(--ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, background-color 0.15s;
+
+  em { font-style: italic; }
+  &:hover { color: var(--ink); }
+
+  &.is-on {
+    background: var(--ink);
+    color: var(--bg);
+    box-shadow: var(--shadow-pop);
+  }
+}
+
+.demo-slider {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--t-small);
+  font-weight: 550;
+  color: var(--ink-2);
+  white-space: nowrap;
+
+  output {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    min-width: 8ch;
+  }
+}
+
+.demo-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 104px;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--line);
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: none;
+    box-shadow: var(--shadow-pop);
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: none;
+    box-shadow: var(--shadow-pop);
+    cursor: pointer;
+  }
+}
+
+/* ── Plot ── */
+
+.demo-plot {
+  position: relative;
+  padding: 16px 18px 14px;
+  border-radius: var(--r-md);
+  background: var(--bg);
+}
+
+.trk + .trk { margin-top: 14px; }
+
+.trk-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+
+.trk-label {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+
+  em { font-style: italic; text-transform: none; letter-spacing: 0; }
+}
+
+.trk-meta {
+  font-size: var(--t-micro);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.sim-canvas { display: block; width: 100%; }
+
+.sim-tooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: var(--t-micro);
+  line-height: 1.5;
+  padding: 6px 10px;
+  border-radius: var(--r-sm);
+  max-width: 240px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Two-item key ── */
+
+.demo-key {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 14px;
+  font-size: var(--t-small);
+  color: var(--ink-2);
+}
+
+.demo-key > span { display: inline-flex; align-items: center; gap: 8px; }
+
+.k {
+  width: 20px;
+  height: 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.k-ok  { background: var(--read-ok); }
+.k-bad { background: var(--read-bad); }
+
+.demo-rerun {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: $bodyFont;
+  font-size: var(--t-small);
+  font-weight: 550;
+  color: var(--ink-2);
+  background: none;
+  border: none;
+  padding: 4px 2px;
+  cursor: pointer;
+  transition: color 0.15s;
+
+  svg { width: 13px; height: 13px; }
+  &:hover { color: var(--ink); }
+
+  @include mobile { margin-left: 0; }
+}
+
+/* ── Headline numbers ── */
+
+.demo-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+
+  @include mobile { grid-template-columns: 1fr; gap: 18px; }
+}
+
+.demo-stat b {
+  display: block;
+  font-family: $displayFont;
+  font-size: clamp(1.75rem, 3.4vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.demo-stat b.is-bad { color: var(--read-bad); }
+
+.demo-stat span {
+  display: block;
+  margin-top: 9px;
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 24ch;
+
+  em { font-style: italic; }
+}
+
+/* ── "How this works" disclosure ── */
+
+.demo-more {
+  margin-top: 22px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.demo-more summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+  font-size: var(--t-small);
+  font-weight: 550;
+  color: var(--ink-2);
+  transition: color 0.15s;
+
+  &::-webkit-details-marker { display: none; }
+  &:hover { color: var(--ink); }
+
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.15s ease;
+  }
+}
+
+.demo-more[open] summary::before { transform: rotate(90deg) translateX(1px); }
+
+.demo-more-body {
+  margin-top: 12px;
+  max-width: 74ch;
+
+  p {
+    margin: 0 0 10px;
+    font-size: var(--t-small);
+    line-height: 1.7;
+    color: var(--ink-3);
+  }
+
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink-2); font-weight: 600; }
+}

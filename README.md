@@ -9,8 +9,8 @@ Personal academic website for [Shunhua Han](https://shunhuahan.github.io), Ph.D.
 - `_data/publications.yml`: journal articles, conference abstracts, patents, and thesis entries rendered on the Publications page and in the homepage "Recent News" feed
 - `_data/talks.yml`: conference talks and posters rendered on the Talks page and in "Recent News"
 - `_layouts/`: `default.html` (shell, nav, footer, dark-mode toggle), `page.html`
-- `_includes/`: `home-styles.html` (homepage CSS), `mappability-demo.html` (the interactive alignment simulation on the Research page), `meta.html` (OpenGraph/Twitter tags), `analytics.html` (GoatCounter, off unless configured)
-- `assets/style.scss`: main stylesheet (imports `_sass/*`)
+- `_includes/`: `mappability-demo.html` (the interactive alignment simulation on the Research page), `meta.html` (OpenGraph/Twitter tags), `analytics.html` (GoatCounter, off unless configured)
+- `assets/style.scss`: main stylesheet; imports `_sass/_tokens.scss` (the whole colour/type/shape system as CSS custom properties, declared once for light and once for dark) plus one partial per area: `_home`, `_research`, `_demo`, `_pages`. Pages carry no `<style>` blocks — add styles to the matching partial and use `var(--…)` tokens so dark mode comes for free.
 - `index.html`: homepage (About content + Recent News + Contact)
 
 ## Updating content

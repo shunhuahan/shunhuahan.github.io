@@ -1,0 +1,84 @@
+//
+// DESIGN TOKENS
+//
+// One flat palette, declared twice (light, dark) and never again. Anything
+// that needs a colour reaches for a var(--…) so a page-level stylesheet can
+// stay theme-agnostic.
+//
+
+:root {
+  /* ── Surfaces ─────────────────────────────────────── */
+  --bg:          #ffffff;
+  --bg-sunken:   #f4f5f7;   // quiet panels that sit inside prose
+  --bg-raised:   #ffffff;   // cards and plots that sit on a sunken panel
+  --bg-header:   rgba(255, 255, 255, 0.82);
+
+  /* ── Ink ──────────────────────────────────────────── */
+  --ink:         #0f1115;   // headings, numbers
+  --ink-body:    #22252d;   // running text
+  --ink-2:       #565c69;   // secondary text, captions
+  --ink-3:       #878d9c;   // meta, footnotes, axis labels
+
+  /* ── Lines ────────────────────────────────────────── */
+  --line:        #e3e6ec;
+  --line-soft:   #eef0f4;
+
+  /* ── Accent ───────────────────────────────────────── */
+  --accent:      #2f5fe0;
+  --accent-2:    #1c3fa8;   // hover / pressed
+  --accent-wash: #eef3ff;
+
+  /* ── Data colours (alignment demo) ────────────────── */
+  --read-ok:     #3f6fd8;   // read the aligner placed confidently
+  --read-bad:    #e0562d;   // read that fits both copies equally well
+  --diff:        #2b3040;   // where the two copies differ
+
+  /* ── Shape ────────────────────────────────────────── */
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   22px;
+  --r-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(15, 17, 21, 0.05), 0 8px 24px rgba(15, 17, 21, 0.04);
+  --shadow-pop:  0 1px 3px rgba(15, 17, 21, 0.12);
+
+  /* ── Type scale ───────────────────────────────────── */
+  --t-micro:   0.75rem;      /* 12 — eyebrows, legends */
+  --t-small:   0.8125rem;    /* 13 — meta, captions */
+  --t-meta:    0.9375rem;    /* 15 — dense UI text */
+  --t-body:    1.0625rem;    /* 17 — running text */
+  --t-lead:    clamp(1.125rem, 1.5vw, 1.3125rem);
+  --t-h3:      1.1875rem;
+  --t-h2:      clamp(1.45rem, 2.5vw, 1.95rem);
+  --t-h1:      clamp(2.3rem, 5vw, 3.6rem);
+  --t-display: clamp(2.6rem, 7vw, 4.5rem);
+
+  /* ── Measure ──────────────────────────────────────── */
+  --measure: 68ch;
+}
+
+html.dark {
+  --bg:          #0a0b0f;
+  --bg-sunken:   #101219;
+  --bg-raised:   #0d0f15;
+  --bg-header:   rgba(10, 11, 15, 0.82);
+
+  --ink:         #edeff4;
+  --ink-body:    #d3d7e0;
+  --ink-2:       #a5abba;
+  --ink-3:       #767d8d;
+
+  --line:        #232733;
+  --line-soft:   #1a1d26;
+
+  --accent:      #7ba0ff;
+  --accent-2:    #a3bcff;
+  --accent-wash: #151b2e;
+
+  --read-ok:     #6f97ff;
+  --read-bad:    #ff7f55;
+  --diff:        #c8cddb;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-pop:  0 1px 3px rgba(0, 0, 0, 0.6);
+}

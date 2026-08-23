@@ -1,0 +1,215 @@
+/* ════════════════════════════════════════
+   PROSE PAGES: About, Publications, Talks
+   ════════════════════════════════════════ */
+
+/* Section labels inside prose read as quiet eyebrows, not headings that
+   compete with the page title. */
+.page .entry h2 {
+  margin: 3em 0 0.9em;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.page .entry > hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2.6em 0 0;
+}
+
+/* The Research page keeps real headings; opt back out of the eyebrow look. */
+.page.is-wide .entry h2 {
+  margin: -0.18em 0 0.7em;
+  font-size: var(--t-h2);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* ── Publication entries ── */
+
+.pub-entry {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line-soft);
+
+  &:last-of-type { border-bottom: none; }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 18px 0;
+  }
+}
+
+.pub-year {
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  padding-top: 3px;
+}
+
+.pub-content { min-width: 0; }
+.pub-content p { margin: 0; }
+
+.pub-title {
+  font-weight: 550;
+  font-size: var(--t-meta);
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 4px !important;
+}
+
+.pub-authors,
+.pub-venue {
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.pub-venue { color: var(--ink-3); }
+
+.pub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.pub-link {
+  display: inline-block;
+  font-family: $bodyFont;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 4px 11px;
+  border: none;
+  border-radius: var(--r-pill);
+  background: var(--bg-sunken);
+  color: var(--ink-2);
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: background-color 0.15s, color 0.15s;
+
+  &:hover {
+    background: var(--accent-wash);
+    color: var(--accent);
+    text-decoration: none !important;
+  }
+
+  &.open { background: var(--ink); color: var(--bg); }
+}
+
+.pub-abstract {
+  display: none;
+  margin-top: 12px;
+  padding: 14px 18px;
+  font-size: var(--t-small);
+  color: var(--ink-2);
+  line-height: 1.7;
+  background: var(--bg-sunken);
+  border-radius: var(--r-md);
+
+  &.open { display: block; }
+}
+
+/* ── Talks: grouped by year, kind in the left column ── */
+
+.page .entry .talk-year h2 {
+  /* opt out of the eyebrow treatment: the year is the section marker */
+  margin: 2.6em 0 0.4em;
+  font-family: $displayFont;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.page .entry .talk-year:first-of-type h2 { margin-top: 1.4em; }
+
+.talk-year .pub-entry {
+  grid-template-columns: 132px minmax(0, 1fr);
+
+  @include mobile { grid-template-columns: 1fr; }
+}
+
+.talk-year .pub-year {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ── About: CV rows ── */
+
+.cv-item {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-soft);
+
+  &:last-of-type { border-bottom: none; }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 16px 0;
+  }
+}
+
+.cv-when {
+  margin: 0 !important;
+  padding-top: 2px;
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.cv-what {
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+    font-size: var(--t-meta);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: var(--t-small);
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+
+  p:first-child { margin-top: 0; }
+}
+
+.cv-org {
+  color: var(--ink-3) !important;
+}
+
+/* ── Small utilities used by prose pages ── */
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.note-small {
+  font-size: var(--t-small);
+  color: var(--ink-3);
+}

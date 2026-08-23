@@ -34,10 +34,8 @@
     <div class="wrapper-container">
       <div class="wrapper-masthead">
         <div class="container">
-          <header class="masthead clearfix">
-            <div class="site-info">
-              <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-            </div>
+          <header class="masthead">
+            <p class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></p>
             <nav>
               <a href="{{ site.baseurl }}/"{% if page.url == '/' %} class="nav-active"{% endif %}>About</a>
               <a href="{{ site.baseurl }}/research"{% if page.url contains '/research' %} class="nav-active"{% endif %}>Research</a>
@@ -137,10 +135,16 @@
           });
         }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
-        document.querySelectorAll('.hero, .home-news-card, .page-head, .research-block, .pub-entry').forEach(function(el) {
+        document.querySelectorAll('.hero, .home-section, .page-head, .rblock, .pub-entry').forEach(function(el) {
           el.classList.add('fade-in-ready');
           observer.observe(el);
         });
+
+        // Header hairline appears only once the page has scrolled
+        var masthead = document.querySelector('.wrapper-masthead');
+        window.addEventListener('scroll', function() {
+          masthead.classList.toggle('is-stuck', window.scrollY > 8);
+        }, { passive: true });
       })();
     </script>
   </body>
