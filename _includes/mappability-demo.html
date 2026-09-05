@@ -42,37 +42,91 @@
   </div>
 
   <div class="demo-key">
-    <span><i class="k k-ok"></i>Confidently placed</span>
-    <span><i class="k k-bad"></i>Ambiguous &mdash; fits either copy</span>
+    <span><i class="k k-ok"></i>Confidently placed <span class="k-note">(above the line)</span></span>
+    <span><i class="k k-bad"></i>Ambiguous, fits either copy <span class="k-note">(below the line)</span></span>
     <button type="button" class="demo-rerun" id="sim-rerun" title="Draw a fresh set of random reads">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
       Re-run
     </button>
   </div>
 
+  <p class="demo-scope"><strong>Illustrative simulation; not an aligner benchmark.</strong> The numbers below describe this one simulated run, under the assumptions listed in "How this simulation works". They are not measurements of any real aligner, sample or gene, and the callable figure applies to the displayed interval rather than to the whole gene.</p>
+
   <div class="demo-stats" id="sim-stats" aria-live="polite">
     <div class="demo-stat">
       <b id="sim-stat-callable">&hellip;</b>
-      <span>of <em id="sim-stat-callable-gene">SMN1</em> is callable</span>
+      <span>of the displayed <em id="sim-stat-callable-gene">SMN1</em> interval is callable in this simulation</span>
     </div>
     <div class="demo-stat">
       <b id="sim-stat-ambiguous">&hellip;</b>
-      <span>of read pairs are ambiguous</span>
+      <span>of all simulated read pairs are ambiguous</span>
     </div>
     <div class="demo-stat">
       <b id="sim-stat-impostor">&hellip;</b>
-      <span>pairs landed on the wrong copy</span>
+      <span>of all simulated read pairs were assigned to the other copy</span>
     </div>
   </div>
+
+  <p class="demo-denom">Denominator for both percentages: <span id="sim-stat-total">&hellip;</span> read pairs simulated across both copies. The callable figure is a fraction of the displayed interval, not of the whole gene.</p>
 
   <details class="demo-more">
     <summary>How this simulation works</summary>
     <div class="demo-more-body">
-      <p><strong>The difference map is real.</strong> Each preset comes from aligning that gene pair in the hg38 reference (NCBI sequences, differences and indel events binned at 500&nbsp;bp). The long empty stretches are the fingerprint of gene conversion, and they are exactly where mapping collapses.</p>
+      <p><strong>Two different kinds of input.</strong> The difference map is derived from the reference: each preset comes from aligning that gene pair in the hg38 reference (NCBI sequences). The reads are entirely simulated. Nothing here is real sequencing data.</p>
+      <p><strong>The difference map is binned, not exact.</strong> The presets store the number of differing positions per 500&nbsp;bp bin, not the positions themselves. The demo re-draws positions at random within each bin, so bin-scale structure &mdash; the long identical stretches, the dense clusters &mdash; reflects the reference alignment, but individual tick positions do not correspond to specific coordinates. This is an approximation, not per-site realism.</p>
+      <p><strong>Interval identity is not the same as the identity you see quoted for a gene.</strong> Each preset reports the average identity across the whole interval it displays. Published figures often describe the high-homology subregion instead, which is shorter and more similar. The <em>PMS2</em> preset shows 95.3% across its ~19.3&nbsp;kb interval, while the commonly quoted ~98% refers to the shorter high-homology region <em>PMS2</em> shares with <em>PMS2CL</em>; averaging across the full interval pulls the number down because it includes diverged sequence. The two numbers describe different spans and neither has been adjusted to match the other.</p>
       <p><strong>The reads are simulated.</strong> Error-free paired-end mates at 30&times; per copy, 450&nbsp;bp mean fragment size jittered per pair. A pair is anchored by any differing position either mate covers, plus any bases spilling into the unique sequence flanking the duplication &mdash; which is why the edges usually survive when the interior does not.</p>
-      <p><strong>The mapping quality is the standard formula.</strong> A pair covering no distinguishing position fits both copies equally well, so, like a real aligner, this one places it at random with MAPQ&nbsp;0. Otherwise MAPQ = &minus;10&thinsp;log<sub>10</sub>&thinsp;P(wrong copy), assuming a 1% chance per site that a sequencing error masks a true difference, capped at 60. "Confidently placed" here means MAPQ&nbsp;&ge;&nbsp;20; "can be called" means at least 8 such reads cover the position, a typical variant-calling filter. The plot draws a sample of the pileup; the numbers use every simulated pair.</p>
+      <p><strong>The MAPQ transformation is conventional; the probability model behind it is simplified.</strong> MAPQ = &minus;10&thinsp;log<sub>10</sub>&thinsp;P(wrong copy) is the standard definition, but this demo feeds it a deliberately simple model: a pair covering no distinguishing position fits both copies equally well and is placed at random with MAPQ&nbsp;0, and otherwise the probability assumes an independent 1% chance per site that a sequencing error masks a true difference, capped at 60. A real aligner also models base qualities, indels, mismatches elsewhere in the read, and its own scoring heuristics. "Confidently placed" here means MAPQ&nbsp;&ge;&nbsp;20; "callable" means at least 8 such reads cover the position, a typical variant-calling filter.</p>
+      <p><strong>Denominators.</strong> Both percentages above are taken over every simulated pair from both copies; the "assigned to the other copy" figure is the subset of those pairs placed on the copy they did not come from. The pileup draws only pairs assigned to the first copy, and only a sample of them &mdash; the row cap keeps the panel readable &mdash; while every reported number uses all simulated pairs.</p>
     </div>
   </details>
+
+  <div class="linkage">
+    <p class="linkage-label">How physical linkage resolves the ambiguity</p>
+    <p class="linkage-note">Conceptual illustration, not output from MRJD and not a simulation. It shows the kind of evidence proximity information adds; it does not imply any particular accuracy, or that every copy can be resolved.</p>
+    <ol class="linkage-steps">
+      <li class="linkage-step">
+        <span class="linkage-num">1</span>
+        <h4>Short reads alone</h4>
+        <div class="linkage-art" role="img" aria-label="Six read bars: two are anchored by a distinguishing difference, four are ambiguous and could belong to either copy.">
+          <span class="lr lr-ok"></span>
+          <span class="lr lr-bad"></span>
+          <span class="lr lr-bad"></span>
+          <span class="lr lr-ok"></span>
+          <span class="lr lr-bad"></span>
+          <span class="lr lr-bad"></span>
+        </div>
+        <p>Only the reads covering a distinguishing difference can be placed. The rest fit both copies equally well, and no amount of extra depth changes that.</p>
+      </li>
+      <li class="linkage-step">
+        <span class="linkage-num">2</span>
+        <h4>Add long-range linkage</h4>
+        <div class="linkage-art" role="img" aria-label="The same reads, now joined by linkage ties into two groups, each group containing at least one anchored read.">
+          <span class="lr-group">
+            <span class="lr lr-ok"></span>
+            <span class="lr lr-bad"></span>
+            <span class="lr lr-bad"></span>
+          </span>
+          <span class="lr-group">
+            <span class="lr lr-ok"></span>
+            <span class="lr lr-bad"></span>
+            <span class="lr lr-bad"></span>
+          </span>
+        </div>
+        <p>Reads from the same original DNA molecule stay physically associated. That ties ambiguous reads to anchored ones, carrying the anchor's evidence along the molecule.</p>
+      </li>
+      <li class="linkage-step">
+        <span class="linkage-num">3</span>
+        <h4>Reconstruct copies</h4>
+        <div class="linkage-art linkage-art-split" role="img" aria-label="Two reconstructed copies, each drawn as a row of resolved reads. One read remains unresolved and is drawn separately.">
+          <span class="lr-copy">Copy 1<span class="lr lr-ok"></span><span class="lr lr-ok"></span><span class="lr lr-ok"></span></span>
+          <span class="lr-copy">Copy 2<span class="lr lr-ok"></span><span class="lr lr-ok"></span><span class="lr lr-ok"></span></span>
+          <span class="lr-copy lr-copy-open">Unresolved<span class="lr lr-bad"></span></span>
+        </div>
+        <p>Linked groups are assembled into individual copies. Evidence that stays unlinked stays unresolved &mdash; the method reduces ambiguity rather than eliminating it.</p>
+      </li>
+    </ol>
+  </div>
 </figure>
 
 <script>
@@ -96,6 +150,7 @@
   var statCallableGene = $('sim-stat-callable-gene');
   var statAmbiguous = $('sim-stat-ambiguous');
   var statImpostor = $('sim-stat-impostor');
+  var statTotal = $('sim-stat-total');
 
   var COVERAGE = 30;      // sequencing depth per copy
   var FRAGMENT = 450;     // mean fragment size
@@ -412,16 +467,22 @@
     redraw();
 
     var callablePct = Math.round(sim.callableFrac * 100);
-    metaRef.textContent = (sim.N / 1000).toFixed(1) + ' kb · ' + p.identity + '% identical · '
-      + sim.psvList.length.toLocaleString() + ' differing positions';
-    metaA.textContent = sim.pairsA.length.toLocaleString() + ' pairs · ' + p.a + ' and ' + p.b + ' mixed together';
-    metaCall.textContent = callablePct + '% of ' + p.a;
+    metaRef.textContent = (sim.N / 1000).toFixed(1) + ' kb interval · ' + p.identity
+      + '% average identity across it · ' + sim.psvList.length.toLocaleString()
+      + ' differing positions (drawn within 500 bp bins)';
+    metaA.textContent = sim.pairsA.length.toLocaleString() + ' of ' + sim.totalPairs.toLocaleString()
+      + ' simulated pairs assigned here · ' + p.a + ' and ' + p.b + ' mixed together';
+    metaCall.textContent = callablePct + '% of the displayed interval';
 
     statCallable.textContent = callablePct + '%';
     statCallable.className = callablePct < 70 ? 'is-bad' : '';
 
+    // Both percentages share one denominator: every simulated pair from both
+    // copies. The label states it so the number cannot be read as a rate over
+    // the displayed pileup, which shows only one copy and only a sample.
+    statTotal.textContent = sim.totalPairs.toLocaleString();
     statAmbiguous.textContent = Math.round(sim.nAmbiguous / sim.totalPairs * 100) + '%';
-    statImpostor.textContent = sim.nImpostor.toLocaleString();
+    statImpostor.textContent = Math.round(sim.nImpostor / sim.totalPairs * 100) + '%';
 
     var buttons = document.querySelectorAll('#mappability-demo .seg-btn');
     for (var i = 0; i < buttons.length; i++) {

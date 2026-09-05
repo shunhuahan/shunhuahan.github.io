@@ -222,6 +222,25 @@
   @include mobile { margin-left: 0; }
 }
 
+.k-note { color: var(--ink-3); }
+
+/* ── Scope disclaimer: deliberately outside the <details>, next to the
+      numbers it qualifies ── */
+
+.demo-scope {
+  margin: 22px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  border-left: 3px solid var(--ink-3);
+  font-size: var(--t-small);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 78ch;
+
+  strong { color: var(--ink); font-weight: 650; }
+}
+
 /* ── Headline numbers ── */
 
 .demo-stats {
@@ -302,9 +321,163 @@
     margin: 0 0 10px;
     font-size: var(--t-small);
     line-height: 1.7;
-    color: var(--ink-3);
+    color: var(--ink-2);
   }
 
   p:last-child { margin-bottom: 0; }
-  strong { color: var(--ink-2); font-weight: 600; }
+  strong { color: var(--ink); font-weight: 600; }
+}
+
+/* ════════════════════════════════════════
+   COMPANION SCHEMATIC: how physical linkage resolves ambiguity.
+   Conceptual only. Built from the demo's own two colours and plain boxes so
+   it carries no numbers that could be mistaken for a measurement.
+   ════════════════════════════════════════ */
+
+.linkage {
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.linkage-label {
+  margin: 0 0 6px;
+  font-family: $displayFont;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.linkage-note {
+  margin: 0 0 22px;
+  max-width: 74ch;
+  font-size: var(--t-small);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.linkage-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include mobile { grid-template-columns: 1fr; gap: 26px; }
+}
+
+.linkage-step {
+  margin: 0;
+  /* Column flex + flex:1 on the art equalises panel heights across the row,
+     so the three captions start on the same line. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  h4 {
+    margin: 0 0 12px;
+    font-size: var(--t-meta);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  p {
+    margin: 12px 0 0;
+    font-size: var(--t-small);
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+}
+
+.linkage-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.linkage-art {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  min-height: 118px;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  align-self: stretch;
+}
+
+/* One read pair, drawn in the same two colours as the pileup above. */
+.lr {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+}
+.lr-ok  { background: var(--read-ok); width: 78%; }
+.lr-bad { background: var(--read-bad); width: 58%; }
+
+/* Offsets so the stack reads as a pileup rather than a bar chart. Direct
+   children only, so bars nested inside .lr-group / .lr-copy are unaffected. */
+.linkage-art > .lr:nth-child(2) { margin-left: 14%; }
+.linkage-art > .lr:nth-child(3) { margin-left: 30%; }
+.linkage-art > .lr:nth-child(5) { margin-left: 8%; }
+.linkage-art > .lr:nth-child(6) { margin-left: 24%; }
+
+/* A linked group: reads held together by proximity, marked by one dashed
+   tie running down the side of the group. */
+.lr-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: 10px;
+  border-left: 1px dashed var(--ink-3);
+
+  & + & { margin-top: 10px; }
+
+  .lr:nth-child(2) { margin-left: 12%; }
+  .lr:nth-child(3) { margin-left: 26%; }
+}
+
+.lr-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--bg-sunken);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+
+  .lr { width: 100%; }
+}
+
+.lr-copy-open {
+  background: none;
+  border: 1px dashed var(--line);
+}
+
+.linkage-art-split { gap: 8px; }
+
+.demo-denom {
+  margin: 14px 0 0;
+  max-width: 76ch;
+  font-size: var(--t-small);
+  line-height: 1.6;
+  color: var(--ink-2);
 }

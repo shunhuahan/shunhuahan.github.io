@@ -6,7 +6,7 @@ permalink: /about/
 description: "About Shunhua Han, Ph.D.: education, professional experience at Illumina, and skills in computational genomics and variant calling."
 ---
 
-I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com) in San Diego, where I build variant-calling methods for the parts of the genome that standard pipelines get wrong. My current focus is TruPath Genome, an on-flowcell proximity sequencing technology, and the algorithms that turn its long-range signal into haplotype-resolved variant calls in segmental duplications. Before that I built targeted callers for the alpha-globin locus and *PMS2*, two of the most requested and most frustrating targets in carrier screening and hereditary cancer testing.
+I'm a Sr. Staff Bioinformatics Scientist at [Illumina](https://www.illumina.com) in San Diego, where I develop computational methods to resolve genetic variation in repetitive and structurally complex regions of the genome. My current focus is copy-aware, haplotype-resolved analysis for TruPath Genome and DRAGEN: TruPath Genome is an on-flowcell proximity sequencing chemistry, and I work on the multi-region joint detection algorithms that turn its long-range linkage into per-copy variant calls in segmental duplications. Before that I built targeted callers for the alpha-globin locus and for *PMS2*, two of the harder targets in carrier screening and hereditary cancer research.
 
 I came to this problem through transposable elements. During my Ph.D. with [Casey Bergman](https://bergmanlab.github.io) at the University of Georgia, I studied how TEs reshape the genomes of *Drosophila* cell lines, and built the software (TELR, ngs_te_mapper2) to find insertions that standard tools miss. Repetitive DNA has a way of breaking every assumption a pipeline makes, and I found I liked working exactly where things break.
 
@@ -19,7 +19,7 @@ The through-line of my work is simple: a lot of medically important genetic vari
   <div class="cv-what">
     <h3>Ph.D. in Bioinformatics</h3>
     <p class="cv-org">University of Georgia</p>
-    <p>Dissertation: <em>Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes</em> (<a href="/assets/shunhuahan-phd-thesis.pdf">PDF</a>). Advisor: Casey Bergman.</p>
+    <p>Dissertation: <em>Novel computational strategies for the analysis of transposable elements in Drosophila cell culture genomes</em> (<a href="/assets/shunhuahan-phd-thesis.pdf">Dissertation PDF</a>). Advisor: Casey Bergman.</p>
   </div>
 </div>
 <div class="cv-item">
@@ -37,7 +37,7 @@ The through-line of my work is simple: a lot of medically important genetic vari
   <div class="cv-what">
     <h3>Sr. Staff Bioinformatics Scientist</h3>
     <p class="cv-org">Illumina</p>
-    <p>Resolving challenging and disease-causing genes using constellation mapped reads and whole-genome sequencing.</p>
+    <p>Copy-aware, haplotype-resolved variant analysis for paralogous genes, using multi-region joint detection with TruPath Genome proximity data and standard whole-genome sequencing.</p>
   </div>
 </div>
 <div class="cv-item">
@@ -45,7 +45,7 @@ The through-line of my work is simple: a lot of medically important genetic vari
   <div class="cv-what">
     <h3>Staff Bioinformatics Scientist</h3>
     <p class="cv-org">Illumina</p>
-    <p>Improved variant calling accuracy for <em>PMS2</em> (Lynch syndrome diagnostics); published a research blog post on <em>PMS2</em> detection.</p>
+    <p>Improved small-variant calling accuracy in the <em>PMS2</em>/<em>PMS2CL</em> high-homology region for standard whole-genome sequencing, work relevant to Lynch syndrome research.</p>
   </div>
 </div>
 <div class="cv-item">
@@ -53,7 +53,7 @@ The through-line of my work is simple: a lot of medically important genetic vari
   <div class="cv-what">
     <h3>Senior Bioinformatics Scientist</h3>
     <p class="cv-org">Illumina</p>
-    <p>Led development of the <em>HBA1/2</em> copy number genotyping method for alpha-thalassemia diagnosis.</p>
+    <p>Led development of the <em>HBA1/2</em> copy-number genotyping method, which genotypes common alpha-globin configurations from whole-genome sequencing. Released for research use.</p>
   </div>
 </div>
 <div class="cv-item">

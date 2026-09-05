@@ -2,7 +2,8 @@
   year: 2025
   sort_date: "2025-03-01"
   title: "Benchmarking of germline copy number variant callers from whole genome sequencing data for clinical applications."
-  authors: "De La Vega FM, <strong>Han S</strong>, Onuchic VF, Chen X, <em>et al.</em>"
+  # Complete published author list, order preserved. Verified against PMC12005901.
+  authors: "De La Vega FM, Irvine SA, Anur P, Potts K, Kraft L, Torres R, Kang P, Truong S, Lee Y, <strong>Han S</strong>, Onuchic V, Han J."
   venue: "<em>Bioinformatics Advances</em>, 5(1), vbaf071."
   doi: "https://doi.org/10.1093/bioadv/vbaf071"
   abstract: "We benchmark several short-read WGS CNV detection tools using reference cell lines to inform their clinical use. Tools vary in sensitivity (7%–83%) and precision (1%–76%), with few meeting the sensitivity needed for clinical testing. Callers generally perform better for deletions (up to 88% sensitivity) than duplications (up to 47% sensitivity), with poor detection of duplications under 5 kb. For CNVs in genes commonly included in clinical panels, significantly improved sensitivity and precision were observed. DRAGEN v4.2 high-sensitivity CNV calls, post-processed with custom filters, achieved 100% sensitivity and 77% precision on the optimized gene panel after excluding recurring artifacts, which may support clinical use with orthogonal confirmation of reportable CNVs."
@@ -68,7 +69,8 @@
   authors: "<strong>Han S</strong>"
   venue: "<em>Illumina Application Note</em>, M-GL-04321."
   url: "https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf"
-  abstract: "TruPath Genome encodes long-range molecular linkage directly on the flow cell during sequencing, and the DRAGEN Multi-Region Joint Detection (MRJD) algorithm uses that linkage to call haplotype-resolved, copy-aware small variants in paralogous regions from a standard short-read WGS workflow. Evaluated across 31 samples spanning eight paralogous loci with 98.2-99.9% sequence homology and sizes from 18 to 357 kb, the approach resolved the known pathogenic variant in every case, produced phased locus-wide haplotypes, and clarified allelic configuration, gene-pseudogene assignment, and CNV context. Results agreed with orthogonal methods including long-read sequencing, and were generated within three days of DNA extraction, replacing cascades of secondary assays such as MLPA and long-range PCR that typically add days to weeks."
+  link_label: "Application note (PDF)"
+  abstract: "TruPath Genome encodes long-range molecular linkage directly on the flow cell during sequencing, and the DRAGEN Multi-Region Joint Detection (MRJD) algorithm uses that linkage to call haplotype-resolved, copy-aware small variants in paralogous regions from a standard short-read WGS workflow. Evaluated across 31 samples spanning eight paralogous loci with 98.2-99.9% sequence homology and sizes from 18 to 357 kb, the approach recovered the expected pathogenic finding in every sample, produced phased locus-wide haplotypes, and clarified allelic configuration, gene-pseudogene assignment, and CNV context. Results agreed with orthogonal methods including long-read sequencing, and were generated within three days of DNA extraction, replacing cascades of secondary assays such as MLPA and long-range PCR that typically add days to weeks. This is recovery of known findings in an evaluation set rather than a measure of diagnostic sensitivity, and the note records that CFC1, IKBKG and HYDIN were evaluated but not supported in DRAGEN v4.5. For research use only."
 
 - type: article
   year: 2024
@@ -77,7 +79,8 @@
   authors: "Illumina DRAGEN research team"
   venue: "<em>Illumina Genomics Research</em> article, June 17, 2024."
   url: "https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html"
-  abstract: "PMS2 shares high sequence identity with its pseudogene PMS2CL, so reads from the two loci map ambiguously and pathogenic variants associated with Lynch syndrome are missed or assigned to the wrong copy. This article describes the multi-region joint detection (MRJD) approach to the problem, reporting approximately 99.7% sensitivity for single nucleotide variants and recovery of all expected pathogenic variants across 22 real clinical samples from whole-genome sequencing."
+  link_label: "Article"
+  abstract: "PMS2 shares high sequence identity with its pseudogene PMS2CL, so reads from the two loci map ambiguously and pathogenic variants associated with Lynch syndrome are missed or assigned to the wrong copy. This article describes the multi-region joint detection (MRJD) approach to the problem, reporting recall of approximately 99.7% for SNVs and 97.1% for indels against a long-range PCR truth set, and detection of all expected pathogenic variants in 22 clinical samples. Recall here measures detection: in high-sensitivity mode an allele can be detected while its assignment to PMS2 or PMS2CL remains ambiguous, and calls from this short-read-only workflow are not phased."
 
 - type: article
   year: 2022
@@ -86,6 +89,7 @@
   authors: "<strong>Han S</strong>, Onuchic V, Rossi M, Roller E, Cameron D."
   venue: "<em>Illumina Genomics Research</em> article, September 8, 2022."
   url: "https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html"
+  link_label: "Article"
   abstract: "The alpha-globin locus is one of the most structurally complex and clinically important regions of the genome, and its two near-identical genes defeat standard short-read genotyping. This article introduces the DRAGEN HBA caller, a targeted method that genotypes HBA1 and HBA2 from standard whole-genome sequencing. Calls showed high concordance with long-read sequencing and perfect Mendelian consistency across family trios, and applying the caller to a large, diverse population cohort recovered the elevated alpha-thalassemia carrier frequencies previously reported in African and South Asian populations."
 
 - type: abstract

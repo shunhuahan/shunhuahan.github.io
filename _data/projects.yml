@@ -1,0 +1,83 @@
+# Flagship projects, rendered on BOTH the homepage ("Selected contributions")
+# and the Research page. Single source of truth so titles, evidence wording and
+# links cannot drift apart between the two pages.
+#
+# Field guide:
+#   anchor    id of the matching section on /research/ (title links there)
+#   problem   the scientific problem, one sentence
+#   idea      the key methodological idea, one sentence
+#   role      my contribution, stated only as far as sources support it
+#   evidence  what was measured, with the qualification kept next to the claim
+#   links     label/url pairs; labels are Paper, Article, Slides, Abstract,
+#             Code, Documentation, Application note
+
+- anchor: trupath
+  eyebrow: "Illumina · clinical genomics research"
+  title: "Haplotype-resolved variant calling in paralogous genes"
+  problem: >-
+    Genes such as <em>SMN1</em>, <em>PMS2</em> and <em>CYP21A2</em> share 98–99.9% of their sequence with a
+    neighbouring paralog or pseudogene, so short reads map ambiguously and labs fall back on
+    cascades of MLPA and long-range PCR.
+  idea: >-
+    Multi-region joint detection (MRJD) analyses a gene and its paralogs together instead of one
+    region at a time: it estimates total copy number, reconstructs each individual copy, and — with
+    TruPath Genome — uses on-flowcell proximity linkage to assign every reconstructed copy.
+  role: >-
+    Algorithm design and evaluation. First-named inventor on the multi-region joint detection patent
+    application; presented the TruPath evaluation as a platform talk at ACMG 2026 and wrote the
+    Illumina application note.
+  evidence: >-
+    Across 31 samples spanning eight paralogous loci (18–357 kb, 98.2–99.9% homology), the evaluation
+    recovered the expected pathogenic finding in every sample, agreeing with orthogonal methods
+    including long-read sequencing. Research use only; this is recovery of known findings in an
+    evaluation set, not a measure of diagnostic sensitivity.
+  links:
+    - label: "Application note"
+      url: "https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf"
+    - label: "Slides"
+      url: "/assets/han-acmg2026-trupath-slides.pdf"
+    - label: "Abstract"
+      url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
+
+- anchor: hba
+  eyebrow: "Illumina · population genomics research"
+  title: "Alpha-globin copy-number genotyping from whole genomes"
+  problem: >-
+    The alpha-globin locus is structurally complex and its two near-identical genes defeat standard
+    short-read genotyping, obscuring the copy-number configurations behind alpha-thalassemia.
+  idea: >-
+    A targeted caller that reads several non-homologous regions within and near the <em>HBA</em> locus to
+    estimate copy-number genotypes, covering 14 configurations spanning common molecular subtypes.
+  role: >-
+    Led development of the caller; first-listed author on the Illumina technical article and
+    first-named inventor on the associated copy-number genotyping patent application.
+  evidence: >-
+    Genotypes were concordant with PacBio HiFi long-read data in 246 diverse 1000 Genomes samples,
+    and calls were consistent with Mendelian inheritance in 575 trios. Research use only.
+  links:
+    - label: "Article"
+      url: "https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html"
+
+- anchor: telr
+  eyebrow: "Ph.D. research · genome evolution"
+  title: "Reconstructing transposable element insertions from long reads"
+  problem: >-
+    Many transposable elements are longer than a short read, and even a long read spanning an
+    insertion does not by itself give its exact boundaries, its family, or how many of a sample's
+    genome copies carry it — which matters in aneuploid cell lines.
+  idea: >-
+    TELR takes candidate insertion sites from structural-variant calls, locally assembles and
+    polishes a contig spanning each insertion, identifies the TE family and reference coordinates,
+    then estimates intra-sample TE allele frequency from read depth.
+  role: >-
+    Software development and analysis. Joint first author with Guilherme B. Dias — the paper states
+    that the first two authors should be regarded as joint first authors.
+  evidence: >-
+    Applied to the <em>Drosophila</em> S2R+ cell line, TELR reconstructed insertion sequences for
+    expanded TE families and estimated their intra-sample allele frequencies, supporting
+    family-level phylogenetic analysis.
+  links:
+    - label: "Paper"
+      url: "https://doi.org/10.1093/nar/gkac794"
+    - label: "Code"
+      url: "https://github.com/bergmanlab/TELR"

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Compact project summary rendered from _data/projects.yml, so the homepage
+  cards and the Research page cannot drift apart.
+  Usage: {% include project-summary.html anchor="trupath" %}
+{%- endcomment -%}
+{%- assign p = site.data.projects | where: "anchor", include.anchor | first -%}
+<div class="psum" id="{{ p.anchor }}">
+  <h3 class="psum-title">{{ p.title }}</h3>
+  <dl class="psum-facts">
+    <dt>Problem</dt><dd>{{ p.problem }}</dd>
+    <dt>Method</dt><dd>{{ p.idea }}</dd>
+    <dt>My role</dt><dd>{{ p.role }}</dd>
+    <dt>Evidence</dt><dd>{{ p.evidence }}</dd>
+  </dl>
+  <p class="psum-links">
+    {% for l in p.links %}<a href="{{ l.url }}"{% unless l.url contains '/assets/' %} target="_blank"{% endunless %}>{{ l.label }}</a>{% unless forloop.last %} <span aria-hidden="true">·</span> {% endunless %}{% endfor %}
+  </p>
+</div>

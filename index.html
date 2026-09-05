@@ -7,20 +7,34 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
   <div class="hero-top">
     <img src="/images/profile.jpg" alt="Shunhua Han" class="hero-photo" width="92" height="92">
     <div class="hero-heading">
-      <p class="hero-eyebrow">Bioinformatics &middot; Illumina &middot; San Diego</p>
+      <p class="hero-eyebrow">Sr. Staff Bioinformatics Scientist &middot; Illumina &middot; San Diego</p>
       <h1 class="hero-name">Shunhua Han</h1>
     </div>
   </div>
 
   <p class="hero-tagline">
-    I build computational methods to detect genetic variants in the parts of the genome
-    standard tools struggle with: segmental duplications, gene families, and other
-    structurally complex, medically important regions. At Illumina I work on TruPath
-    Genome and DRAGEN; before that, I studied transposable elements for my Ph.D. at the
-    University of Georgia.
+    I develop computational methods to resolve genetic variation in repetitive and structurally
+    complex regions of the genome. At Illumina I work on copy-aware, haplotype-resolved analysis
+    for TruPath Genome and DRAGEN. My earlier research developed methods to reconstruct
+    transposable element insertions and study genome evolution in <em>Drosophila</em> cell lines.
+  </p>
+
+  <p class="hero-tagline hero-tagline-secondary">
+    The through-line is the same in both: when a genome carries several near-identical copies of a
+    sequence, the problem is deciding which copy a read came from — whether that copy is a
+    transposable element insertion, an alpha-globin copy-number configuration, or one of a pair of
+    paralogous genes and its haplotypes.
   </p>
 
   <div class="hero-links">
+    <a href="{{ site.baseurl }}/research" class="btn-pill btn-pill-accent">
+      Selected research
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a href="/assets/shunhuahan-cv.pdf" target="_blank" class="btn-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+      CV (PDF)
+    </a>
     <a href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en" target="_blank" class="btn-pill">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
       Google Scholar
@@ -37,12 +51,29 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
       <svg viewBox="0 0 600 530" fill="currentColor"><path d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.38-3.69-10.832-3.708-7.896-.017-2.936-1.193.516-3.707 7.896-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.45-163.25-81.433C20.15 217.613 10 86.535 10 68.825c0-88.687 77.742-60.816 125.72-24.795z"/></svg>
       Bluesky
     </a>
-    <a href="/assets/shunhuahan-cv.pdf" target="_blank" class="btn-pill btn-pill-accent">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
-      Download CV
-    </a>
   </div>
 </div>
+
+<!-- ── Selected contributions (shared source: _data/projects.yml) ── -->
+<section class="home-section home-section-wide" id="selected">
+  <h2 class="home-section-title">Selected contributions</h2>
+  <div class="sel-grid">
+    {% for p in site.data.projects %}
+    <article class="sel-card">
+      <p class="sel-eyebrow">{{ p.eyebrow }}</p>
+      <h3 class="sel-title"><a href="{{ site.baseurl }}/research#{{ p.anchor }}">{{ p.title }}</a></h3>
+      <dl class="sel-facts">
+        <dt>Problem</dt><dd>{{ p.problem }}</dd>
+        <dt>Contribution</dt><dd>{{ p.role }}</dd>
+        <dt>Evidence</dt><dd>{{ p.evidence }}</dd>
+      </dl>
+      <p class="sel-links">
+        {% for l in p.links %}<a href="{{ l.url }}"{% unless l.url contains '/assets/' %} target="_blank"{% endunless %}>{{ l.label }}</a>{% unless forloop.last %} <span aria-hidden="true">·</span> {% endunless %}{% endfor %}
+      </p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
 
 <!-- ── Recent News ── -->
 {% assign journal_pubs = site.data.publications | where: "type", "journal" %}

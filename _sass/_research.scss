@@ -165,6 +165,68 @@
   }
 }
 
+/* ── Project summary (shared with the homepage cards via _data/projects.yml) ── */
+
+.psum {
+  margin: 34px 0;
+  padding: 26px 28px 24px;
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  max-width: 780px;
+  scroll-margin-top: 96px;
+
+  @include mobile { padding: 20px 18px; border-radius: var(--r-md); }
+}
+
+.psum-title {
+  margin: 0 0 16px;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.psum-facts {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px 20px;
+  margin: 0 0 16px;
+
+  dt {
+    font-size: var(--t-micro);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-top: 2px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--t-small);
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    dt { margin-top: 12px; }
+    dt:first-child { margin-top: 0; }
+  }
+}
+
+.psum-links {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: var(--t-small);
+  font-weight: 550;
+  color: var(--ink-3);
+
+  a { white-space: nowrap; }
+}
+
 /* ── Software cards ── */
 
 .tool-grid {
@@ -182,13 +244,6 @@
   padding: 20px 22px 22px;
   border-radius: var(--r-md);
   background: var(--bg-sunken);
-  text-decoration: none !important;
-  transition: background-color 0.15s, transform 0.15s;
-
-  &:hover {
-    background: var(--accent-wash);
-    transform: translateY(-2px);
-  }
 }
 
 .tool-name {
@@ -205,14 +260,33 @@
   color: var(--ink-2);
 }
 
-.tool-card::after {
-  content: '↗';
-  margin-top: 6px;
-  font-size: var(--t-small);
+.tool-meta {
+  font-size: var(--t-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--ink-3);
 }
 
-.tool-card:hover::after { color: var(--accent); }
+.tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: var(--t-small);
+  font-weight: 550;
+}
+
+/* Subsection headings inside a research block. Direct child only, so the
+   nested h3 in .psum and in the demo keep their own sizing. */
+.rblock-body > h3 {
+  margin: 2.2em 0 0.6em;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 32ch;
+}
 
 /* ── Figure lightbox ── */
 

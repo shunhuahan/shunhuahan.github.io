@@ -48,7 +48,12 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
     <div class="pub-actions">
-      {% if pub.url %}<a href="{{ pub.url }}" class="pub-link" target="_blank">PDF</a>{% endif %}
+      {% comment %}
+        The link label lives beside the url in _data/publications.yml, so it
+        describes the actual destination (HTML article vs PDF application
+        note) instead of being guessed from the entry type here.
+      {% endcomment %}
+      {% if pub.url %}<a href="{{ pub.url }}" class="pub-link" target="_blank">{{ pub.link_label }}</a>{% endif %}
       {% if pub.abstract %}<button class="pub-link pub-abstract-toggle" data-target="appnote-{{ forloop.index }}">Abstract</button>{% endif %}
     </div>
     {% if pub.abstract %}
@@ -105,7 +110,7 @@ For a full and up-to-date list, see my [Google Scholar](https://scholar.google.c
     <p class="pub-authors">{{ pub.authors }}</p>
     <p class="pub-venue">{{ pub.venue }}</p>
     <div class="pub-actions">
-      {% if pub.pdf %}<a href="{{ pub.pdf }}" class="pub-link" target="_blank">PDF</a>{% endif %}
+      {% if pub.pdf %}<a href="{{ pub.pdf }}" class="pub-link" target="_blank">Dissertation (PDF)</a>{% endif %}
       {% if pub.thesis %}<a href="{{ pub.thesis }}" class="pub-link" target="_blank">ProQuest</a>{% endif %}
     </div>
   </div>

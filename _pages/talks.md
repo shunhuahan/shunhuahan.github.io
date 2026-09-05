@@ -18,7 +18,12 @@ Conference presentations, most recent first.
     <div class="pub-content">
       <p class="pub-title">{{ talk.title }}</p>
       <p class="pub-venue">{{ talk.venue }}{% if talk.location %}, {{ talk.location }}{% endif %}{% if talk.date %} · {{ talk.date }}{% endif %}</p>
-      {% if talk.url %}<div class="pub-actions"><a href="{{ talk.url }}" class="pub-link" target="_blank">Abstract</a></div>{% endif %}
+      {% if talk.url or talk.slides %}
+      <div class="pub-actions">
+        {% if talk.url %}<a href="{{ talk.url }}" class="pub-link" target="_blank">Abstract</a>{% endif %}
+        {% if talk.slides %}<a href="{{ talk.slides }}" class="pub-link" target="_blank">Slides (PDF)</a>{% endif %}
+      </div>
+      {% endif %}
     </div>
   </div>
   {% endfor %}

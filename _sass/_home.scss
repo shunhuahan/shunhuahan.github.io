@@ -66,10 +66,85 @@
   text-wrap: pretty;
 }
 
+.hero-tagline-secondary {
+  font-size: var(--t-body);
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
 .hero-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+}
+
+/* ── Selected contributions ── */
+
+.sel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px 32px;
+  margin-top: 22px;
+}
+
+.sel-card {
+  display: flex;
+  flex-direction: column;
+  padding-top: 18px;
+  border-top: 2px solid var(--ink);
+}
+
+.sel-eyebrow {
+  margin: 0 0 8px;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.sel-title {
+  margin: 0 0 14px;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+
+  a { color: var(--ink); }
+  a:hover { color: var(--accent); text-decoration: none; }
+}
+
+.sel-facts {
+  margin: 0 0 14px;
+  flex: 1;
+
+  dt {
+    font-size: var(--t-micro);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 12px;
+  }
+
+  dt:first-child { margin-top: 0; }
+
+  dd {
+    margin: 3px 0 0;
+    font-size: var(--t-small);
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+}
+
+.sel-links {
+  margin: 0;
+  font-size: var(--t-small);
+  font-weight: 550;
+  color: var(--ink-3);
+
+  a { white-space: nowrap; }
 }
 
 @include mobile {
@@ -88,6 +163,9 @@
 
   @include mobile { margin-top: 52px; }
 }
+
+/* The contribution grid needs the full measure; prose sections do not. */
+.home-section-wide { max-width: none; }
 
 .home-section-title {
   margin: 0 0 8px;
