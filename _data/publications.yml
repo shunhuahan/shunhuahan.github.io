@@ -63,6 +63,7 @@
   abstract: "We compared estimates of genomic P element content with gonadal dysgenesis phenotypes for isofemale strains from three worldwide populations of D. melanogaster. P element abundance is highly correlated across different bioinformatics approaches, but sensitive to method and filtering strategy. North American strains have fewer P elements but a higher proportion of full-length elements than European or African strains. However, geographic differences in P element abundance and structure are not associated with corresponding differences in dysgenesis. We conclude that genomic P element content alone is not sufficient to explain variation in gonadal dysgenesis across strains."
 
 - type: appnote
+  display_title: "TruPath Genome: reconstructing paralogous gene copies"
   year: 2026
   sort_date: "2026-08-03"
   title: "Deliver haplotype-resolved, copy-aware small variant detection in paralogous regions within a single WGS workflow: enabled by Illumina TruPath Genome using Multi-Region Joint Detection."

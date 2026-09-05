@@ -1,5 +1,6 @@
 - year: 2026
   type: "Platform Presentation"
+  display_title: "Copy-aware variant analysis at ACMG"
   title: "A Rapid, Novel Approach to Rare Disease and Clinical Genetic Variant Discovery using On-flowcell Proximity Sequencing and Haplotype-resolved Variant Calling."
   venue: "ACMG Annual Clinical Genetics Meeting"
   location: "Baltimore, MD"
@@ -10,6 +11,7 @@
 
 - year: 2026
   type: "Poster"
+  display_title: "Haplotype-resolved analysis at InSiGHT"
   title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-Region Joint Detection with Illumina TruPath Genome."
   venue: "Biennial Meeting of the International Society for Gastrointestinal Hereditary Tumours (InSiGHT)"
   location: "Dusit Thani Laguna, Singapore"

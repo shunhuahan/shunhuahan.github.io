@@ -399,21 +399,6 @@ html.dark .theme-toggle .icon-moon { display: none; }
   #back-to-top { bottom: 18px; right: 18px; }
 }
 
-/* ── Fade-in on scroll ──
-   The visible state must clear the transform entirely: a lingering
-   `translateY(0)` still creates a containing block and would break the
-   sticky rail inside .rblock. */
-.fade-in-ready {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.5s cubic-bezier(0.2, 0, 0, 1), transform 0.5s cubic-bezier(0.2, 0, 0, 1);
-}
-.fade-in-visible { opacity: 1; transform: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .fade-in-ready { opacity: 1; transform: none; transition: none; }
-}
-
 /* ── Theme switch transition ── */
 html.theme-transitions,
 html.theme-transitions *,

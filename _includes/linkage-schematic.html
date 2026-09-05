@@ -1,0 +1,36 @@
+<figure class="linkage" aria-labelledby="linkage-title">
+  <figcaption>
+    <p class="demo-eyebrow">The additional evidence</p>
+    <h4 id="linkage-title">A short read can borrow a longer view</h4>
+    <p class="linkage-note">Conceptual illustration of physical linkage, not an MRJD run. The same seven reads appear in each step.</p>
+  </figcaption>
+  <ol class="linkage-steps">
+    <li class="linkage-step">
+      <h4><span>01</span> Sequence alone</h4>
+      <div class="linkage-art" role="img" aria-label="A and D are informative. B, C, E, F and U could match either copy.">
+        <div class="evidence-row"><b class="evidence-read anchor">A</b><b class="evidence-read">B</b><b class="evidence-read">C</b></div>
+        <div class="evidence-row"><b class="evidence-read anchor">D</b><b class="evidence-read">E</b><b class="evidence-read">F</b></div>
+        <div class="evidence-row"><b class="evidence-read">U</b><span>Uninformative</span></div>
+      </div>
+      <p>A and D carry distinguishing sequence. The other reads could fit either copy.</p>
+    </li>
+    <li class="linkage-step">
+      <h4><span>02</span> Physical linkage</h4>
+      <div class="linkage-art" role="img" aria-label="Linkage connects A with B and C, and D with E and F. U remains unlinked.">
+        <div class="evidence-row linked"><b class="evidence-read anchor">A</b><b class="evidence-read">B</b><b class="evidence-read">C</b></div>
+        <div class="evidence-row linked"><b class="evidence-read anchor">D</b><b class="evidence-read">E</b><b class="evidence-read">F</b></div>
+        <div class="evidence-row"><b class="evidence-read">U</b><span>No linkage</span></div>
+      </div>
+      <p>Linkage connects ambiguous reads to informative sequence on the same molecule.</p>
+    </li>
+    <li class="linkage-step">
+      <h4><span>03</span> Copy assignment</h4>
+      <div class="linkage-art" role="img" aria-label="A, B and C support copy 1. D, E and F support copy 2. U remains unresolved.">
+        <div class="evidence-row resolved"><b class="evidence-read">A</b><b class="evidence-read">B</b><b class="evidence-read">C</b><span>Copy 1</span></div>
+        <div class="evidence-row resolved"><b class="evidence-read">D</b><b class="evidence-read">E</b><b class="evidence-read">F</b><span>Copy 2</span></div>
+        <div class="evidence-row"><b class="evidence-read">U</b><span>Unresolved</span></div>
+      </div>
+      <p>The linked groups support separate copies. Without an anchor, U stays unresolved.</p>
+    </li>
+  </ol>
+</figure>

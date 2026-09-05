@@ -11,7 +11,10 @@
   padding: 72px 0 8px;
   border-top: 1px solid var(--line);
 
-  &:first-of-type { border-top: none; padding-top: 8px; }
+  &:first-of-type {
+    border-top: none;
+    padding-top: 8px;
+  }
 
   @include tablet {
     grid-template-columns: 1fr;
@@ -60,6 +63,7 @@
   > h2 {
     margin: -0.18em 0 0.7em;
     font-size: var(--t-h2);
+    font-weight: 550;
     max-width: 26ch;
   }
 
@@ -81,6 +85,7 @@
 .rfig img {
   display: block;
   width: 100%;
+  height: auto;
   border-radius: var(--r-md);
   border: 1px solid var(--line);
   background: #fff;
@@ -161,71 +166,91 @@
 
   @include mobile {
     grid-template-columns: 1fr;
-    .rlist-link { grid-column: 1; grid-row: auto; }
+    .rlist-link {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 }
 
 /* ── Project summary (shared with the homepage cards via _data/projects.yml) ── */
 
-.psum {
-  margin: 34px 0;
-  padding: 26px 28px 24px;
-  border-radius: var(--r-lg);
-  background: var(--bg-sunken);
-  max-width: 780px;
-  scroll-margin-top: 96px;
-
-  @include mobile { padding: 20px 18px; border-radius: var(--r-md); }
+ .psum {
+   margin: 28px 0 40px;
+   padding: 0 0 24px;
+   border-bottom: 1px solid var(--line);
+   scroll-margin-top: 110px;
+ }
+.psum-kicker {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: var(--t-small);
+  font-weight: 600;
 }
-
-.psum-title {
-  margin: 0 0 16px;
-  font-size: 1.0625rem;
-  font-weight: 650;
-  letter-spacing: -0.015em;
+.psum-intro {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--t-body);
+  line-height: 1.7;
+}
+.psum-evidence {
+  margin: 16px 0 0;
+  max-width: 68ch;
+  color: var(--ink-2);
+  font-size: var(--t-meta);
+  line-height: 1.65;
+}
+.psum-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 20px 0 0;
+  font-size: var(--t-small);
+}
+.research-details {
+  margin: 24px 0;
+  font-size: var(--t-meta);
+}
+.research-details summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: var(--t-small);
+  padding: 8px 0;
+}
+.research-details[open] > summary {
+  margin-bottom: 16px;
   color: var(--ink);
 }
-
+.research-details > p { max-width: var(--measure); }
+.psum .research-details { margin: 16px 0 0; }
 .psum-facts {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
-  gap: 10px 20px;
-  margin: 0 0 16px;
-
-  dt {
-    font-size: var(--t-micro);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    padding-top: 2px;
-  }
-
-  dd {
-    margin: 0;
-    font-size: var(--t-small);
-    line-height: 1.65;
-    color: var(--ink-2);
-  }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: 2px;
-    dt { margin-top: 12px; }
-    dt:first-child { margin-top: 0; }
-  }
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 18px 24px;
+  margin: 12px 0 0;
 }
-
-.psum-links {
-  margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
+.psum-facts dt {
   font-size: var(--t-small);
-  font-weight: 550;
-  color: var(--ink-3);
-
-  a { white-space: nowrap; }
+  color: var(--ink-2);
 }
+.psum-facts dd {
+  margin: 0;
+  font-size: var(--t-meta);
+  line-height: 1.65;
+}
+.research-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 28px 0 56px;
+  font-size: var(--t-small);
+}
+.research-index a {
+  padding: 0;
+  background: none;
+  color: var(--accent);
+}
+@include mobile { .psum-facts { grid-template-columns: 1fr; gap: 6px; } .psum-facts dt:not(:first-child) { margin-top: 12px; } .research-index { gap: 12px 22px; margin-bottom: 40px; } }
 
 /* ── Software cards ── */
 
@@ -301,6 +326,7 @@
   padding: 40px 24px 28px;
   background: rgba(8, 9, 12, 0.94);
   cursor: zoom-out;
+  overflow-y: auto;
 
   &.open { display: flex; }
 

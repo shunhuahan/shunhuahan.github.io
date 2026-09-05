@@ -12,6 +12,9 @@
 #             Code, Documentation, Application note
 
 - anchor: trupath
+  short_title: "MRJD / TruPath Genome"
+  summary: "Reconstructing gene copies and haplotypes where paralogs make short reads ambiguous. I designed and evaluated algorithms that combine joint analysis with proximity evidence."
+  result: "Known pathogenic findings recovered in 31 evaluated samples across eight loci; an evaluation set, not diagnostic sensitivity."
   eyebrow: "Illumina · clinical genomics research"
   title: "Haplotype-resolved variant calling in paralogous genes"
   problem: >-
@@ -21,7 +24,7 @@
   idea: >-
     Multi-region joint detection (MRJD) analyses a gene and its paralogs together instead of one
     region at a time: it estimates total copy number, reconstructs each individual copy, and — with
-    TruPath Genome — uses on-flowcell proximity linkage to assign every reconstructed copy.
+    TruPath Genome — uses on-flowcell proximity linkage to support copy assignment.
   role: >-
     Algorithm design and evaluation. First-named inventor on the multi-region joint detection patent
     application; presented the TruPath evaluation as a platform talk at ACMG 2026 and wrote the
@@ -40,6 +43,9 @@
       url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
 
 - anchor: hba
+  short_title: "Alpha-globin genotyping"
+  summary: "Resolving common alpha-globin copy-number configurations from whole-genome sequencing. I led development of the targeted HBA caller."
+  result: "Compared with long-read data in 246 samples; separately, genotype calls were Mendelian-consistent in 575 trios."
   eyebrow: "Illumina · population genomics research"
   title: "Alpha-globin copy-number genotyping from whole genomes"
   problem: >-
@@ -52,13 +58,16 @@
     Led development of the caller; first-listed author on the Illumina technical article and
     first-named inventor on the associated copy-number genotyping patent application.
   evidence: >-
-    Genotypes were concordant with PacBio HiFi long-read data in 246 diverse 1000 Genomes samples,
+    Evaluation against PacBio HiFi data in 246 diverse 1000 Genomes samples showed high concordance (four no-calls),
     and calls were consistent with Mendelian inheritance in 575 trios. Research use only.
   links:
     - label: "Article"
       url: "https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html"
 
 - anchor: telr
+  short_title: "TELR"
+  summary: "Reconstructing transposable element insertions and estimating their allele frequencies in complex genomes. I developed the software and contributed analysis; joint first author with Guilherme B. Dias."
+  result: "Insertion sequences reconstructed in Drosophila S2R+ supported family-level phylogenetic analysis."
   eyebrow: "Ph.D. research · genome evolution"
   title: "Reconstructing transposable element insertions from long reads"
   problem: >-
