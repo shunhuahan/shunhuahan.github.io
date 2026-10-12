@@ -95,11 +95,21 @@
 
 - type: abstract
   year: 2026
+  sort_date: "2026-03-12"
+  title: "O21: A rapid, novel approach to rare disease and clinical genetic variant discovery using on-flowcell proximity sequencing and haplotype-resolved variant calling."
+  # 39 authors; first six kept, order verified against Crossref.
+  authors: "<strong>Han S</strong>, Onuchic V, Jain V, Subramaniyan A, Tasev Z, Gaffney S, <em>et al.</em>"
+  venue: "<em>Genetics in Medicine Open</em>, 4, 104308."
+  url: "https://doi.org/10.1016/j.gimo.2026.104308"
+
+- type: abstract
+  year: 2026
   sort_date: "2026-03-05"
   title: "O20: Benchmarking comprehensive variant detection in challenging genomic regions using Constellation mapped read technology."
-  authors: "Facio F, Johnson B, Onuchic VF, <strong>Han S</strong>, <em>et al.</em>"
-  venue: "<em>Genetics in Medicine Open</em>, 4."
-  url: "https://www.gimopen.org/article/S2949-7744(26)00817-4/fulltext"
+  # 13 authors; order verified against Crossref.
+  authors: "Facio F, Johnson B, Hruska K, Ellershaw D, Onuchic V, <strong>Han S</strong>, <em>et al.</em>"
+  venue: "<em>Genetics in Medicine Open</em>, 4, 104307."
+  url: "https://doi.org/10.1016/j.gimo.2026.104307"
 
 - type: abstract
   year: 2025

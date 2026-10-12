@@ -2,51 +2,48 @@
   <header class="fig-head">
     <p class="fig-label">Figure 4</p>
     <h3 class="fig-title" id="ag-title">The configuration matters, not just the count</h3>
-    <p class="fig-sub">Common alpha-globin genotypes. Each bar is one chromosome 16 carrying two alpha-globin genes; hollow genes are deleted.</p>
+    <p class="fig-sub">Common alpha-globin genotypes. Each pair of bars is the two copies of chromosome 16, each normally carrying two alpha-globin genes; hollow genes are deleted.</p>
   </header>
-  <div class="ag-table" role="table" aria-label="Alpha-globin genotypes, gene counts and clinical status">
-    <div class="ag-row ag-headrow" role="row">
-      <span role="columnheader">Genotype</span>
-      <span role="columnheader">Chromosome pair</span>
-      <span role="columnheader">Genes</span>
-      <span role="columnheader">Status</span>
-    </div>
-    <div class="ag-row" role="row">
-      <span class="ag-gt" role="cell">αα/αα</span>
-      <span class="ag-chroms" role="cell" aria-label="4 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
-      <span class="ag-n" role="cell">4</span>
-      <span class="ag-status" role="cell">Unaffected</span>
-    </div>
-    <div class="ag-row" role="row">
-      <span class="ag-gt" role="cell">&minus;α/αα</span>
-      <span class="ag-chroms" role="cell" aria-label="3 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
-      <span class="ag-n" role="cell">3</span>
-      <span class="ag-status" role="cell">Silent carrier</span>
-    </div>
-    <div class="ag-row ag-cis" role="row">
-      <span class="ag-gt" role="cell">&minus;&minus;/αα</span>
-      <span class="ag-chroms" role="cell" aria-label="2 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
-      <span class="ag-n" role="cell">2</span>
-      <span class="ag-status" role="cell">Trait · both genes lost from one chromosome, e.g. &minus;&minus;<sup>SEA</sup></span>
-    </div>
-    <div class="ag-row ag-trans" role="row">
-      <span class="ag-gt" role="cell">&minus;α/&minus;α</span>
-      <span class="ag-chroms" role="cell" aria-label="2 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span></span>
-      <span class="ag-n" role="cell">2</span>
-      <span class="ag-status" role="cell">Trait · one gene lost from each chromosome, e.g. &minus;α<sup>3.7</sup></span>
-    </div>
-    <div class="ag-row" role="row">
-      <span class="ag-gt" role="cell">&minus;&minus;/&minus;α</span>
-      <span class="ag-chroms" role="cell" aria-label="1 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span></span>
-      <span class="ag-n" role="cell">1</span>
-      <span class="ag-status" role="cell">HbH disease</span>
-    </div>
-    <div class="ag-row" role="row">
-      <span class="ag-gt" role="cell">&minus;&minus;/&minus;&minus;</span>
-      <span class="ag-chroms" role="cell" aria-label="0 of 4 alpha-globin genes present"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span></span>
-      <span class="ag-n" role="cell">0</span>
-      <span class="ag-status" role="cell">Hb Bart's hydrops fetalis</span>
-    </div>
+  <div class="ag-board">
+    <p class="ag-bracket"><span>Same count, different risk</span></p>
+    <ol class="ag-cols" aria-label="Alpha-globin genotypes from four genes to none">
+      <li class="ag-col">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
+        <b class="ag-n">4</b>
+        <span class="ag-gt">αα/αα</span>
+        <span class="ag-status">Unaffected</span>
+      </li>
+      <li class="ag-col">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
+        <b class="ag-n">3</b>
+        <span class="ag-gt">&minus;α/αα</span>
+        <span class="ag-status">Silent carrier</span>
+      </li>
+      <li class="ag-col ag-cis">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene"></i></span></span>
+        <b class="ag-n">2</b>
+        <span class="ag-gt">&minus;&minus;/αα</span>
+        <span class="ag-status">Trait</span><span class="ag-note">Both deleted on one chromosome, e.g. <span class="ag-allele">&minus;&minus;<sup>SEA</sup></span></span>
+      </li>
+      <li class="ag-col ag-trans">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span></span>
+        <b class="ag-n">2</b>
+        <span class="ag-gt">&minus;α/&minus;α</span>
+        <span class="ag-status">Trait</span><span class="ag-note">One deleted on each, e.g. <span class="ag-allele">&minus;α<sup>3.7</sup></span></span>
+      </li>
+      <li class="ag-col">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene"></i><i class="ag-gene is-lost"></i></span></span>
+        <b class="ag-n">1</b>
+        <span class="ag-gt">&minus;&minus;/&minus;α</span>
+        <span class="ag-status">HbH disease</span>
+      </li>
+      <li class="ag-col">
+        <span class="ag-glyph" aria-hidden="true"><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span><span class="ag-chr"><i class="ag-gene is-lost"></i><i class="ag-gene is-lost"></i></span></span>
+        <b class="ag-n">0</b>
+        <span class="ag-gt">&minus;&minus;/&minus;&minus;</span>
+        <span class="ag-status">Hb Bart's hydrops fetalis</span>
+      </li>
+    </ol>
   </div>
-  <figcaption>The two highlighted rows carry the same number of genes, so a gene count cannot separate them, and reads inside <i>HBA1</i> and <i>HBA2</i> are ambiguous in any case. The difference matters for carrier screening: only the <i>cis</i> configuration passes on a chromosome with no alpha-globin genes. Deletions of different extent leave different depth signatures in the non-homologous sequence around the genes, and that is what the caller reads.</figcaption>
+  <figcaption>The two middle genotypes carry the same two genes, so a gene count cannot separate them, and reads inside <i>HBA1</i> and <i>HBA2</i> are ambiguous in any case. The difference matters for carrier screening: only the <i>cis</i> configuration passes on a chromosome with no alpha-globin genes. Deletions of different extent leave different depth signatures in the non-homologous sequence around the genes, and that is what the caller reads.</figcaption>
 </figure>

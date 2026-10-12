@@ -67,7 +67,7 @@
     <div class="demo-more-body">
       <p><strong>The difference map comes from the reference; the reads are simulated.</strong> Each preset stores how many positions differ between the two copies per 500&nbsp;bp bin, from aligning the pair in hg38. The demo redraws positions at random within each bin, so the long identical stretches and dense clusters are real, but individual ticks are not specific coordinates. Interval identity is averaged over the whole displayed span, so it reads lower than figures quoted for the most similar subregion.</p>
       <p><strong>Short reads.</strong> Error-free 2&nbsp;&times;&nbsp;150&nbsp;bp pairs at 30&times; per copy, with ~450&nbsp;bp fragments. A pair is placed when either mate covers at least one differing position; otherwise it fits both copies equally, gets MAPQ&nbsp;0 and lands on one at random. MAPQ follows the usual &minus;10&thinsp;log<sub>10</sub>&thinsp;P(wrong copy) with a simple 1% chance per site that an error masks a difference.</p>
-      <p><strong>Proximity linkage.</strong> The same read pairs are grouped into source molecules (median ~20&nbsp;kb, one pair every ~1.5&nbsp;kb along each molecule). If any pair in a group covers a differing position, the whole group is placed together. This mirrors the idea behind TruPath Genome, where reads from neighbouring nanowells share a source molecule; real molecule lengths, read density and grouping accuracy differ, and the real analysis also reconstructs and phases each copy.</p>
+      <p><strong>Proximity linkage.</strong> The same read pairs are grouped into source molecules: median ~20&nbsp;kb, with only a few pairs sequenced from each (1&ndash;5, about 3 on average), as is typical for a TruPath Genome template. If any pair in a group covers a differing position, the whole group is placed together. Only this direct, one-molecule linkage is modelled. The real analysis reconstructs each copy from many molecules at once, so it gains more than this view shows, while actual molecule lengths and grouping accuracy also differ.</p>
       <p><strong>Deliberately conservative.</strong> Sequence outside the displayed interval is ignored, so neither view gets help from unique flanking DNA. A position is callable when at least 8 reads placed with MAPQ&nbsp;&ge;&nbsp;20 cover it. Percentages use every simulated pair from both copies; the pileup shows only a sample.</p>
     </div>
   </details>
@@ -94,7 +94,7 @@
   var MIN_DEPTH = 8;
   var MOL_MEDIAN = 20000;  // linked molecule length, lognormal
   var MOL_SIGMA = 0.7;
-  var PAIR_SPACING = 1500; // mean bp between read pairs along a molecule
+  var PAIRS_PER_MOL = 3;   // sequenced fragments per template, typically ~3
 
   // Both views use the same pileup height so toggling never shifts the page:
   // 12 rows of read pairs, or 9 airier rows of molecules.
@@ -187,7 +187,7 @@
         len = Math.max(3000, Math.min(120000, len));
         var ms = Math.floor(rng() * (N + len)) - len;
         var mol = { s: ms, e: ms + len, origin: origin, pairs: [], k: 0 };
-        var n = Math.max(1, Math.round(len / PAIR_SPACING * (0.6 + 0.8 * rng())));
+        var n = 1 + Math.floor(rng() * (2 * PAIRS_PER_MOL - 1));   // 1-5, mean 3
         for (var r = 0; r < n; r++) {
           var F = Math.round(FRAGMENT * (0.8 + 0.4 * rng()));
           var s = ms + Math.floor(rng() * Math.max(1, len - F));

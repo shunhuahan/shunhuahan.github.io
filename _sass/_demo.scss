@@ -381,70 +381,75 @@
 
 /* ════════════════════════════════════════
    FIGURE 4 · ALPHA-GLOBIN CONFIGURATIONS
+   Six columns, four genes down to none. Each glyph is a chromosome pair:
+   two hairlines with two gene blocks on each.
    ════════════════════════════════════════ */
 
-.ag-table {
+.ag-board {
+  position: relative;
+  padding: 22px 20px 24px;
   border-radius: var(--r-md);
   background: var(--bg);
-  padding: 6px 18px;
+
+  @include mobile { padding: 18px 12px 20px; }
 }
 
-.ag-row {
+.ag-cols {
   display: grid;
-  grid-template-columns: 92px 150px 52px minmax(0, 1fr);
-  align-items: center;
-  gap: 16px;
-  padding: 11px 0;
-  border-top: 1px solid var(--line-soft);
-  font-size: var(--t-small);
-  color: var(--ink-2);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-  &:first-child { border-top: none; }
-
-  @include mobile {
-    grid-template-columns: 64px 104px 28px minmax(0, 1fr);
-    gap: 10px;
-    font-size: 12px;
-  }
+  // Two per row keeps the cis/trans pair side by side on phones.
+  @include mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; }
 }
 
-.ag-headrow {
-  padding: 10px 0 8px;
-  font-size: var(--t-micro);
-  font-weight: 600;
-  color: var(--ink-3);
-
-  @include mobile { font-size: 11px; }
-}
-
-.ag-gt {
-  font-family: $monoFont;
-  font-size: 0.875rem;
-  color: var(--ink);
-  white-space: nowrap;
-  @include mobile { font-size: 12px; }
-}
-
-.ag-n {
-  font-family: $displayFont;
-  font-size: 1.0625rem;
-  font-weight: 650;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.ag-chroms {
+.ag-col {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  margin: 0;
+  padding: 16px 6px 4px;
+  text-align: center;
+  border-radius: var(--r-sm);
 }
 
-// One chromosome: a hairline with two gene blocks on it.
+// The pair the figure is about shares one tinted field.
+.ag-cis, .ag-trans { background: var(--accent-wash); }
+.ag-cis { border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.ag-trans { border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+
+.ag-bracket {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0 0 8px;
+
+  span {
+    grid-column: 3 / span 2;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent);
+    font-size: var(--t-micro);
+    font-weight: 600;
+    text-align: center;
+    color: var(--accent);
+  }
+
+  @include mobile { display: none; }
+}
+
+.ag-glyph {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
 .ag-chr {
   position: relative;
   display: flex;
-  gap: 6px;
-  padding: 0 10px;
+  gap: 5px;
+  padding: 0 8px;
 
   &::before {
     content: '';
@@ -452,39 +457,58 @@
     left: 0;
     right: 0;
     top: 50%;
-    border-top: 1px solid var(--ink-3);
-    opacity: 0.6;
+    border-top: 1.5px solid var(--ink-3);
+    opacity: 0.5;
   }
 }
 
 .ag-gene {
   position: relative;
-  width: 26px;
-  height: 9px;
-  border-radius: 2px;
+  width: 22px;
+  height: 12px;
+  border-radius: 3px;
   background: var(--accent);
 
   &.is-lost {
     background: var(--bg);
-    border: 1px dashed var(--ink-3);
+    border: 1.5px dashed var(--ink-3);
   }
+}
+.ag-cis .ag-gene.is-lost, .ag-trans .ag-gene.is-lost { background: var(--accent-wash); }
 
-  @include mobile { width: 20px; }
+.ag-n {
+  font-family: $displayFont;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
-// The two rows the figure is about.
-.ag-cis, .ag-trans {
-  .ag-status { color: var(--ink); }
+.ag-gt {
+  margin-top: 6px;
+  font-family: $monoFont;
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+  white-space: nowrap;
 }
-.ag-cis {
-  border-top-color: var(--line);
-  box-shadow: inset 3px 0 0 var(--accent);
-  margin-left: -18px;
-  padding-left: 18px;
-  @include mobile { margin-left: -18px; padding-left: 18px; }
+
+.ag-status {
+  margin-top: 8px;
+  font-size: var(--t-small);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
 }
-.ag-trans {
-  box-shadow: inset 3px 0 0 var(--accent);
-  margin-left: -18px;
-  padding-left: 18px;
+
+.ag-note {
+  margin-top: 4px;
+  font-size: var(--t-micro);
+  line-height: 1.4;
+  color: var(--ink-2);
+
+  sup { font-size: 0.7em; line-height: 0; vertical-align: super; }
 }
+
+.ag-allele { white-space: nowrap; }

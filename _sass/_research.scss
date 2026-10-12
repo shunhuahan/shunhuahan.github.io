@@ -485,8 +485,7 @@
 .work:last-child { border-bottom: none; }
 
 // Allele names such as −α3.7 and −−SEA carry their subtype as a superscript.
-.work-main sup,
-.ag-status sup {
+.work-main sup {
   font-size: 0.68em;
   line-height: 0;
   vertical-align: super;
