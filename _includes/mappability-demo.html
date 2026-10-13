@@ -2,7 +2,7 @@
   <header class="fig-head">
     <p class="fig-label">Figure 1 · Interactive</p>
     <h3 class="fig-title">Where short reads lose their place</h3>
-    <p class="fig-sub">Pick a gene pair, then add proximity linkage. The reads are the same in both views; linkage only changes which of them can be placed on the right copy.</p>
+    <p class="fig-sub">A read can only be placed on the right gene if it covers a base where the two copies differ. Where the copies are identical, reads fit both equally and cannot support a variant call.</p>
   </header>
 
   <div class="demo-bar">
@@ -11,33 +11,34 @@
       <button type="button" class="seg-btn" data-preset="pms2" aria-pressed="false"><em>PMS2</em><span class="seg-divider"> / </span><em>PMS2CL</em></button>
       <button type="button" class="seg-btn" data-preset="cyp21" aria-pressed="false"><em>CYP21A2</em><span class="seg-divider"> / </span><em>CYP21A1P</em></button>
     </div>
-    <div class="seg seg-mode" role="group" aria-label="Evidence">
-      <button type="button" class="seg-btn is-on" data-mode="short" aria-pressed="true">Short reads</button>
-      <button type="button" class="seg-btn" data-mode="linked" aria-pressed="false">+ Proximity linkage</button>
+    <div class="seg seg-len" role="group" aria-label="Read length">
+      <button type="button" class="seg-btn" data-len="100" aria-pressed="false">2&times;100</button>
+      <button type="button" class="seg-btn is-on" data-len="150" aria-pressed="true">2&times;150</button>
+      <button type="button" class="seg-btn" data-len="250" aria-pressed="false">2&times;250 bp</button>
     </div>
   </div>
 
   <div class="demo-plot" id="sim-wrap">
     <div class="trk">
       <div class="trk-head">
-        <span class="trk-label">Where the two copies differ</span>
+        <span class="trk-label">Bases where the two copies differ</span>
         <span class="trk-meta" id="sim-meta-ref"></span>
       </div>
       <canvas class="sim-canvas" id="sim-canvas-ref" role="img" aria-label="Density of positions where the two gene copies differ"></canvas>
     </div>
     <div class="trk">
       <div class="trk-head">
-        <span class="trk-label" id="sim-label-a">Read pairs placed on <em>SMN1</em></span>
-        <span class="trk-meta" id="sim-meta-a"></span>
+        <span class="trk-label" id="sim-label-depth">Read depth on <em>SMN1</em></span>
+        <span class="trk-meta">dashed line: minimum depth to call a variant</span>
       </div>
-      <canvas class="sim-canvas" id="sim-canvas-a" role="img" aria-label="Simulated reads, split by whether they could be placed on the right copy"></canvas>
+      <canvas class="sim-canvas" id="sim-canvas-depth" role="img" aria-label="Read depth across the gene, split into reads placed on the right copy and reads that fit both copies"></canvas>
     </div>
     <div class="trk">
       <div class="trk-head">
-        <span class="trk-label">Callable for a variant</span>
+        <span class="trk-label">Callable</span>
         <span class="trk-meta" id="sim-meta-call"></span>
       </div>
-      <canvas class="sim-canvas" id="sim-canvas-call" role="img" aria-label="Positions with enough confidently placed reads to call a variant"></canvas>
+      <canvas class="sim-canvas" id="sim-canvas-call" role="img" aria-label="Positions with enough placed reads to call a variant"></canvas>
       <div class="trk-axis"><span>0</span><span id="sim-axis-end"></span></div>
     </div>
     <div class="sim-tooltip" id="sim-tooltip" aria-hidden="true"></div>
@@ -46,29 +47,25 @@
   <div class="demo-key">
     <span><i class="k k-ok"></i>Placed on the right copy</span>
     <span><i class="k k-bad"></i>Fits both copies equally</span>
-    <span class="k-note">Illustrative simulation, not a benchmark</span>
   </div>
 
   <div class="demo-stats" aria-live="polite">
     <div class="demo-stat">
       <b id="sim-stat-callable">&hellip;</b>
       <span>of the <em id="sim-stat-gene">SMN1</em> interval is callable</span>
-      <small id="sim-cmp-callable"></small>
     </div>
     <div class="demo-stat">
       <b id="sim-stat-ambiguous">&hellip;</b>
       <span>of read pairs fit both copies equally</span>
-      <small id="sim-cmp-ambiguous"></small>
     </div>
   </div>
 
   <details class="demo-more">
     <summary>How the simulation works</summary>
     <div class="demo-more-body">
-      <p><strong>The difference map comes from the reference; the reads are simulated.</strong> Each preset stores how many positions differ between the two copies per 500&nbsp;bp bin, from aligning the pair in hg38. The demo redraws positions at random within each bin, so the long identical stretches and dense clusters are real, but individual ticks are not specific coordinates. Interval identity is averaged over the whole displayed span, so it reads lower than figures quoted for the most similar subregion.</p>
-      <p><strong>Short reads.</strong> Error-free 2&nbsp;&times;&nbsp;150&nbsp;bp pairs at 30&times; per copy, with ~450&nbsp;bp fragments. A pair is placed when either mate covers at least one differing position; otherwise it fits both copies equally, gets MAPQ&nbsp;0 and lands on one at random. MAPQ follows the usual &minus;10&thinsp;log<sub>10</sub>&thinsp;P(wrong copy) with a simple 1% chance per site that an error masks a difference.</p>
-      <p><strong>Proximity linkage.</strong> The same read pairs are grouped into source molecules: median ~20&nbsp;kb, with only a few pairs sequenced from each (1&ndash;5, about 3 on average), as is typical for a TruPath Genome template. If any pair in a group covers a differing position, the whole group is placed together. Only this direct, one-molecule linkage is modelled. The real analysis reconstructs each copy from many molecules at once, so it gains more than this view shows, while actual molecule lengths and grouping accuracy also differ.</p>
-      <p><strong>Deliberately conservative.</strong> Sequence outside the displayed interval is ignored, so neither view gets help from unique flanking DNA. A position is callable when at least 8 reads placed with MAPQ&nbsp;&ge;&nbsp;20 cover it. Percentages use every simulated pair from both copies; the pileup shows only a sample.</p>
+      <p><strong>The difference map comes from the reference; the reads are simulated.</strong> Each preset stores how many positions differ between the two copies per 500&nbsp;bp bin, from aligning the pair in hg38. Positions are redrawn at random within each bin, so the long identical stretches and dense clusters are real, but individual positions are not exact coordinates. Identity is averaged over the whole displayed interval, so it reads lower than figures quoted for the most similar subregion.</p>
+      <p><strong>Reads.</strong> Error-free paired-end reads at 30&times; per copy with ~450&nbsp;bp fragments, drawn from both copies. A pair covering at least one differing position is placed on its true copy. A pair covering none fits both equally, gets MAPQ&nbsp;0 and lands on either copy at random; the orange depth is those reads. Sequence outside the displayed interval is ignored.</p>
+      <p><strong>Callable</strong> means at least 8 placed reads with MAPQ&nbsp;&ge;&nbsp;20 cover the position, a typical variant-calling filter. MAPQ follows the usual &minus;10&thinsp;log<sub>10</sub>&thinsp;P(wrong copy), with a simple 1% chance per site that a sequencing error masks a difference. A real aligner also weighs base qualities, indels and its own scoring, so treat this as an illustration, not a benchmark.</p>
     </div>
   </details>
 </figure>
@@ -81,25 +78,19 @@
   if (!root) return;
 
   var canvasRef = $('sim-canvas-ref');
-  var canvasA = $('sim-canvas-a');
+  var canvasDepth = $('sim-canvas-depth');
   var canvasCall = $('sim-canvas-call');
   var tooltip = $('sim-tooltip');
   var simWrap = $('sim-wrap');
 
-  var READ_LEN = 150;
-  var COVERAGE = 30;       // per copy
-  var FRAGMENT = 450;      // mean insert
-  var ERR = 0.01;          // chance an error masks a difference
+  var COVERAGE = 30;    // per copy
+  var FRAGMENT = 450;   // mean insert
+  var ERR = 0.01;       // chance an error masks a difference
   var GOOD_MAPQ = 20;
   var MIN_DEPTH = 8;
-  var MOL_MEDIAN = 20000;  // linked molecule length, lognormal
-  var MOL_SIGMA = 0.7;
-  var PAIRS_PER_MOL = 3;   // sequenced fragments per template, typically ~3
-
-  // Both views use the same pileup height so toggling never shifts the page:
-  // 12 rows of read pairs, or 9 airier rows of molecules.
-  var ROW_H = 4, PAIR_LANE = 6, PAIR_ROWS = 12, MOL_LANE = 8, MOL_ROWS = 9;
-  var REF_H = 28, CALL_H = 10, CALL_BINS = 1600;
+  var REF_H = 28, DEPTH_H = 96, CALL_H = 10;
+  var BIN = 100;        // bp per depth bin
+  var SMOOTH = 2;       // bins either side; ~500 bp window for the depth trace
 
   // Differences per 500 bp bin, from the hg38 alignment of each pair.
   var PRESETS = {
@@ -117,8 +108,8 @@
     }
   };
 
-  var state = { preset: 'smn', mode: 'short' };
-  var cache = {};   // preset -> { short: sim, linked: sim }
+  var state = { preset: 'smn', len: 150 };
+  var cache = {};
   var shown = null;
 
   function mulberry32(a) {
@@ -130,42 +121,18 @@
     };
   }
 
-  function gauss(rng) {
-    var u = Math.max(1e-9, rng()), v = rng();
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-  }
-
   function mapqFor(k) {
     if (k === 0) return 0;
     var pWrong = Math.pow(ERR, k) / (Math.pow(ERR, k) + Math.pow(1 - ERR, k));
     return Math.min(60, Math.round(-10 * Math.log(pWrong) / Math.LN10));
   }
 
-  // Greedy first-fit packing, as in a genome browser pileup.
-  function pack(items, maxRows) {
-    items.sort(function(a, b) { return a.s - b.s; });
-    var ends = [];
-    for (var i = 0; i < items.length; i++) {
-      var it = items[i];
-      it.row = -1;
-      for (var j = 0; j < ends.length; j++) {
-        if (ends[j] < it.s) { it.row = j; ends[j] = it.e + it.pad; break; }
-      }
-      if (it.row === -1 && ends.length < maxRows) {
-        it.row = ends.length;
-        ends.push(it.e + it.pad);
-      }
-    }
-  }
-
-  // One genome, one set of read pairs per preset; the two modes differ only
-  // in whether pairs are judged alone or together with their molecule.
-  function build(key) {
-    var p = PRESETS[key];
-    var N = p.size;
+  // The genome is fixed per preset (same seed), so changing read length
+  // re-reads the same pair of genes rather than reshuffling them.
+  function simulate(key, L) {
+    var p = PRESETS[key], N = p.size;
     var rngP = mulberry32(42);
-    var psv = [];
-    var prefix = new Int32Array(N + 1);
+    var psv = [], prefix = new Int32Array(N + 1);
     for (var i = 0; i < N; i++) {
       var b = Math.min(p.bins.length - 1, Math.floor(i / p.binSize));
       var hit = rngP() < p.bins[b] / p.binSize ? 1 : 0;
@@ -177,105 +144,56 @@
       return hi > lo ? prefix[hi] - prefix[lo] : 0;
     }
 
-    var rng = mulberry32(7);
-    var target = Math.round((N + FRAGMENT) * COVERAGE / (2 * READ_LEN));
-    var pairs = [], molecules = [];
-    for (var origin = 0; origin < 2; origin++) {
-      var made = 0;
-      while (made < target) {
-        var len = Math.round(MOL_MEDIAN * Math.exp(MOL_SIGMA * gauss(rng)));
-        len = Math.max(3000, Math.min(120000, len));
-        var ms = Math.floor(rng() * (N + len)) - len;
-        var mol = { s: ms, e: ms + len, origin: origin, pairs: [], k: 0 };
-        var n = 1 + Math.floor(rng() * (2 * PAIRS_PER_MOL - 1));   // 1-5, mean 3
-        for (var r = 0; r < n; r++) {
-          var F = Math.round(FRAGMENT * (0.8 + 0.4 * rng()));
-          var s = ms + Math.floor(rng() * Math.max(1, len - F));
-          if (s + F <= 0 || s >= N) continue;   // outside the displayed interval
-          var k = sitesIn(s, s + READ_LEN) + sitesIn(s + F - READ_LEN, s + F);
-          var pr = { s: s, F: F, k: k, origin: origin, mol: mol, tie: rng() };
-          mol.pairs.push(pr);
-          mol.k += k;
-          pairs.push(pr);
-          made++;
-        }
-        if (mol.pairs.length) {
-          mol.tie = rng();
-          molecules.push(mol);
-        }
-      }
-    }
-    return {
-      preset: p, N: N, psv: psv, pairs: pairs, molecules: molecules,
-      short: evaluate(p, N, pairs, molecules, false),
-      linked: evaluate(p, N, pairs, molecules, true)
-    };
-  }
-
-  function evaluate(p, N, pairs, molecules, linked) {
-    var depthDelta = new Int32Array(N + 1);
-    function add(a, b) {
+    // Depth on copy A, split by whether the read was placed or merely fits.
+    var okDelta = new Int32Array(N + 1), badDelta = new Int32Array(N + 1);
+    function add(arr, a, b) {
       var lo = Math.max(0, a), hi = Math.min(N, b);
-      if (hi > lo) { depthDelta[lo]++; depthDelta[hi]--; }
+      if (hi > lo) { arr[lo]++; arr[hi]--; }
     }
-    var nAmb = 0;
-    for (var i = 0; i < pairs.length; i++) {
-      var pr = pairs[i];
-      var k = linked ? pr.mol.k : pr.k;
-      var tie = linked ? pr.mol.tie : pr.tie;
-      var assigned = k > 0 ? pr.origin : (tie < 0.5 ? pr.origin : 1 - pr.origin);
-      if (k === 0) nAmb++;
-      if (assigned === 0 && mapqFor(k) >= GOOD_MAPQ) {
-        add(pr.s, pr.s + READ_LEN);
-        add(pr.s + pr.F - READ_LEN, pr.s + pr.F);
+
+    var rng = mulberry32(7 + L);
+    var Fmean = Math.max(FRAGMENT, L + 50);
+    var nPer = Math.round((N + Fmean) * COVERAGE / (2 * L));
+    var total = 0, amb = 0;
+    for (var origin = 0; origin < 2; origin++) {
+      for (var r = 0; r < nPer; r++) {
+        var F = Math.max(L, Math.round(Fmean * (0.85 + 0.3 * rng())));
+        var s = Math.floor(rng() * (N + F - 1)) - (F - 1);
+        var e2 = Math.max(s + L, s + F - L);
+        var k = sitesIn(s, s + L) + sitesIn(e2, s + F);
+        var tie = rng();
+        total++;
+        var assigned = origin;
+        if (k === 0) { amb++; assigned = tie < 0.5 ? 0 : 1; }
+        if (assigned !== 0) continue;
+        var arr = mapqFor(k) >= GOOD_MAPQ ? okDelta : badDelta;
+        add(arr, s, s + L);
+        add(arr, e2, s + F);
       }
     }
-    var depth = 0, callable = 0;
-    var hit = new Float32Array(CALL_BINS), tot = new Float32Array(CALL_BINS);
+
+    var nb = Math.ceil(N / BIN);
+    var ok = new Float32Array(nb), bad = new Float32Array(nb), call = new Float32Array(nb);
+    var dOk = 0, dBad = 0, callable = 0;
     for (var i = 0; i < N; i++) {
-      depth += depthDelta[i];
-      var bin = Math.min(CALL_BINS - 1, Math.floor(i * CALL_BINS / N));
-      tot[bin]++;
-      if (depth >= MIN_DEPTH) { callable++; hit[bin]++; }
+      dOk += okDelta[i]; dBad += badDelta[i];
+      var j = Math.floor(i / BIN);
+      ok[j] += dOk; bad[j] += dBad;
+      if (dOk >= MIN_DEPTH) { callable++; call[j]++; }
     }
-    for (var i = 0; i < CALL_BINS; i++) hit[i] = tot[i] ? hit[i] / tot[i] : 0;
-
-    // Pileup items for copy A: pairs on their own, or whole molecules.
-    var ok = [], bad = [];
-    if (linked) {
-      for (var i = 0; i < molecules.length; i++) {
-        var m = molecules[i];
-        var a = m.k > 0 ? m.origin : (m.tie < 0.5 ? m.origin : 1 - m.origin);
-        if (a !== 0) continue;
-        var lo = Infinity, hi = -Infinity;
-        for (var j = 0; j < m.pairs.length; j++) {
-          lo = Math.min(lo, m.pairs[j].s);
-          hi = Math.max(hi, m.pairs[j].s + m.pairs[j].F);
-        }
-        var item = { s: Math.max(lo, m.s), e: hi, pad: 600, mol: m, k: m.k };
-        (m.k > 0 ? ok : bad).push(item);
-      }
-    } else {
-      for (var i = 0; i < pairs.length; i++) {
-        var pr = pairs[i];
-        var a = pr.k > 0 ? pr.origin : (pr.tie < 0.5 ? pr.origin : 1 - pr.origin);
-        if (a !== 0) continue;
-        (pr.k > 0 ? ok : bad).push({ s: pr.s, e: pr.s + pr.F, pad: 60, pair: pr, k: pr.k });
-      }
+    for (var j = 0; j < nb; j++) {
+      var w = Math.min(BIN, N - j * BIN);
+      ok[j] /= w; bad[j] /= w; call[j] /= w;
     }
-    var rows = linked ? MOL_ROWS : PAIR_ROWS;
-    pack(ok, rows);
-    pack(bad, rows);
-
     return {
-      ok: ok, bad: bad, nAssignedA: ok.length + bad.length,
-      callProfile: hit, callableFrac: callable / N,
-      ambFrac: nAmb / pairs.length, totalPairs: pairs.length
+      preset: p, N: N, psv: psv, ok: ok, bad: bad, call: call,
+      callableFrac: callable / N, ambFrac: amb / total
     };
   }
 
-  function get(key) {
-    if (!cache[key]) cache[key] = build(key);
+  function get() {
+    var key = state.preset + ':' + state.len;
+    if (!cache[key]) cache[key] = simulate(state.preset, state.len);
     return cache[key];
   }
 
@@ -285,7 +203,9 @@
       ok: cs.getPropertyValue('--read-ok').trim() || '#3f6fd8',
       bad: cs.getPropertyValue('--read-bad').trim() || '#e0562d',
       diff: cs.getPropertyValue('--diff').trim() || '#2b3040',
-      line: cs.getPropertyValue('--line').trim() || '#e3e6ec'
+      line: cs.getPropertyValue('--line').trim() || '#e3e6ec',
+      ink: cs.getPropertyValue('--ink').trim() || '#0f1115',
+      bg: cs.getPropertyValue('--bg').trim() || '#ffffff'
     };
   }
 
@@ -301,8 +221,8 @@
     return { ctx: ctx, w: cssW, h: cssH };
   }
 
-  // Density per pixel column rather than ticks: at this scale one differing
-  // base is a fraction of a pixel, and the empty valleys are the point.
+  // Density per pixel column: at this scale one differing base is a fraction
+  // of a pixel, and the empty stretches are the point.
   function drawRef(g) {
     var c = setupCanvas(canvasRef, REF_H), pal = tokens(), ctx = c.ctx;
     var cols = Math.max(1, Math.round(c.w));
@@ -321,48 +241,68 @@
     }
   }
 
-  var hitRects = [];
-
-  function drawPileup(g, ev, linked) {
-    var lane = linked ? MOL_LANE : PAIR_LANE;
-    var mid = PAIR_ROWS * PAIR_LANE + 4;
-    var c = setupCanvas(canvasA, mid * 2);
-    var ctx = c.ctx, pal = tokens();
-    var xs = c.w / g.N;
-    ctx.fillStyle = pal.line;
-    ctx.fillRect(0, mid - 1, c.w, 1);
-    hitRects = [];
-
-    function group(items, color, up) {
-      for (var i = 0; i < items.length; i++) {
-        var it = items[i];
-        if (it.row < 0) continue;
-        var y = up ? mid - 3 - (it.row + 1) * lane + (lane - ROW_H) : mid + 2 + it.row * lane;
-        if (linked) {
-          // The molecule as a hairline, its read pairs as blocks along it.
-          var x1 = Math.max(0, it.s * xs), x2 = Math.min(c.w, it.e * xs);
-          ctx.globalAlpha = 0.45;
-          ctx.fillStyle = color;
-          ctx.fillRect(x1, y + ROW_H / 2 - 0.5, Math.max(1, x2 - x1), 1);
-          ctx.globalAlpha = 1;
-          var ps = it.mol.pairs;
-          for (var j = 0; j < ps.length; j++) {
-            ctx.fillRect(ps[j].s * xs, y, Math.max(2, ps[j].F * xs), ROW_H);
-          }
-        } else {
-          // At this scale the two mates sit ~3 px apart, so the pair reads
-          // better as one fragment than as two dotted marks.
-          ctx.fillStyle = color;
-          ctx.fillRect(it.s * xs, y, Math.max(2, (it.e - it.s) * xs), ROW_H);
+  // Stacked depth: placed reads from the baseline, reads that merely fit on
+  // top. Total depth barely changes along the gene; what changes is how much
+  // of it can be trusted.
+  function drawDepth(g) {
+    var c = setupCanvas(canvasDepth, DEPTH_H), pal = tokens(), ctx = c.ctx;
+    // A ~500 bp moving average: the per-base depth is all noise at this
+    // scale, and the shape of the two layers is what matters.
+    function smooth(a) {
+      var out = new Float32Array(a.length);
+      for (var j = 0; j < a.length; j++) {
+        var sum = 0, n = 0;
+        for (var d = -SMOOTH; d <= SMOOTH; d++) {
+          if (j + d >= 0 && j + d < a.length) { sum += a[j + d]; n++; }
         }
-        hitRects.push({ x: it.s * xs, y: y - 1, w: Math.max(3, (it.e - it.s) * xs), h: ROW_H + 2, item: it });
+        out[j] = sum / n;
       }
+      return out;
     }
-    group(ev.ok, pal.ok, true);
-    group(ev.bad, pal.bad, false);
+    var okS = smooth(g.ok), badS = smooth(g.bad);
+    var nb = okS.length, top = 0;
+    for (var j = 0; j < nb; j++) top = Math.max(top, okS[j] + badS[j]);
+    var depthMax = Math.max(40, Math.ceil(top / 10) * 10);
+    var H = c.h - 1;
+    function X(j) { return j / nb * c.w; }
+    function Y(d) { return H - d / depthMax * H; }
+
+    function area(lower, upper, color) {
+      ctx.beginPath();
+      ctx.moveTo(0, Y(lower(0)));
+      for (var j = 0; j < nb; j++) { ctx.lineTo(X(j), Y(upper(j))); ctx.lineTo(X(j + 1), Y(upper(j))); }
+      for (var j = nb - 1; j >= 0; j--) { ctx.lineTo(X(j + 1), Y(lower(j))); ctx.lineTo(X(j), Y(lower(j))); }
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+    area(function() { return 0; }, function(j) { return okS[j]; }, pal.ok);
+    area(function(j) { return okS[j]; }, function(j) { return okS[j] + badS[j]; }, pal.bad);
+
+    ctx.fillStyle = pal.line;
+    ctx.fillRect(0, H, c.w, 1);
+
+    // Threshold: a background-coloured halo keeps the dashes legible over
+    // either fill colour.
+    var yT = Math.round(Y(MIN_DEPTH)) + 0.5;
+    ctx.strokeStyle = pal.bg;
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(0, yT); ctx.lineTo(c.w - 22, yT); ctx.stroke();
+    ctx.strokeStyle = pal.ink;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(0, yT); ctx.lineTo(c.w - 22, yT); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '600 10px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = pal.bg;
+    ctx.fillRect(c.w - 20, yT - 7, 20, 14);
+    ctx.fillStyle = pal.ink;
+    ctx.fillText(MIN_DEPTH + '\u00d7', c.w, yT);
   }
 
-  function drawCall(ev) {
+  function drawCall(g) {
     var c = setupCanvas(canvasCall, CALL_H), ctx = c.ctx, pal = tokens();
     ctx.beginPath();
     if (ctx.roundRect) ctx.roundRect(0, 0, c.w, CALL_H, CALL_H / 2);
@@ -372,8 +312,9 @@
     ctx.save();
     ctx.clip();
     ctx.fillStyle = pal.ok;
+    var nb = g.call.length;
     for (var x = 0; x < c.w; x++) {
-      var f = ev.callProfile[Math.min(CALL_BINS - 1, Math.floor(x / c.w * CALL_BINS))];
+      var f = g.call[Math.min(nb - 1, Math.floor(x / c.w * nb))];
       if (f <= 0.02) continue;
       ctx.globalAlpha = Math.min(1, 0.25 + 0.75 * f);
       ctx.fillRect(x, 0, 1, CALL_H);
@@ -383,59 +324,30 @@
 
   function pct(x) { return Math.round(x * 100) + '%'; }
 
-  // Ease the headline numbers so the change between views reads as a change.
-  var tweens = {};
-  function setNumber(el, to) {
-    var from = parseFloat(el.getAttribute('data-v'));
-    el.setAttribute('data-v', to);
-    if (isNaN(from) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      el.textContent = Math.round(to) + '%';
-      return;
-    }
-    var t0 = performance.now(), id = el.id;
-    cancelAnimationFrame(tweens[id]);
-    (function step(t) {
-      var u = Math.min(1, (t - t0) / 420);
-      u = 1 - Math.pow(1 - u, 3);
-      el.textContent = Math.round(from + (to - from) * u) + '%';
-      if (u < 1) tweens[id] = requestAnimationFrame(step);
-    })(t0);
-  }
-
   function redraw() {
-    var g = get(state.preset), ev = g[state.mode];
-    drawRef(g);
-    drawPileup(g, ev, state.mode === 'linked');
-    drawCall(ev);
+    drawRef(shown);
+    drawDepth(shown);
+    drawCall(shown);
   }
 
   function render() {
-    var g = get(state.preset), linked = state.mode === 'linked';
-    var ev = g[state.mode], other = linked ? g.short : g.linked;
-    var p = g.preset;
-    shown = ev;
+    var g = shown = get(), p = g.preset;
     redraw();
-
-    $('sim-meta-ref').textContent = (g.N / 1000).toFixed(1) + ' kb · ' + p.identity + '% identical';
-    $('sim-label-a').innerHTML = (linked ? 'Linked molecules placed on ' : 'Read pairs placed on ') + '<em>' + p.a + '</em>';
-    $('sim-meta-a').textContent = linked ? 'one row per source molecule' : 'one row per read pair';
-    $('sim-meta-call').textContent = pct(ev.callableFrac) + ' of the interval';
-    $('sim-axis-end').textContent = (g.N / 1000).toFixed(1) + ' kb';
+    var kb = (g.N / 1000).toFixed(1) + ' kb';
+    $('sim-meta-ref').textContent = kb + ' · ' + p.identity + '% identical';
+    $('sim-label-depth').innerHTML = 'Read depth on <em>' + p.a + '</em>';
+    $('sim-meta-call').textContent = pct(g.callableFrac) + ' of the interval';
+    $('sim-axis-end').textContent = kb;
     $('sim-stat-gene').textContent = p.a;
-    canvasRef.setAttribute('aria-label', 'Positions where ' + p.a + ' and ' + p.b + ' differ, across ' + (g.N / 1000).toFixed(1) + ' kb');
-
-    var cs = $('sim-stat-callable'), ca = $('sim-stat-ambiguous');
-    setNumber(cs, ev.callableFrac * 100);
-    setNumber(ca, ev.ambFrac * 100);
-    cs.className = ev.callableFrac < 0.7 ? 'is-bad' : '';
-    var lab = linked ? 'Short reads alone: ' : 'With linkage: ';
-    $('sim-cmp-callable').textContent = lab + pct(other.callableFrac);
-    $('sim-cmp-ambiguous').textContent = lab + pct(other.ambFrac);
+    $('sim-stat-callable').textContent = pct(g.callableFrac);
+    $('sim-stat-callable').className = g.callableFrac < 0.7 ? 'is-bad' : '';
+    $('sim-stat-ambiguous').textContent = pct(g.ambFrac);
+    canvasRef.setAttribute('aria-label', 'Positions where ' + p.a + ' and ' + p.b + ' differ, across ' + kb);
 
     var btns = root.querySelectorAll('.seg-btn');
     for (var i = 0; i < btns.length; i++) {
       var b = btns[i];
-      var on = b.getAttribute('data-preset') === state.preset || b.getAttribute('data-mode') === state.mode;
+      var on = b.getAttribute('data-preset') === state.preset || b.getAttribute('data-len') === String(state.len);
       b.classList.toggle('is-on', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     }
@@ -445,35 +357,25 @@
     var b = e.target.closest('.seg-btn');
     if (!b) return;
     if (b.hasAttribute('data-preset')) state.preset = b.getAttribute('data-preset');
-    if (b.hasAttribute('data-mode')) state.mode = b.getAttribute('data-mode');
+    if (b.hasAttribute('data-len')) state.len = parseInt(b.getAttribute('data-len'), 10);
     render();
   });
 
-  canvasA.addEventListener('mousemove', function(e) {
-    var rect = canvasA.getBoundingClientRect();
-    var mx = e.clientX - rect.left, my = e.clientY - rect.top, hit = null;
-    for (var i = hitRects.length - 1; i >= 0; i--) {
-      var h = hitRects[i];
-      if (mx >= h.x && mx <= h.x + h.w && my >= h.y && my <= h.y + h.h) { hit = h.item; break; }
-    }
-    if (!hit) { tooltip.style.display = 'none'; return; }
-    var msg;
-    if (hit.mol) {
-      msg = 'Molecule · ' + (hit.mol.e - hit.mol.s >= 1000 ? ((hit.mol.e - hit.mol.s) / 1000).toFixed(1) + ' kb' : '') +
-        ' · ' + hit.mol.pairs.length + ' read pairs in view · ' +
-        (hit.k ? hit.k + ' distinguishing site' + (hit.k === 1 ? '' : 's') + ' anchor it' : 'no read touches a difference');
-    } else {
-      msg = hit.k ? 'Covers ' + hit.k + ' distinguishing site' + (hit.k === 1 ? '' : 's') + ' · MAPQ ' + mapqFor(hit.k)
-                  : 'No distinguishing base · MAPQ 0, placed at random';
-    }
-    tooltip.textContent = msg;
+  // Hover the depth chart to read off one position.
+  canvasDepth.addEventListener('mousemove', function(e) {
+    if (!shown) return;
+    var rect = canvasDepth.getBoundingClientRect();
+    var nb = shown.ok.length;
+    var j = Math.max(0, Math.min(nb - 1, Math.floor((e.clientX - rect.left) / rect.width * nb)));
+    var ok = Math.round(shown.ok[j]), bad = Math.round(shown.bad[j]);
+    tooltip.textContent = (j * BIN / 1000).toFixed(1) + ' kb · ' + ok + ' placed, ' + bad + ' ambiguous · ' +
+      (ok >= MIN_DEPTH ? 'callable' : 'not callable');
     tooltip.style.display = 'block';
     var wr = simWrap.getBoundingClientRect();
-    var tx = Math.min(e.clientX - wr.left + 12, wr.width - 250);
-    tooltip.style.left = Math.max(0, tx) + 'px';
+    tooltip.style.left = Math.max(0, Math.min(e.clientX - wr.left + 12, wr.width - 250)) + 'px';
     tooltip.style.top = (e.clientY - wr.top - 38) + 'px';
   });
-  canvasA.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+  canvasDepth.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
 
   var raf = null;
   window.addEventListener('resize', function() {

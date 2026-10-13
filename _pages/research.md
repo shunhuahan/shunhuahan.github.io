@@ -30,15 +30,13 @@ Genes such as *SMN1*, *PMS2* and *CYP21A2* share long, near-identical stretches 
 
 TruPath Genome (formerly Constellation) moves library preparation onto the flow cell, so each short read keeps a record of the long molecule it came from. I work on the analysis side: in DRAGEN, multi-region joint detection uses that linkage to count how many copies a sample carries, reconstruct each copy and its variants, and place the copies on the right gene.
 
-{% include trupath-schematic.html %}
-
 ### A worked case: *PMS2* and *PMS2CL*
 
 *PMS2CL* sequence can be copied into *PMS2* by gene conversion, which a gene-level call cannot see. Here the two reconstructed *PMS2* haplotypes are separated: one carries a *PMS2CL*-to-*PMS2* conversion tract, and *PMS2CL* itself is deleted on both chromosomes. The application note reports this configuration as consistent with the sample's prior characterization.
 
 <figure class="rfig">
   <img src="/images/research-pms2-schematic.jpg" width="1400" height="787" loading="lazy" alt="Alignment tracks for two reconstructed PMS2 haplotypes. Haplotype 1 carries a PMS2CL-to-PMS2 gene conversion tract and is annotated non-functional; haplotype 2 is unaffected. PMS2CL is deleted on both haplotypes.">
-  <figcaption><span class="fig-label">Figure 3</span>Two reconstructed <em>PMS2</em> haplotypes. The source classifies haplotype 1, which carries the conversion tract, as non-functional without naming a causal change; haplotype 2 is unaffected. <em>PMS2CL</em> is deleted on both.</figcaption>
+  <figcaption><span class="fig-label">Figure 2</span>Two reconstructed <em>PMS2</em> haplotypes. The source classifies haplotype 1, which carries the conversion tract, as non-functional without naming a causal change; haplotype 2 is unaffected. <em>PMS2CL</em> is deleted on both.</figcaption>
 </figure>
 
 </div>
@@ -108,7 +106,7 @@ Before proximity data, I built callers that get the most out of an ordinary geno
 
 <figure class="rfig">
   <img src="/images/research-telr-workflow.png" width="1600" height="925" loading="lazy" alt="TELR workflow diagram showing four stages: identifying TE insertion candidate loci from structural variant calls, assembling and polishing a local TE contig, identifying the TE insertion family and reference coordinates, and estimating intra-sample allele frequency">
-  <figcaption><span class="fig-label">Figure 5</span>The TELR pipeline: identify candidate TE insertion loci from structural variant calls, locally assemble and polish a contig spanning the insertion, identify the TE family and its reference coordinates, then estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
+  <figcaption><span class="fig-label">Figure 4</span>The TELR pipeline: identify candidate TE insertion loci from structural variant calls, locally assemble and polish a contig spanning the insertion, identify the TE family and its reference coordinates, then estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
 </figure>
 
 ### What the family trees actually show
@@ -121,7 +119,7 @@ These sequence phylogenies reveal relationships among copies, not the number of 
 
 <figure class="rfig">
   <img src="/images/research-telr-phylogeny.jpg" width="1288" height="1300" loading="lazy" alt="Phylogenetic trees for four transposable element families (1731, 297, jockey, and Juan) built from TELR-assembled insertion sequences, with highlighted clades marking expansions in the S2R+ cell line">
-  <figcaption><span class="fig-label">Figure 6</span>Family trees for four TE families, built from sequences TELR assembled directly from long reads. Highlighted clades mark expansions in S2R+. The paper reports a single expansion clade for <em>1731</em> and multiple expansion clades for <em>jockey</em> and <em>Juan</em>, so expansion is family-dependent rather than uniformly single-source.</figcaption>
+  <figcaption><span class="fig-label">Figure 5</span>Family trees for four TE families, built from sequences TELR assembled directly from long reads. Highlighted clades mark expansions in S2R+. The paper reports a single expansion clade for <em>1731</em> and multiple expansion clades for <em>jockey</em> and <em>Juan</em>, so expansion is family-dependent rather than uniformly single-source.</figcaption>
 </figure>
 
 ### Why the biology matters

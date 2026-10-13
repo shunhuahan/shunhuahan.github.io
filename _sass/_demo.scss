@@ -47,7 +47,8 @@
 
 /* ════════════════════════════════════════
    FIGURE 1 · ALIGNMENT DEMO
-   Two segmented controls, three tracks, a two-colour key, two numbers.
+   Two segmented controls, three tracks (differences, stacked read depth,
+   callable), a two-colour key, two numbers.
    ════════════════════════════════════════ */
 
 .demo-bar {
@@ -91,13 +92,6 @@
     color: var(--bg);
     box-shadow: var(--shadow-pop);
   }
-}
-
-// The evidence toggle is the one control that changes the story, so its
-// "on" state carries the accent rather than ink.
-.seg-mode .seg-btn.is-on[data-mode="linked"] {
-  background: var(--accent);
-  color: #fff;
 }
 
 .demo-plot {
@@ -284,10 +278,7 @@
     width: 100%;
     border-radius: 12px;
   }
-  .seg-mode {
-    grid-template-columns: repeat(2, 1fr);
-    margin-top: 8px;
-  }
+  .seg-len { margin-top: 8px; }
   .seg-btn {
     padding: 8px 4px;
     font-size: 12px;
@@ -306,81 +297,7 @@
 }
 
 /* ════════════════════════════════════════
-   FIGURE 2 · TRUPATH SCHEMATIC
-   Three small SVG panels. Colours come from tokens so the drawing follows
-   the theme: molecule 1 is the accent, molecule 2 is neutral ink.
-   ════════════════════════════════════════ */
-
-.tp-steps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  @include tablet { grid-template-columns: 1fr; gap: 28px; }
-}
-
-.tp-step {
-  margin: 0;
-  min-width: 0;
-
-  svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 6px;
-    border-radius: var(--r-md);
-    background: var(--bg);
-    overflow: visible;
-
-    @include tablet { max-width: 420px; }
-  }
-
-  h4 {
-    margin: 16px 0 6px;
-    font-size: var(--t-meta);
-    font-weight: 600;
-    color: var(--ink);
-
-    span {
-      margin-right: 8px;
-      color: var(--accent);
-      font-variant-numeric: tabular-nums;
-    }
-  }
-
-  p {
-    margin: 0;
-    font-size: var(--t-small);
-    line-height: 1.6;
-    color: var(--ink-2);
-  }
-}
-
-.tp-well { fill: var(--bg-sunken); stroke: var(--line); stroke-width: 0.8; }
-.tp-mol1, .tp-mol2, .tp-ghost { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.tp-mol1 { stroke: var(--accent); stroke-width: 2.6; }
-.tp-mol2 { stroke: var(--ink-3); stroke-width: 2.6; }
-.tp-ghost { stroke: var(--line); stroke-width: 1.2; stroke-dasharray: 2 3; }
-.tp-c1 { fill: var(--accent); }
-.tp-c2 { fill: var(--ink-3); }
-
-.tp-ref { fill: var(--line); }
-.tp-psv { fill: var(--diff); }
-.tp-r1 { fill: var(--accent); }
-.tp-r2 { fill: var(--ink-3); }
-.tp-link1, .tp-link2 { stroke-width: 1; }
-.tp-link1 { stroke: var(--accent); opacity: 0.5; }
-.tp-link2 { stroke: var(--ink-3); opacity: 0.5; }
-.tp-anchor { fill: none; stroke: var(--accent); stroke-width: 1.2; }
-.tp-anchor-2 { stroke: var(--ink-3); }
-.tp-lab { font: 600 11px $bodyFont; fill: var(--ink-2); }
-.tp-note { font: 10px $bodyFont; fill: var(--ink-3); }
-
-/* ════════════════════════════════════════
-   FIGURE 4 · ALPHA-GLOBIN CONFIGURATIONS
+   FIGURE 3 · ALPHA-GLOBIN CONFIGURATIONS
    Six columns, four genes down to none. Each glyph is a chromosome pair:
    two hairlines with two gene blocks on each.
    ════════════════════════════════════════ */
