@@ -26,18 +26,16 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
     <div class="about-grid">
       <div>
         <p class="kicker">About</p>
-        <h2 class="sheet-title">Working where pipelines break</h2>
+        <h2 class="sheet-title">Telling near-identical copies apart</h2>
         <div class="about-text">
           <p>I'm a Sr. Staff Bioinformatics Scientist at Illumina in San Diego, where I develop computational methods to resolve genetic variation in repetitive and structurally complex regions of the genome. My current focus is copy-aware, haplotype-resolved analysis for TruPath Genome and DRAGEN. Before that I built targeted callers for the alpha-globin locus and for <em>PMS2</em>, two of the harder targets in carrier screening and hereditary cancer research.</p>
-          <p>I came to this problem through transposable elements. During my Ph.D. with Casey Bergman at the University of Georgia, I studied how TEs reshape the genomes of <em>Drosophila</em> cell lines, and built the software (TELR, ngs_te_mapper2) to find insertions that standard tools miss. Repetitive DNA breaks every assumption a pipeline makes, and I found I liked working exactly where things break.</p>
-          <p>The through-line is one puzzle: a lot of medically important genetic variation sits where the genome carries two nearly identical copies of the same sequence, and someone has to work out which copy a read came from. In different forms, it has kept me busy for a decade.</p>
+          <p>I came to this problem through transposable elements. During my Ph.D. with Casey Bergman at the University of Georgia, I studied how TEs reshape the genomes of <em>Drosophila</em> cell lines, and built the software (TELR, ngs_te_mapper2) to find insertions that standard tools miss. Repetitive DNA is where standard methods run out of road, and I enjoy solving those problems, because each one makes room for discoveries that could not be made before.</p>
+          <p>Much of the genetic variation that matters in the clinic sits in duplicated regions, where a gene has a near-identical copy beside it. My aim is to make those regions as readable as the rest of the genome: every copy counted, every haplotype resolved, and every variant placed on the copy that carries it.</p>
         </div>
         <dl class="facts">
           <dt>Now</dt><dd>Sr. Staff Bioinformatics Scientist, Illumina, 2025&ndash;</dd>
-          <dt>Before</dt><dd>Staff (2023&ndash;2025) and Senior (2022&ndash;2023) Bioinformatics Scientist, Illumina</dd>
           <dt>Ph.D.</dt><dd>Bioinformatics, University of Georgia, 2021. Advisor: Casey Bergman. <a class="link" href="{{ site.baseurl }}/assets/shunhuahan-phd-thesis.pdf">Dissertation</a></dd>
           <dt>B.S.</dt><dd>Pharmaceutical Sciences, East China University of Science and Technology, 2015</dd>
-          <dt>Tools</dt><dd>Python &middot; R &middot; C++ &middot; Bash &middot; Nextflow &middot; Docker &middot; AWS</dd>
         </dl>
         <p class="elsewhere"><a class="link" href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">CV (PDF)</a><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google Scholar</a><a class="link" href="https://orcid.org/0000-0002-8605-7547">ORCID</a><a class="link" href="https://www.linkedin.com/in/shunhua-han/">LinkedIn</a><a class="link" href="https://bsky.app/profile/shunhuahan.bsky.social">Bluesky</a></p>
       </div>
@@ -60,7 +58,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
         <figcaption><span class="no">PL. I</span><b>A copy, made long ago.</b> Segmental duplications began as copying accidents: a stretch of chromosome, sometimes carrying whole genes, was duplicated into a new place. The two copies drift apart slowly, so many are still almost identical today.</figcaption></figure>
       <figure class="pl"><svg id="pl2" viewBox="0 0 400 250" role="img" aria-label="A primate family tree of macaque, orangutan, gorilla, chimpanzee and human, each with a small portrait. Duplications cluster on the branch leading to African great apes and humans, about 8 to 12 million years ago."></svg>
         <figcaption><span class="no">PL. II</span><b>A burst in our ancestors.</b> Comparing primate genomes, the Eichler lab found that duplication sped up in the common ancestor of humans and African great apes, roughly 8&ndash;12 million years ago. It matters for two reasons. Duplication is a main source of new genes: human-specific copies such as <em>SRGAP2C</em> and <em>NOTCH2NL</em> have been linked to the growth of our neocortex. And the repeats make the genome unstable: recombination between copies causes recurrent deletions and duplications, such as the 1q21.1 syndromes at the <em>NOTCH2NL</em> locus.</figcaption></figure>
-      <figure class="pl"><svg id="pl3" viewBox="0 0 400 250" role="img" aria-label="Top: HBA2 and HBA1, both intact. Bottom: PMS2 intact beside PMS2CL, a faded copy with broken and missing exons."></svg>
+      <figure class="pl"><svg id="pl3" viewBox="0 0 400 262" role="img" aria-label="Top: HBA2 and HBA1, both intact; together they make alpha-globin, half of adult haemoglobin. Bottom: PMS2, a DNA mismatch repair gene whose loss causes Lynch syndrome, beside PMS2CL, a faded copy with broken and missing exons."></svg>
         <figcaption><span class="no">PL. III</span><b>Gene, or pseudogene.</b> Sometimes both copies stay useful: the alpha-globin genes <em>HBA1</em> and <em>HBA2</em> both make protein. Often one copy collects disabling changes and becomes a pseudogene that still reads almost exactly like the working gene, as <em>PMS2CL</em> does beside <em>PMS2</em>.</figcaption></figure>
       <figure class="pl"><svg id="pl4" viewBox="0 0 400 250" role="img" aria-label="PMS2 and PMS2CL written letter by letter, identical but for one letter. A short read from the shared stretch matches both, so the test cannot tell which gene it came from."></svg>
         <figcaption><span class="no">PL. IV</span><b>A problem for genetic testing.</b> Sequencing reads DNA in short pieces. A piece from the shared stretch matches the gene and the pseudogene equally well, so a variant on it can be missed or blamed on the wrong copy. Gene conversion, which copies pseudogene sequence into the gene, blurs the two further. That is why <em>PMS2</em> (Lynch syndrome), <em>CYP21A2</em> (congenital adrenal hyperplasia) and <em>SMN1</em> (spinal muscular atrophy) have long needed extra lab tests.</figcaption></figure>
@@ -81,7 +79,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
         <span class="tape" style="--tr:-3deg"></span>
         <div class="paper"><svg id="w1" viewBox="-14 0 314 270" role="img" aria-label="Top: the PMS2 and PMS2CL reference regions, with reads that align equally well to both. Multi-region Joint Detection (MRJD) turns them into four complete copies: two PMS2 haplotypes, one carrying a stretch of PMS2CL sequence from gene conversion, and two PMS2CL haplotypes, each with its own variants."></svg></div>
         <p class="eyebrow">TruPath Genome &middot; 2025&ndash;now</p>
-        <h3>Haplotype-resolved calling in paralogous genes</h3>
+        <h3><a class="stretch" href="{{ site.baseurl }}/research/#paralogs">Haplotype-resolved calling in paralogous genes</a></h3>
         <p class="gist">Multi-region Joint Detection (MRJD) analyses a gene and its pseudogene together. With TruPath Genome proximity linkage it rebuilds the full sequence of every copy, both haplotypes of the gene and both of the pseudogene, and tells which is which, even where gene conversion has copied pseudogene sequence into the gene.</p>
         <p class="result">{{ trupath.result }}</p>
         <p class="links"><a class="link" href="{{ trupath.links[0].url }}">Application note</a><a class="link" href="{{ site.baseurl }}/assets/han-acmg2026-trupath-slides.pdf">ACMG slides</a><a class="link" href="{{ site.baseurl }}/research/#paralogs">More</a></p>
@@ -90,7 +88,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
         <span class="tape" style="--tr:2deg"></span>
         <div class="paper"><svg id="w2" viewBox="0 -15 300 270" role="img" aria-label="Four alpha-globin genotypes with 4, 3, 2 and 2 genes; the two-gene genotypes differ in whether both deletions are on one chromosome or one on each."></svg></div>
         <p class="eyebrow">Standard WGS &middot; 2022&ndash;2025</p>
-        <h3>Targeted callers: alpha-globin, <em>PMS2</em>, <em>SMN</em></h3>
+        <h3><a class="stretch" href="{{ site.baseurl }}/research/#short-read">Targeted callers: alpha-globin, <em>PMS2</em>, <em>SMN</em></a></h3>
         <p class="gist">Before proximity data, callers built around single loci. For <em>HBA1</em>/<em>HBA2</em>, depth over non-homologous sequence resolves 14 copy-number genotypes, including &minus;&minus;<sup>SEA</sup>/&alpha;&alpha; versus &minus;&alpha;/&minus;&alpha;: both are carriers with two genes, but only the first can pass a chromosome with no alpha genes to a child. For <em>PMS2</em>, joint analysis keeps the reads a standard pipeline discards.</p>
         <p class="result">HBA: checked against long reads in 246 samples and Mendelian-consistent in 575 trios. PMS2: 99.7% SNV recall against long-range PCR in 147 cell lines.</p>
         <p class="links"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html">HBA article</a><a class="link" href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html">PMS2 article</a><a class="link" href="{{ site.baseurl }}/research/#short-read">More</a></p>
@@ -99,7 +97,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
         <span class="tape" style="--tr:-1deg"></span>
         <div class="paper"><svg id="w3" viewBox="0 -15 300 270" role="img" aria-label="A fruit fly above a chromosome on which a transposon jumps to a new place, making a new copy."></svg></div>
         <p class="eyebrow">Ph.D. &middot; <i>Drosophila</i> cell lines</p>
-        <h3>Reconstructing transposon insertions</h3>
+        <h3><a class="stretch" href="{{ site.baseurl }}/research/#transposons">Reconstructing transposon insertions</a></h3>
         <p class="gist">Transposons copy themselves into new places in the genome. TELR finds those new insertions in long reads, assembles each one to recover its full sequence and family, and estimates how many of a sample&rsquo;s genome copies carry it, which matters in the tetraploid <em>Drosophila</em> S2R+ cell line.</p>
         <p class="result">{{ telr.result }}</p>
         <p class="links"><a class="link" href="https://doi.org/10.1093/nar/gkac794">Paper</a><a class="link" href="https://github.com/bergmanlab/TELR">Code</a><a class="link" href="{{ site.baseurl }}/research/#transposons">More</a></p>

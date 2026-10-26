@@ -2,7 +2,7 @@
 // RESEARCH
 //
 // Summary cards, taped figures, the caller list, related papers, the
-// software cards and the alignment demo on paper.
+// and the software cards.
 //
 
 /* ------------------------------------------------------------------ research page */
@@ -68,13 +68,7 @@ details.more > div { margin-top: 12px; font-size: 1rem; color: var(--ink-2); }
 .card .lic { font-size: .92rem; margin-top: 10px; color: var(--ink-3); }
 .card .acts { display: flex; gap: 18px; margin-top: 12px; }
 
-/* the interactive alignment figure, on paper */
-.fig-panel { background: #fffdf7 !important; border-radius: 0 !important; box-shadow: 0 1px 2px rgba(36,31,26,.12), 0 12px 24px -14px rgba(36,31,26,.35) !important; margin: 48px 0 0 !important; max-width: 1080px; }
-.fig-label { font-family: var(--body) !important; letter-spacing: .08em !important; font-variant-caps: all-small-caps; text-transform: none !important; color: var(--tiger-ink) !important; font-size: 1.02rem !important; }
-.fig-title, .demo-stat b { font-family: var(--body) !important; font-weight: 400 !important; letter-spacing: -0.01em !important; }
-.fig-sub, .fig-panel figcaption, .demo-more-body p, .trk-label, .trk-meta, .demo-key, .demo-stat span { font-family: var(--body) !important; }
-.seg-btn { font-family: var(--body) !important; }
-.demo-plot { box-shadow: inset 0 0 0 1px var(--line); }
+
 
 /* on a phone the wide figures keep a readable size and scroll sideways within their frame */
 @media (max-width: 760px) {

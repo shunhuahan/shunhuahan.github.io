@@ -378,29 +378,44 @@
     note(svg, 287, 226, "copy", { size: 12.5, anchor: "middle" });
     note(svg, 287, 242, "with a few changes", { size: 11, anchor: "middle", fill: RED });
   })();
-  // a small portrait for each species: macaque, orangutan, gorilla, chimpanzee, human
+  // a small portrait of each species, drawn so the five read apart at a glance
   function primate(svg, kind, cx, cy) {
-    var g = el("g", { transform: "translate(" + cx + "," + cy + ")" }, svg), w = 1.1;
+    var g = el("g", { transform: "translate(" + cx + "," + cy + ") scale(1.25)" }, svg), w = 1;
     function e(x, y, rx, ry, fill, sw) { return el("ellipse", { cx: x, cy: y, rx: rx, ry: ry, fill: fill, stroke: INK, "stroke-width": sw == null ? w : sw }, g); }
-    function eyes(y, dx) { el("circle", { cx: -dx, cy: y, r: 1.1, fill: INK }, g); el("circle", { cx: dx, cy: y, r: 1.1, fill: INK }, g); }
+    function p(d, fill, sw) { return el("path", { d: d, fill: fill || "none", stroke: INK, "stroke-width": sw == null ? w : sw, "stroke-linejoin": "round", "stroke-linecap": "round" }, g); }
+    function eyes(y, dx, r) { el("circle", { cx: -dx, cy: y, r: r || 1, fill: INK }, g); el("circle", { cx: dx, cy: y, r: r || 1, fill: INK }, g); }
     if (kind === "macaque") {
-      e(-8.5, -1, 2.6, 3, "#b49a7a"); e(8.5, -1, 2.6, 3, "#b49a7a");
-      e(0, 0, 8.5, 9.5, "#b49a7a"); e(0, 1.5, 5.6, 6.8, "#e3b4a0", .8); eyes(-0.5, 2.3);
-      path(g, "M-1.5,4.6 Q0,5.6 1.5,4.6", { w: .8 });
+      // grey-brown fur, small ears, a pink bare face with a short muzzle
+      e(-9, -1, 2.4, 2.8, "#e2a99a"); e(9, -1, 2.4, 2.8, "#e2a99a");
+      e(0, -0.5, 9, 9.5, "#9b8a74");
+      p("M-6,-4 C-6,-9 6,-9 6,-4 C7,2 4,8 0,8 C-4,8 -7,2 -6,-4Z", "#e7a596", .8);
+      eyes(-2.5, 2.3, 1); p("M-1.6,1.4 l.6,.6 M1.6,1.4 l-.6,.6 M-2,4.6 Q0,5.6 2,4.6", null, .8);
     } else if (kind === "orangutan") {
-      e(0, 1, 11.5, 8.5, "#a8582c"); e(0, 1.5, 6.8, 7.6, "#6b4a35", .8); eyes(0, 2.4);
-      path(g, "M-2,5 Q0,6 2,5", { w: .8, stroke: "#e8d6c0" }); path(g, "M-6,-8 q6,-4 12,0", { w: 1.6, stroke: "#a8582c" });
+      // a flanged male: a wide dark face framed by cheek pads and long orange hair
+      p("M-13,4 C-14,-6 -8,-12 0,-12 C8,-12 14,-6 13,4 C12,11 5,13 0,13 C-5,13 -12,11 -13,4Z", "#c2622e");
+      e(0, 1, 10.5, 8, "#5d4637", .9);
+      e(0, 2.5, 5, 6, "#7a5c47", .7); eyes(-0.5, 2.4, 1); p("M-2.4,5.2 Q0,6.6 2.4,5.2", null, .8);
+      p("M-12.5,-3 l-2.6,1.6 M-13.2,1.5 l-2.8,1.2 M-12.8,6 l-2.4,1.8 M12.5,-3 l2.6,1.6 M13.2,1.5 l2.8,1.2 M12.8,6 l2.4,1.8", null, .9);
     } else if (kind === "gorilla") {
-      el("path", { d: "M-8,4 C-10,-6 -5,-13 0,-13 C5,-13 10,-6 8,4 C6,10 -6,10 -8,4Z", fill: "#2f2a27", stroke: INK, "stroke-width": w }, g);
-      e(0, 3.2, 5.6, 4.6, "#544a44", .8); path(g, "M-5,-2.5 L5,-2.5", { w: 1.6, stroke: "#161311" });
-      el("circle", { cx: -2.4, cy: -0.6, r: 1, fill: "#e8dccb" }, g); el("circle", { cx: 2.4, cy: -0.6, r: 1, fill: "#e8dccb" }, g);
+      // black, with the tall crest of a silverback and a heavy brow over a wide nose
+      p("M-9,6 C-11,-3 -7,-9 -3,-13 C-1,-15 1,-15 3,-13 C7,-9 11,-3 9,6 C7,11 -7,11 -9,6Z", "#2d2826");
+      p("M-6.5,-2.2 Q0,-4.4 6.5,-2.2", "none", 2.2);
+      e(0, 4, 5.4, 4.2, "#4a403b", .7);
+      el("ellipse", { cx: -1.6, cy: 3.6, rx: 1.1, ry: .8, fill: "#151210" }, g); el("ellipse", { cx: 1.6, cy: 3.6, rx: 1.1, ry: .8, fill: "#151210" }, g);
+      el("circle", { cx: -2.6, cy: 0, r: .9, fill: "#e8dccb" }, g); el("circle", { cx: 2.6, cy: 0, r: .9, fill: "#e8dccb" }, g);
     } else if (kind === "chimpanzee") {
-      e(-9.5, -0.5, 3.6, 4.4, "#d8b48e"); e(9.5, -0.5, 3.6, 4.4, "#d8b48e");
-      e(0, -1, 8.4, 9.2, "#4a3a2e"); e(0, 2.4, 6, 5.8, "#d8b48e", .8); eyes(-1.2, 2.3);
-      path(g, "M-2.4,5 Q0,6.4 2.4,5", { w: .8 });
+      // big round ears, dark fur, a pale face with a jutting brow and muzzle
+      e(-10, 0, 3.8, 4.6, "#d9b38c"); e(10, 0, 3.8, 4.6, "#d9b38c");
+      e(0, -1, 8.6, 9.6, "#3d3029");
+      p("M-6,-3 C-6,-7 6,-7 6,-3 C7,3 5,9 0,9 C-5,9 -7,3 -6,-3Z", "#dcb48d", .8);
+      p("M-5.5,-3.2 Q0,-5.4 5.5,-3.2", null, 1.3);
+      eyes(-1.6, 2.3, 1); p("M-3,5 Q0,7 3,5", null, .8);
     } else {
-      e(0, 0.5, 7.4, 9.4, "#e7c2a0"); el("path", { d: "M-7.6,-1 C-8,-9 -3,-10.8 0,-10.8 C3,-10.8 8,-9 7.6,-1 C5,-5.5 -5,-5.5 -7.6,-1Z", fill: "#2c2420", stroke: INK, "stroke-width": .8 }, g);
-      eyes(0.6, 2.6); path(g, "M0,1.6 L-0.8,4.2 L0.6,4.4 M-2,6.6 Q0,7.6 2,6.6", { w: .8 });
+      // a human: a rounder head, hair, a nose and a small mouth
+      e(0, 0.8, 7.6, 9.6, "#ecc6a3");
+      p("M-7.8,-1 C-8.4,-9.4 -3,-11.2 0,-11.2 C3.4,-11.2 8.4,-9.2 7.8,-1 C6,-6.4 -1,-7.6 -7.8,-1Z", "#2c2420", .8);
+      e(-7.8, 1.6, 1.4, 2.2, "#ecc6a3", .8); e(7.8, 1.6, 1.4, 2.2, "#ecc6a3", .8);
+      eyes(0.8, 2.7, 1); p("M0,1.8 L-.9,4.4 L.6,4.6 M-2.2,6.8 Q0,7.8 2.2,6.8", null, .8);
     }
   }
   (function () {
@@ -408,7 +423,7 @@
     var g = inkLayer(svg), R = rng(62);
     plateNo(svg, "PL. II");
     var leaves = [["macaque", 42], ["orangutan", 82], ["gorilla", 122], ["chimpanzee", 162], ["human", 202]];
-    var LX = 282, hc = [236, 182], ghc = [176, 152], oghc = [114, 117], root = [48, 79.5];
+    var LX = 276, hc = [232, 182], ghc = [176, 152], oghc = [114, 117], root = [48, 79.5];
     function elbow(px, py, cx, cy, marks, thick) {
       path(g, "M" + px + "," + py + " L" + px + "," + cy + " L" + cx + "," + cy, { w: thick ? 3.4 : 1.4, stroke: thick ? "#c0392b" : INK });
       for (var i = 0; i < marks; i++) {
@@ -426,8 +441,8 @@
     elbow(hc[0], hc[1], LX, leaves[4][1], 2);
     path(g, "M" + (root[0] - 14) + "," + root[1] + " L" + root[0] + "," + root[1], { w: 1.4 });
     leaves.forEach(function (l) {
-      primate(svg, l[0], LX + 16, l[1]);
-      note(svg, LX + 33, l[1] + 4.5, l[0], { size: 13, fill: INK, roman: true });
+      primate(svg, l[0], LX + 18, l[1]);
+      note(svg, LX + 38, l[1] + 4.5, l[0], { size: 13, fill: INK, roman: true });
     });
     note(svg, 166, 176, "a burst of duplication", { size: 12, fill: "#9a4a12", anchor: "end", roman: true });
     note(svg, 166, 193, "~8–12 million years ago", { size: 11.5, anchor: "end", roman: true });
@@ -450,18 +465,24 @@
     var svg = $("pl3"); if (!svg) return;
     var g = inkLayer(svg);
     plateNo(svg, "PL. III");
-    note(svg, 30, 56, "both copies keep working", { size: 12.5, fill: "#9a4a12" });
-    geneModel(g, 30, 84, 150, "#b5543b");
-    geneModel(g, 220, 84, 150, "#b5543b");
-    note(svg, 105, 114, "HBA2", { size: 13, fill: INK, anchor: "middle" });
-    note(svg, 295, 114, "HBA1", { size: 13, fill: INK, anchor: "middle" });
-    path(g, "M30,140 L370,140", { w: .8, dash: "2 4", op: .6 });
-    note(svg, 30, 166, "one copy decays into a pseudogene", { size: 12.5, fill: "#9a4a12" });
-    geneModel(g, 30, 194, 150, A);
-    geneModel(g, 220, 194, 150, A, { faded: true, broken: [1, 4], missing: 3 });
-    note(svg, 105, 224, "PMS2", { size: 13, fill: INK, anchor: "middle" });
-    note(svg, 295, 224, "PMS2CL", { size: 13, fill: INK, anchor: "middle" });
-    note(svg, 295, 240, "disabled, but still almost identical", { size: 11, anchor: "middle" });
+    note(svg, 30, 50, "both copies keep working", { size: 12.5, fill: "#9a4a12" });
+    geneModel(g, 30, 76, 150, "#b5543b");
+    geneModel(g, 220, 76, 150, "#b5543b");
+    note(svg, 105, 104, "HBA2", { size: 13, fill: INK, anchor: "middle" });
+    note(svg, 295, 104, "HBA1", { size: 13, fill: INK, anchor: "middle" });
+    // the two genes make the same protein
+    path(g, "M30,112 l0,5 l340,0 l0,-5", { w: 1, stroke: "#b5543b" });
+    note(svg, 200, 132, "together they make α-globin, half of adult haemoglobin", { size: 12, anchor: "middle", fill: "#8e3a28", roman: true });
+    path(g, "M30,146 L370,146", { w: .8, dash: "2 4", op: .6 });
+    note(svg, 30, 168, "one copy decays into a pseudogene", { size: 12.5, fill: "#9a4a12" });
+    geneModel(g, 30, 192, 150, A);
+    geneModel(g, 220, 192, 150, A, { faded: true, broken: [1, 4], missing: 3 });
+    note(svg, 105, 220, "PMS2", { size: 13, fill: INK, anchor: "middle" });
+    note(svg, 295, 220, "PMS2CL", { size: 13, fill: INK, anchor: "middle" });
+    note(svg, 105, 236, "DNA mismatch repair;", { size: 11.5, anchor: "middle", fill: "#2c4f72", roman: true });
+    note(svg, 105, 250, "losing it causes Lynch syndrome", { size: 11.5, anchor: "middle", fill: "#2c4f72", roman: true });
+    note(svg, 295, 236, "disabled, but", { size: 11.5, anchor: "middle", roman: true });
+    note(svg, 295, 250, "still almost identical", { size: 11.5, anchor: "middle", roman: true });
   })();
   (function () {
     var svg = $("pl4"); if (!svg) return;
@@ -508,7 +529,7 @@
       // reads that align equally well here and in the other copy
       for (var row = 0; row < 4; row++) {
         var x = r[0] - 4 + R() * 8;
-        while (x < r[0] + 116) { var len = 18 + R() * 10; ghost(g, x, 40 + row * 6.5, Math.min(len, r[0] + 120 - x), 3.6); x += len + 3 + R() * 5; }
+        while (x < r[0] + 116) { var len = 18 + R() * 10; box(g, x, 40 + row * 6.5, Math.min(len, r[0] + 120 - x), 4, R() < .5 ? A : B, .85, .7); x += len + 3 + R() * 5; }
       }
     });
     note(svg, 150, 79, "reads align equally well to both: ambiguous", { size: 10.5, anchor: "middle", roman: true });
@@ -594,6 +615,65 @@
   (function () {
     var svg = $("fly"); if (!svg) return;
     drawFly(inkLayer(svg), 100, 90, 1.25);
+  })();
+
+  // Figure 1 on the research page: why short reads lose their place between two near-identical copies
+  (function () {
+    var svg = $("fig1"); if (!svg) return;
+    var g = inkLayer(svg), R = rng(17);
+    var X0 = 150, X1 = 960, PSV = [262, 268, 431, 598, 604, 612, 790, 846];
+    function gene(y, color, label, sub) {
+      path(g, "M" + X0 + "," + y + " L" + X1 + "," + y, { w: 1.6 });
+      [[180, 48], [300, 40], [420, 56], [540, 40], [660, 60], [800, 46], [900, 40]].forEach(function (e) { box(g, e[0], y - 11, e[1], 22, color, .72); });
+      PSV.forEach(function (x) { path(g, "M" + x + "," + (y - 15) + " L" + x + "," + (y + 15), { w: 2.2, stroke: RED }); });
+      note(svg, X0 - 18, y + 2, label, { size: 19, fill: INK, anchor: "end" });
+      note(svg, X0 - 18, y + 21, sub, { size: 14, anchor: "end", roman: true });
+    }
+    gene(70, A, "SMN1", "the gene");
+    gene(300, B, "SMN2", "its copy");
+    // reads from the sample, between the two copies they could have come from
+    var placed = [], lost = [];
+    for (var row = 0; row < 7; row++) {
+      var x = X0 + 4 - R() * 40 + row * 9, y = 118 + row * 21;
+      while (x < X1 - 70) {
+        var len = Math.min(66 + R() * 20, X1 - x), hits = PSV.some(function (p) { return p > x + 2 && p < x + len - 2; });
+        (hits ? placed : lost).push([x, y, len]);
+        x += len + 10 + R() * 26;
+      }
+    }
+    lost.forEach(function (r) {
+      var tilt = (R() - .5) * 7, cx = r[0] + r[2] / 2;
+      var gr = el("g", { transform: "rotate(" + f(tilt) + " " + f(cx) + " " + r[1] + ")" }, g);
+      box(gr, r[0], r[1] - 5, r[2], 10, "#c97a3a", .55, 1);
+    });
+    placed.forEach(function (r) {
+      box(g, r[0], r[1] - 5, r[2], 10, A, .9, 1.1);
+      PSV.forEach(function (p) { if (p > r[0] && p < r[0] + r[2]) el("rect", { x: p - 1.6, y: r[1] - 6, width: 3.2, height: 12, fill: RED }, svg); });
+    });
+    // a few question marks over the reads that fit both
+    [lost[2], lost[8], lost[13], lost[19], lost[25]].forEach(function (r) { if (r) note(svg, r[0] + r[2] + 9, r[1] + 7, "?", { size: 26, fill: "#9a4a12", anchor: "middle", roman: true }); });
+    // what can be called on SMN1
+    var cy = 372, on = [];
+    for (var cx = X0; cx <= X1; cx += 2) {
+      var n = placed.filter(function (r) { return r[0] <= cx && r[0] + r[2] >= cx; }).length;
+      on.push(n >= 2);
+    }
+    path(g, "M" + X0 + "," + cy + " L" + X1 + "," + cy, { w: 1, dash: "3 4", op: .6 });
+    var d = "", start = -1;
+    for (var i = 0; i <= on.length; i++) {
+      if (on[i] && start < 0) start = i;
+      if (!on[i] && start >= 0) { d += " M" + (X0 + start * 2) + "," + cy + " L" + (X0 + (i - 1) * 2) + "," + cy; start = -1; }
+    }
+    path(g, d, { w: 9, stroke: INK });
+    note(svg, X0 - 18, cy + 6, "callable", { size: 17, fill: INK, anchor: "end" });
+    // the key
+    var ky = 428;
+    box(g, X0, ky - 6, 46, 12, A, .9, 1.1); el("rect", { x: X0 + 22, y: ky - 7, width: 3.2, height: 14, fill: RED }, svg);
+    note(svg, X0 + 58, ky + 5, "covers a base where the copies differ: placed on its gene", { size: 16, fill: INK, roman: true });
+    var gk = el("g", { transform: "rotate(-3 " + (X0 + 23) + " " + (ky + 30) + ")" }, g);
+    box(gk, X0, ky + 24, 46, 12, "#c97a3a", .55, 1);
+    note(svg, X0 + 58, ky + 35, "covers none: fits both genes equally, so the caller sets it aside", { size: 16, fill: INK, roman: true });
+    path(g, "M" + (X0 - 4) + ",458 l0,0", { w: 0 });
   })();
 
   // ---------------------------------------------------------------- Figure 2: the PMS2 case, redrawn

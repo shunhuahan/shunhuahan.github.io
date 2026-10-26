@@ -23,10 +23,13 @@ description: "Research on haplotype-resolved variant calling in paralogous genes
     <div class="prose" style="margin-top:48px">
       <p>Genes such as <em>SMN1</em>, <em>PMS2</em> and <em>CYP21A2</em> share long, near-identical stretches with a paralog or pseudogene. A short read from one of those stretches fits both copies equally well, so the variant caller cannot tell which gene it is looking at.</p>
     </div>
-{% include mappability-demo.html %}
+    <figure class="figprint">
+      <div class="paper"><svg id="fig1" viewBox="0 0 1000 486" role="img" aria-label="Reads from a sample drawn between SMN1 and its near-identical copy SMN2. Reads that cover a base where the copies differ are placed on their gene; the rest fit both genes equally and are set aside, so only stretches near those differences can be called."></svg></div>
+      <figcaption><b>Figure 1</b>Where short reads lose their place. <em>SMN1</em> and <em>SMN2</em> differ at only a handful of positions (red). A read can be placed on the right gene only if it covers one of them; every other read fits both genes equally, gets a mapping quality of zero, and is set aside. What remains callable is a few short stretches around the differences. Schematic.</figcaption>
+    </figure>
 
     <div class="prose" style="margin-top:48px">
-      <p>TruPath Genome (formerly Constellation) moves library preparation onto the flow cell, so each short read keeps a record of the long molecule it came from. I work on the analysis side: in DRAGEN, multi-region joint detection uses that linkage to count how many copies a sample carries, reconstruct each copy and its variants, and place the copies on the right gene.</p>
+      <p>TruPath Genome (formerly Constellation) moves library preparation onto the flow cell, so each short read keeps a record of the long molecule it came from. I work on the informatics algorithms: in DRAGEN, Multi-region Joint Detection uses that linkage to count how many copies a sample carries, reconstruct each copy and its variants, and place the copies on the right gene and haplotype.</p>
       <h3>A worked case: <em>PMS2</em> and <em>PMS2CL</em></h3>
       <p><em>PMS2CL</em> sequence can be copied into <em>PMS2</em> by gene conversion, which a gene-level call cannot see. Here the two reconstructed <em>PMS2</em> haplotypes are separated: one carries a <em>PMS2CL</em>-to-<em>PMS2</em> conversion tract, and <em>PMS2CL</em> itself is deleted on both chromosomes. The application note reports this configuration as consistent with the sample's prior characterization.</p>
     </div>

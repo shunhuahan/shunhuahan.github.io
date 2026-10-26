@@ -66,12 +66,12 @@
   display_title: "TruPath Genome: reconstructing paralogous gene copies"
   year: 2026
   sort_date: "2026-08-03"
-  title: "Deliver haplotype-resolved, copy-aware small variant detection in paralogous regions within a single WGS workflow: enabled by Illumina TruPath Genome using Multi-Region Joint Detection."
+  title: "Deliver haplotype-resolved, copy-aware small variant detection in paralogous regions within a single WGS workflow: enabled by Illumina TruPath Genome using Multi-region Joint Detection."
   authors: "<strong>Han S</strong>"
   venue: "<em>Illumina Application Note</em>, M-GL-04321."
   url: "https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf"
   link_label: "Application note (PDF)"
-  abstract: "TruPath Genome encodes long-range molecular linkage directly on the flow cell during sequencing, and the DRAGEN Multi-Region Joint Detection (MRJD) algorithm uses that linkage to call haplotype-resolved, copy-aware small variants in paralogous regions from a standard short-read WGS workflow. Evaluated across 31 samples spanning eight paralogous loci with 98.2-99.9% sequence homology and sizes from 18 to 357 kb, the approach recovered the expected pathogenic finding in every sample, produced phased locus-wide haplotypes, and clarified allelic configuration, gene-pseudogene assignment, and CNV context. Results agreed with orthogonal methods including long-read sequencing, and were generated within three days of DNA extraction, replacing cascades of secondary assays such as MLPA and long-range PCR that typically add days to weeks. This is recovery of known findings in an evaluation set rather than a measure of diagnostic sensitivity, and the note records that CFC1, IKBKG and HYDIN were evaluated but not supported in DRAGEN v4.5. For research use only."
+  abstract: "TruPath Genome encodes long-range molecular linkage directly on the flow cell during sequencing, and the DRAGEN Multi-region Joint Detection (MRJD) algorithm uses that linkage to call haplotype-resolved, copy-aware small variants in paralogous regions from a standard short-read WGS workflow. Evaluated across 31 samples spanning eight paralogous loci with 98.2-99.9% sequence homology and sizes from 18 to 357 kb, the approach recovered the expected pathogenic finding in every sample, produced phased locus-wide haplotypes, and clarified allelic configuration, gene-pseudogene assignment, and CNV context. Results agreed with orthogonal methods including long-read sequencing, and were generated within three days of DNA extraction, replacing cascades of secondary assays such as MLPA and long-range PCR that typically add days to weeks. This is recovery of known findings in an evaluation set rather than a measure of diagnostic sensitivity, and the note records that CFC1, IKBKG and HYDIN were evaluated but not supported in DRAGEN v4.5. For research use only."
 
 - type: article
   year: 2024
@@ -81,7 +81,7 @@
   venue: "<em>Illumina Genomics Research</em> article, June 17, 2024."
   url: "https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html"
   link_label: "Article"
-  abstract: "PMS2 shares high sequence identity with its pseudogene PMS2CL, so reads from the two loci map ambiguously and pathogenic variants associated with Lynch syndrome are missed or assigned to the wrong copy. This article describes the multi-region joint detection (MRJD) approach to the problem, reporting recall of approximately 99.7% for SNVs and 97.1% for indels against a long-range PCR truth set, and detection of all expected pathogenic variants in 22 clinical samples. Recall here measures detection: in high-sensitivity mode an allele can be detected while its assignment to PMS2 or PMS2CL remains ambiguous, and calls from this short-read-only workflow are not phased."
+  abstract: "PMS2 shares high sequence identity with its pseudogene PMS2CL, so reads from the two loci map ambiguously and pathogenic variants associated with Lynch syndrome are missed or assigned to the wrong copy. This article describes the Multi-region Joint Detection (MRJD) approach to the problem, reporting recall of approximately 99.7% for SNVs and 97.1% for indels against a long-range PCR truth set, and detection of all expected pathogenic variants in 22 clinical samples. Recall here measures detection: in high-sensitivity mode an allele can be detected while its assignment to PMS2 or PMS2CL remains ambiguous, and calls from this short-read-only workflow are not phased."
 
 - type: article
   year: 2022
@@ -162,7 +162,7 @@
 - type: patent
   year: 2024
   sort_date: "2024-11-28"
-  title: "Multi-region joint detection."
+  title: "Multi-region Joint Detection."
   authors: "<strong>Han S</strong>, Andrews D, Onuchic VF."
   venue: "<em>US Patent Application</em> 18/674,279."
   patent: "https://patents.google.com/patent/US20240395363A1"

@@ -22,11 +22,11 @@
     neighbouring paralog or pseudogene, so short reads map ambiguously and labs fall back on
     cascades of MLPA and long-range PCR.
   idea: >-
-    Multi-region joint detection (MRJD) analyses a gene and its paralogs together instead of one
+    Multi-region Joint Detection (MRJD) analyses a gene and its paralogs together instead of one
     region at a time: it estimates total copy number, reconstructs each individual copy, and — with
     TruPath Genome — uses on-flowcell proximity linkage to support copy assignment.
   role: >-
-    Algorithm design and evaluation. First-named inventor on the multi-region joint detection patent
+    Algorithm design and evaluation. First-named inventor on the Multi-region Joint Detection patent
     application; presented the TruPath evaluation as a platform talk at ACMG 2026 and wrote the
     Illumina application note.
   evidence: >-

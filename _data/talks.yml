@@ -12,7 +12,7 @@
 - year: 2026
   type: "Poster"
   display_title: "Haplotype-resolved analysis at InSiGHT"
-  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-Region Joint Detection with Illumina TruPath Genome."
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-region Joint Detection with Illumina TruPath Genome."
   venue: "Biennial Meeting of the International Society for Gastrointestinal Hereditary Tumours (InSiGHT)"
   location: "Dusit Thani Laguna, Singapore"
   date: "March 7, 2026"
@@ -28,7 +28,7 @@
 
 - year: 2025
   type: "Poster"
-  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina constellation mapped reads."
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-region Joint Detection with Illumina constellation mapped reads."
   venue: "American Society of Human Genetics (ASHG)"
   location: "Boston, MA"
   date: "October 17, 2025"
@@ -46,7 +46,7 @@
 
 - year: 2025
   type: "Poster"
-  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using multi-region joint detection with Illumina on-flowcell proximity sequencing."
+  title: "Haplotype-resolved variant detection in medically relevant and paralogous genes using Multi-region Joint Detection with Illumina on-flowcell proximity sequencing."
   venue: "AGBT Precision Health"
   location: "San Diego, CA"
   date: "September 9, 2025"

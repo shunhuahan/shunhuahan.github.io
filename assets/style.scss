@@ -6,7 +6,7 @@
 //
 // Web fonts load through <link> tags in _layouts/default.html, so the
 // browser fetches them in parallel with this stylesheet. _variables holds
-// the Sass type stacks and breakpoints the alignment demo still uses.
+// the Sass type stacks and breakpoints.
 //
 
 @import "variables";
@@ -14,5 +14,4 @@
 @import "paper";
 @import "home";
 @import "research";
-@import "demo";
 @import "pages";
