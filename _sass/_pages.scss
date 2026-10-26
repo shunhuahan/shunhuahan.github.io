@@ -11,34 +11,34 @@
 .masthead h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); margin-top: 10px; max-width: 16ch; }
 .masthead .lede { max-width: 60ch; }
 .masthead .mark { position: absolute; right: unquote("max(var(--gutter), 16px)"); top: 18px; width: clamp(96px, 13vw, 170px); height: auto; pointer-events: none; }
-.toc { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 28px; font-family: var(--display); font-size: 1rem; }
+.toc { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 28px; }
 .toc a { text-decoration: none; }
-.toc a span { font-size: .78rem; letter-spacing: .14em; color: var(--tiger-ink); margin-right: 8px; }
+.toc a:hover { color: var(--tiger-ink); }
+.toc a span { font-size: .8rem; letter-spacing: .14em; color: var(--tiger-ink); margin-right: 8px; }
 @media (max-width: 700px) { .masthead .mark { opacity: .35; } }
 
 /* ------------------------------------------------------------------ ledger rows */
 .notes { margin-top: 40px; display: grid; }
 .note { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 0 28px; padding: 18px 0 20px; position: relative; }
-.note + .note { border-top: 1px dashed rgba(90, 80, 71, .35); }
-.note .yr { font-family: var(--display); font-size: 1.15rem; color: #a5402f; text-align: right; line-height: 1.5; padding-right: 18px; border-right: 2px solid var(--margin-red); }
-.note .kind { font-family: var(--display); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.note + .note { border-top: 1px solid rgba(90, 80, 71, .16); }
+.note .yr { font-size: 1.1rem; color: var(--tiger-ink); text-align: right; line-height: 1.55; padding-right: 4px; font-variant-numeric: oldstyle-nums; }
+.note .kind { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
 .note .t { font-size: 1.12rem; line-height: 1.45; margin-top: 3px; }
 .note .au { font-size: .96rem; color: var(--ink-2); margin-top: 4px; }
 .note .au strong { color: var(--ink); font-weight: 500; }
 .note .v { font-size: 0.96rem; color: var(--ink-2); margin-top: 2px; }
-.note .acts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin-top: 8px; font-family: var(--display); font-size: .92rem; }
+.note .acts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin-top: 8px; font-size: .96rem; }
 .note .acts details { margin-top: 0; }
 .note .acts details[open] { flex-basis: 100%; }
-.note .acts details p { font-family: var(--body); }
 .note details { margin-top: 8px; }
-.note summary { cursor: pointer; font-family: var(--display); font-size: .92rem; color: var(--ink); list-style: none; display: inline-block; background: var(--brush) left 100% / 100% 0.42em no-repeat; padding-bottom: .12em; }
+.note summary { cursor: pointer; color: var(--ink); list-style: none; display: inline-block; text-decoration: underline; text-decoration-color: var(--tiger); text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .note summary::-webkit-details-marker { display: none; }
 .note summary::after { content: " +"; color: var(--tiger-ink); }
 .note details[open] summary::after { content: " \2212"; }
 .note details p { margin-top: 10px; font-size: .98rem; color: var(--ink-2); max-width: 75ch; padding-left: 14px; border-left: 2px solid rgba(217, 120, 42, .5); }
-.archive { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 32px; padding-left: 124px; font-family: var(--display); }
-.group-h { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 64px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.group-h small { font-family: var(--body); font-style: italic; font-size: 1rem; color: var(--ink-3); letter-spacing: 0; }
+.archive { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 32px; padding-left: 124px; }
+.group-h { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 64px; padding-bottom: 8px; border-bottom: 1px solid rgba(36, 31, 26, .5); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.group-h small { font-size: 1rem; color: var(--ink-3); letter-spacing: 0; }
 .group-h:first-of-type { margin-top: 0; }
 @media (max-width: 620px) {
   .note { grid-template-columns: minmax(0, 1fr); }

@@ -31,7 +31,7 @@ description: "Research on haplotype-resolved variant calling in paralogous genes
       <p><em>PMS2CL</em> sequence can be copied into <em>PMS2</em> by gene conversion, which a gene-level call cannot see. Here the two reconstructed <em>PMS2</em> haplotypes are separated: one carries a <em>PMS2CL</em>-to-<em>PMS2</em> conversion tract, and <em>PMS2CL</em> itself is deleted on both chromosomes. The application note reports this configuration as consistent with the sample's prior characterization.</p>
     </div>
     <figure class="figprint" style="--r:0.3deg"><span class="tape"></span>
-      <div class="paper"><svg id="fig2" viewBox="0 0 1000 520" role="img" aria-label="Alignment tracks for two reconstructed PMS2 haplotypes over 16 kb. Haplotype 1 carries a PMS2CL-to-PMS2 gene conversion tract and is non-functional; haplotype 2 is functional. PMS2CL is deleted on both haplotypes."></svg></div>
+      <div class="paper"><svg id="fig2" viewBox="0 0 1000 580" role="img" aria-label="Alignment tracks for two reconstructed PMS2 haplotypes over 16 kb. Haplotype 1 carries a PMS2CL-to-PMS2 gene conversion tract and is non-functional; haplotype 2 is functional. PMS2CL is deleted on both haplotypes."></svg></div>
       <figcaption><b>Figure 2</b>Redrawn from the ACMG 2026 slides. Two reconstructed <em>PMS2</em> haplotypes. The source classifies haplotype 1, which carries the conversion tract, as non-functional without naming a causal change; haplotype 2 is unaffected. <em>PMS2CL</em> is deleted on both.</figcaption>
     </figure>
   </div>
@@ -43,8 +43,8 @@ description: "Research on haplotype-resolved variant calling in paralogous genes
     <h2 class="sheet-title">Calling difficult clinical genes from standard sequencing</h2>
     <p class="lede">Before proximity data, I built callers that get the most out of an ordinary genome or exome for a few high-value genes. Each one is designed around its locus: reading depth over sequence that is unique when the genes themselves are not, or analysing near-identical copies together instead of discarding the reads they share.</p>
     <figure class="figprint" style="--r:-0.4deg"><span class="tape"></span>
-      <div class="paper"><svg id="agfig" viewBox="0 0 900 200" role="img" aria-label="Six alpha-globin genotypes from four genes to none. The two two-gene genotypes differ: both deletions on one chromosome (cis) or one on each (trans)."></svg></div>
-      <figcaption><b>Figure 3</b>The configuration matters, not just the count. Each pair of bars is the two copies of chromosome 16, each normally carrying two alpha-globin genes; hollow genes are deleted. The two middle genotypes carry the same two genes, so a gene count cannot separate them, and reads inside <em>HBA1</em> and <em>HBA2</em> are ambiguous in any case. Only the <em>cis</em> configuration passes on a chromosome with no alpha-globin genes. Deletions of different extent leave different depth signatures in the non-homologous sequence around the genes, and that is what the caller reads.</figcaption>
+      <div class="paper"><svg id="agfig" viewBox="0 0 900 262" role="img" aria-label="Six alpha-globin genotypes from four genes to none. The two two-gene genotypes are both carriers; only the cis configuration can pass on a chromosome with no alpha-globin genes."></svg></div>
+      <figcaption><b>Figure 3</b>The configuration matters, not just the count. Each pair of bars is the two copies of chromosome 16, each normally carrying two alpha-globin genes; hollow genes are deleted. Both two-gene genotypes are alpha-thalassemia trait, with mild or no symptoms. They differ in what a parent passes on: a cis carrier (&minus;&minus;/&alpha;&alpha;) can transmit a chromosome with no alpha-globin genes, so two cis carriers have a 1 in 4 chance of a child with Hb Bart&rsquo;s hydrops fetalis, while a trans carrier (&minus;&alpha;/&minus;&alpha;) always transmits one gene. A gene count cannot separate them, and reads inside <em>HBA1</em> and <em>HBA2</em> are ambiguous, so the caller reads the depth signature that deletions of different extent leave in the non-homologous sequence around the genes.</figcaption>
     </figure>
     <div class="works">
       <article class="work" id="hba">
@@ -81,7 +81,7 @@ description: "Research on haplotype-resolved variant calling in paralogous genes
     <h2 class="sheet-title">Reconstructing insertions and genome history</h2>
     {% include summary-card.html anchor="telr" %}
     <figure class="figprint" style="--r:0.4deg"><span class="tape"></span>
-      <div class="paper"><svg id="fig4" viewBox="0 0 1000 620" role="img" aria-label="TELR workflow in four stages: identify TE insertion candidate loci from structural variant calls, assemble and polish a local TE contig, identify the TE family and reference coordinates, and estimate intra-sample allele frequency from read depth."></svg></div>
+      <div class="paper"><svg id="fig4" viewBox="0 0 1000 760" role="img" aria-label="TELR workflow in four stages: identify TE insertion candidate loci from structural variant calls, assemble and polish a local TE contig, identify the TE family and reference coordinates, and estimate intra-sample allele frequency from read depth."></svg></div>
       <figcaption><b>Figure 4</b>The TELR pipeline: identify candidate TE insertion loci from structural variant calls, locally assemble and polish a contig spanning the insertion, identify the TE family and its reference coordinates, then estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
     </figure>
     <div class="prose" style="margin-top:48px">

@@ -10,34 +10,28 @@
 // directly in a custom property, so each texture is a Sass variable that the
 // token interpolates.
 $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .24  0 0 0 0 .16  0 0 0 .075 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-$mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .22  0 0 0 .1 -.025'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
-$brush: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C40 3 80 9 120 5 S180 6 198 6' fill='none' stroke='%23d9782a' stroke-width='4' stroke-linecap='round' opacity='.8'/%3E%3C/svg%3E");
+$mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .22  0 0 0 .07 -.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
 
 :root {
   --ink: #241f1a;          /* india ink */
   --ink-2: #5a5047;        /* pencil */
   --ink-3: #7a6f63;
-  --newsprint: #f3ecdb;
-  --plate: #efe5cc;
-  --kraft: #c7a57a;
-  --ledger: #f6f3ea;
-  --dotpaper: #f7f3ea;
-  --graph: #f3f5ef;
+  --newsprint: #f4eedf;     /* the main paper */
+  --plate: #ece3cd;         /* a warmer sheet, for alternating sections */
+  --kraft: #c9aa80;
   --night: #1f2b47;
   --tiger: #d9782a;        /* the one accent: tiger orange */
   --tiger-ink: #9a4a12;    /* the accent, dark enough for small text */
   --copy-a: #4f6f95;       /* a gene */
   --copy-b: #c08736;       /* its paralog */
   --psv: #a8432e;          /* where the copies differ; a variant */
-  --rule-blue: #c3d4e2;
-  --margin-red: #d57a6c;
   --tape: rgba(236, 224, 186, 0.82);
-  --display: "Cutive", "Courier New", Georgia, serif;
+  /* one family throughout: Newsreader, whose optical sizes cover display and text */
+  --display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --body: "Newsreader", "Iowan Old Style", Georgia, serif;
   --gutter: clamp(16px, 4vw, 56px);
   --grain: #{$grain};
   --mottle: #{$mottle};
-  --brush: #{$brush};
 
   /* tokens the interactive alignment figure reads */
   --bg: #fbf7ec;

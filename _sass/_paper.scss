@@ -12,7 +12,7 @@ body {
   font: 400 1.125rem/1.62 var(--body); font-optical-sizing: auto;
   overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; line-height: 1.14; margin: 0; text-wrap: balance; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; line-height: 1.12; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
 a { color: inherit; }
 ::selection { background: #f3cf94; }
@@ -20,11 +20,9 @@ a { color: inherit; }
 svg { display: block; }
 img { max-width: 100%; }
 
-/* a link: underlined once with a tiger-orange brush stroke */
-.link { text-decoration: none; background: var(--brush) left 100% / 100% 0.42em no-repeat; padding-bottom: 0.12em; }
-.link:hover { color: var(--tiger-ink); background-size: 100% 0.62em; }
-.prose a:not(.link) { color: var(--ink); text-decoration-color: var(--tiger); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
-.prose a:not(.link):hover { color: var(--tiger-ink); }
+/* a link: a plain underline in the accent */
+.link, .prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--tiger); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.link:hover, .prose a:hover { color: var(--tiger-ink); text-decoration-thickness: 2px; }
 
 /* ------------------------------------------------------------------ sheets */
 .sheet { position: relative; background-color: var(--paper); background-image: var(--grain), var(--mottle), var(--pattern, none); }
@@ -42,23 +40,16 @@ img { max-width: 100%; }
   padding-right: unquote("max(var(--gutter), env(safe-area-inset-right, 0px))");
   padding-block: clamp(64px, 8vw, 112px);
 }
-.kicker { font-family: var(--display); font-size: 0.86rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tiger-ink); }
-.sheet-title { font-size: clamp(2.3rem, 5vw, 4rem); letter-spacing: 0.01em; margin-top: 10px; }
+/* the one small label style: kickers, eyebrows and list labels all use it */
+.kicker { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tiger-ink); }
+.sheet-title { font-size: clamp(2.3rem, 5vw, 3.9rem); margin-top: 10px; }
 .lede { max-width: 62ch; margin-top: 18px; color: var(--ink-2); font-size: 1.16rem; }
 
-.sheet.newsprint { --paper: var(--newsprint); }
-.sheet.plate { --paper: var(--plate); --pattern: radial-gradient(rgba(150, 110, 60, 0.06) 1px, transparent 1.3px); background-size: 260px 260px, 600px 600px, 6px 6px; }
+/* plain paper only: no ruled, dotted or gridded sheets, so nothing runs behind the text.
+   Sections alternate between the main paper and a warmer one; selected work sits on kraft. */
+.sheet.newsprint, .sheet.dots, .sheet.ledger, .sheet.graph, .sheet.quiet { --paper: var(--newsprint); }
+.sheet.plate, .sheet.quiet.alt { --paper: var(--plate); }
 .sheet.kraft { --paper: var(--kraft); }
-.sheet.ledger { --paper: var(--ledger); --pattern: linear-gradient(to bottom, transparent 31px, var(--rule-blue) 31px, var(--rule-blue) 32px); background-size: 260px 260px, 600px 600px, 100% 32px; }
-.sheet.dots { --paper: var(--dotpaper); --pattern: radial-gradient(rgba(90, 80, 71, .15) 1px, transparent 1.3px); background-size: 260px 260px, 600px 600px, 22px 22px; }
-.sheet.graph { --paper: var(--graph);
-  background-image: var(--grain), var(--mottle),
-    linear-gradient(rgba(96, 150, 140, .14) 1px, transparent 1px), linear-gradient(90deg, rgba(96, 150, 140, .14) 1px, transparent 1px),
-    linear-gradient(rgba(96, 150, 140, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(96, 150, 140, .06) 1px, transparent 1px);
-  background-size: 260px 260px, 600px 600px, 80px 80px, 80px 80px, 16px 16px, 16px 16px; }
-/* plain, quiet paper for long lists: only the grain, and a faint deckle shadow at the edges */
-.sheet.quiet { --paper: #f7f2e6; background-image: var(--grain), radial-gradient(ellipse at 50% 0%, transparent 60%, rgba(120, 95, 60, .07)); }
-.sheet.quiet.alt { --paper: #f2ecdd; }
 .kraft .kicker { color: #5a2b0a; }
 .kraft .lede { color: #3f3226; }
 
@@ -66,11 +57,12 @@ img { max-width: 100%; }
 .topnav {
   position: relative; z-index: 4; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 28px;
   padding: clamp(18px, 2.4vw, 32px) unquote("max(var(--gutter), env(safe-area-inset-right, 0px))") 0 unquote("max(var(--gutter), env(safe-area-inset-left, 0px))");
-  font-family: var(--display); font-size: 1rem; letter-spacing: 0.04em;
+  font-size: 1.02rem;
 }
-.topnav .home { margin-right: auto; font-size: 1.15rem; text-decoration: none; }
-.topnav a { text-decoration: none; padding: 4px 0 6px; background: var(--brush) left 100% / 0% 0.42em no-repeat; transition: background-size .35s ease; text-shadow: 0 0 3px var(--newsprint), 0 0 6px var(--newsprint); }
-.topnav a:hover, .topnav a[aria-current="page"] { background-size: 100% 0.42em; }
+.topnav .home { margin-right: auto; font-size: 1.12rem; }
+.topnav a { text-decoration: none; padding: 4px 0; border-bottom: 1px solid transparent; transition: border-color .2s ease; }
+.topnav a:hover, .topnav a[aria-current="page"] { border-bottom-color: var(--tiger); }
+.topnav .home:hover { border-bottom-color: transparent; }
 .front .topnav { justify-content: flex-end; }
 
 /* ------------------------------------------------------------------ night footer */
@@ -81,14 +73,14 @@ img { max-width: 100%; }
 .night h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
 .night .bye { font-style: italic; font-size: 1.25rem; color: #f2c58f; margin-top: 12px; }
 .night .contact { margin-top: 22px; font-size: 1.05rem; color: #d9d1c0; }
-.night .contact code { font-family: var(--display); font-size: 1rem; color: #fff7e6; user-select: all; }
-.night .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 24px; margin-top: 14px; font-family: var(--display); font-size: .98rem; }
+.night .contact code { font-family: inherit; font-size: 1.05rem; color: #fff7e6; user-select: all; }
+.night .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 24px; margin-top: 14px; font-size: 1rem; }
+.night .link { color: #efe8d8; }
+.night .link:hover { color: #f2c58f; }
 .night small { display: block; color: #9fa6b8; font-size: .9rem; }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .print .paper, .topnav a { transition: none; } }
 @media (prefers-reduced-motion: no-preference) {
-  .kite-sway { animation: sway 7s ease-in-out infinite alternate; transform-origin: 300px 170px; transform-box: view-box; }
-  @keyframes sway { from { transform: rotate(-3deg) translate(-4px, 2px); } to { transform: rotate(3deg) translate(6px, -4px); } }
   .twinkle { animation: tw 3.2s ease-in-out infinite alternate; }
   @keyframes tw { from { opacity: .35; } to { opacity: 1; } }
 }
