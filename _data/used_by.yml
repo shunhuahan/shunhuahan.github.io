@@ -1,0 +1,22 @@
+# Studies by other groups that use or evaluate my methods, shown as clippings on
+# the Research page under the project they relate to (`project` = section id).
+#
+# Field guide:
+#   project   research section the clipping belongs to (paralogs, short-read, transposons)
+#   kind      short label, e.g. "Independent evaluation", "Applied in"
+#   status    publication status, kept next to the claim (e.g. "Preprint, not yet peer reviewed")
+#   finding   one or two sentences on what they found that bears on my work
+
+- project: paralogs
+  kind: "Independent clinical evaluation"
+  title: "Proximity-mapped whole-genome sequencing for characterization of repeat expansions and variants in highly homologous genomic regions"
+  authors: "Lin Y, Zhang L, Qiang Y, Yang L, Li X, Wang K"
+  group: "Shanghai Fujun Medical Laboratory"
+  venue: "medRxiv"
+  year: 2026
+  status: "Preprint, not yet peer reviewed"
+  url: "https://www.medrxiv.org/content/10.64898/2026.10.11.26365260v1"
+  finding: >-
+    Ran TruPath Genome on 10 archived clinical DNA samples. In the homologous genes, <em>SMN1</em>/<em>SMN2</em>
+    and <em>STRC</em> copy-number calls agreed with orthogonal assays, and the <em>CYP21A2</em> RCCX region was
+    reconstructed with the I2G variant and a chimeric allele placed on different haplotypes.

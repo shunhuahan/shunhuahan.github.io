@@ -144,180 +144,148 @@
     document.documentElement.style.setProperty("--tear", "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")");
   })();
 
-  // ---------------------------------------------------------------- the front: a vignette engraving of two identical peaks
-  // Drawn the way a survey engraver would: the land is cut into ridgelines, nearer lines hide farther ones,
-  // tone comes from how closely lines are laid, and a flag on one summit is the only difference.
-  function drawEngraving(canvas, opts) {
-      opts = opts || {}; if (!canvas || !canvas.getContext) return;
-      var VW = 1440, VH = 800, F = 900, H0 = 520, CAMH = 1.2;
-      function hash(x, y) { var h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return h - Math.floor(h); }
-      function vnoise(x, y) {
-        var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
-        var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
-        var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
-        return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
-      }
-      function fbm(x, y, o) { var s = 0, a = .5, k = 1; for (var i = 0; i < o; i++) { s += a * vnoise(x * k, y * k); k *= 2.03; a *= .5; } return s; }
-      function ridged(x, y, o) { var s = 0, a = .55, k = 1; for (var i = 0; i < o; i++) { var n = 1 - Math.abs(vnoise(x * k, y * k) * 2 - 1); s += a * n * n; k *= 2.1; a *= .5; } return s; }
-
-      var PZ = 30, PH = 12.6, PR = 10.5, PEAKS = [6.4, 16.2];
-      function peak(dx, dz) {
-        var r = Math.sqrt(dx * dx + dz * dz * 0.7);
-        if (r >= PR) return 0;
-        var cone = Math.pow(1 - r / PR, 1.45);
-        return PH * cone * (0.8 + 0.42 * ridged(dx * 0.32 + 3.1, dz * 0.32 + 7.7, 4));
-      }
-      function height(X, Z) {
-        var h = 0;
-        for (var i = 0; i < PEAKS.length; i++) {
-          var dx = X - PEAKS[i], dz = Z - PZ;
-          if (Math.abs(dx) < PR && Math.abs(dz) < PR * 1.2) h = Math.max(h, peak(dx, dz));
-        }
-        // a far range behind, low rolling ground in the valley
-        h = Math.max(h, 3.2 * fbm(X * 0.05 + 11, Z * 0.05, 3) * Math.min(1, Math.max(0, (Z - 38) / 12)));
-        var ramp = Math.min(1, Math.max(0, (Z - 8) / 14)); ramp = ramp * ramp * (3 - 2 * ramp);
-        var valley = 0.25 + Math.pow(fbm(X * 0.075 + 5, Z * 0.075, 4), 1.6) * 5.2 * ramp;
-        h = Math.max(h, valley);
-        // the near ledge the explorer stands on, falling away to the right
-        var ledge = 1.42 * Math.exp(-Math.pow((Z - 4.8) / 1.9, 2)) / (1 + Math.exp((X + 0.75) * 1.9));
-        h = Math.max(h, ledge);
-        return h;
-      }
-      function snowy(X, Z, h) {
-        for (var i = 0; i < PEAKS.length; i++) if (Math.abs(X - PEAKS[i]) < PR && Math.abs(Z - PZ) < PR && h > 8.4 + 1.1 * vnoise(X * 1.3, Z * 1.3)) return true;
-        return false;
-      }
-
-      (function draw() {
-        var W = canvas.clientWidth, H = canvas.clientHeight; if (!W || !H) return;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-        // cover the box from the bottom; on a narrow screen keep the whole valley in view instead
-        var s = Math.max(W / VW, Math.min(H / VH, W / 1100));
-        var s0 = s; s = s * (opts.zoom || 1); var ox = W / 2 - (opts.focus || 800) * s, oy = H - (opts.bottom || VH) * s;
-        var ctx = canvas.getContext("2d");
-        ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * ox, dpr * oy);
-        ctx.clearRect(0, 0, VW, VH);
-        var px = 1 / s;                       // one CSS pixel, in scene units
-        var x0 = Math.max(0, Math.floor(-ox / s) - 4), x1 = Math.min(VW, Math.ceil((W - ox) / s) + 4);
-
-        // a low warm light behind the peaks, laid on like a thin wash
-        var glow = ctx.createRadialGradient(1060, 470, 20, 1060, 470, 560);
-        glow.addColorStop(0, "rgba(222, 170, 104, 0.26)"); glow.addColorStop(1, "rgba(222, 170, 104, 0)");
-        ctx.fillStyle = glow; ctx.fillRect(0, 0, VW, VH);
-
-        // sky: ruled lines that thin out upward and toward the text, the way a vignette engraving fades
-        ctx.strokeStyle = "rgba(36, 31, 26, 0.32)";
-        for (var sy = H0 - 4; sy > 110; sy -= 5.2 * px) {
-          var fadeY = (H0 - sy) / (H0 - 110);
-          ctx.lineWidth = Math.max(0.35 * px, 0.75 * px * (1 - fadeY));
-          ctx.beginPath();
-          var on = false;
-          for (var sx = Math.max(x0, 600); sx <= x1; sx += 3) {
-            var ex = (sx - 1100) / 520, ey = (sy - 480) / 330;
-            var keep = ex * ex + ey * ey + 0.35 * vnoise(sx * 0.02, sy * 0.05) < 1;
-            var cloud = fbm(sx * 0.004 + 4, sy * 0.016, 3) > 0.6 + fadeY * 0.1;
-            if (keep && !cloud) { if (!on) { ctx.moveTo(sx, sy); on = true; } else ctx.lineTo(sx, sy); }
-            else on = false;
-          }
-          ctx.stroke();
-        }
-
-        // the land, nearest line first, each hidden wherever a nearer one already rose above it
-        var cols = Math.ceil((x1 - x0) / 2) + 1;
-        var occ = new Float32Array(cols).fill(1e9);
-        var ledgeTop = null;
-        var BUCKETS = 7, paths = [];
-        for (var b = 0; b < BUCKETS; b++) paths.push(new Path2D());
-        var Z = 1.6, row = 0, prevY = new Float32Array(cols).fill(NaN);
-        while (Z < 72) {
-          var fade = Math.max(0.28, 1 - (Z - 2) / 80);
-          var rowBucket = new Int8Array(cols).fill(-1), ys = new Float32Array(cols);
-          for (var c = 0; c < cols; c++) {
-            var X = (x0 + c * 2 - VW / 2) * Z / F, e = 0.06 * Z;
-            var h = height(X, Z), y = H0 - (h - CAMH) * F / Z;
-            ys[c] = y;
-            var dy = isNaN(prevY[c]) ? 1 : Math.max(0.05, prevY[c] - y);
-            prevY[c] = y;
-            if (y >= occ[c] - 0.15) continue;
-            var edge = occ[c] - y > 10 * px;   // a ridge rising into view always gets its outline
-            occ[c] = y;
-            // light from the upper left and a little behind the viewer
-            var hx = (height(X + e, Z) - height(X - e, Z)) / (2 * e), hz = (height(X, Z + e) - h) / e;
-            var nl = Math.sqrt(hx * hx + 1 + hz * hz);
-            var lit = Math.max(0, Math.min(1, (hx * 0.9 + 0.62 - hz * 0.35) / nl));
-            var snow = snowy(X, Z, h);
-            var gap = (snow ? 10 : 2.2 + 6.2 * Math.pow(lit, 1.5)) * px;
-            // draw every k-th row, k a power of two: lit ground keeps the lines a shadow would also draw
-            var k = Math.pow(2, Math.max(0, Math.min(8, Math.round(Math.log(gap / dy) / Math.LN2))));
-            if (!edge && row % k) continue;
-            var tone = (snow ? 0.3 : 0.5 + 0.5 * (1 - lit)) * fade * (edge ? 1.2 : 1);
-            rowBucket[c] = Math.max(0, Math.min(BUCKETS - 1, Math.round(tone * (BUCKETS - 1))));
-          }
-          for (var kk = 0; kk < cols; kk++) {
-            var bk = rowBucket[kk]; if (bk < 0) continue;
-            var p = paths[bk], xx = x0 + kk * 2;
-            if (kk > 0 && rowBucket[kk - 1] >= 0 && Math.abs(ys[kk - 1] - ys[kk]) < 8) { p.moveTo(xx - 2, ys[kk - 1]); p.lineTo(xx, ys[kk]); }
-            else { p.moveTo(xx - 0.6, ys[kk]); p.lineTo(xx + 0.6, ys[kk]); }
-          }
-          if (Z > 8 && !ledgeTop) ledgeTop = occ.slice();
-          Z += Z / 380; row++;
-        }
-        for (var q = 0; q < BUCKETS; q++) {
-          var t = q / (BUCKETS - 1);
-          ctx.strokeStyle = "rgba(36, 31, 26, " + (0.18 + 0.78 * t).toFixed(3) + ")";
-          ctx.lineWidth = (0.5 + 0.38 * t) * px;
-          ctx.lineCap = "round";
-          ctx.stroke(paths[q]);
-        }
-
-        // the flag on the first summit: the one place the two peaks differ
-        var fx = VW / 2 + PEAKS[0] * F / PZ, fh = peak(0, 0), fy = H0 - (fh - CAMH) * F / PZ;
-        ctx.strokeStyle = "#241f1a"; ctx.lineWidth = 1.1 * px;
-        ctx.beginPath(); ctx.moveTo(fx, fy + 1); ctx.lineTo(fx, fy - 22); ctx.stroke();
-        ctx.fillStyle = "#a8432e";
-        ctx.beginPath(); ctx.moveTo(fx, fy - 22); ctx.lineTo(fx + 14, fy - 18.5); ctx.lineTo(fx, fy - 15); ctx.closePath(); ctx.fill();
-
-        // a few birds, far off
-        ctx.strokeStyle = "rgba(36, 31, 26, 0.7)"; ctx.lineWidth = 1 * px;
-        [[760, 300, 1], [790, 286, .8], [812, 306, .7]].forEach(function (bd) {
-          var bx = bd[0], by = bd[1], bs = bd[2] * 6;
-          ctx.beginPath(); ctx.moveTo(bx - bs, by - bs * .3); ctx.quadraticCurveTo(bx - bs * .4, by - bs * .6, bx, by); ctx.quadraticCurveTo(bx + bs * .4, by - bs * .6, bx + bs, by - bs * .3); ctx.stroke();
-        });
-
-        // the explorer, a small figure on the ledge with a telescope raised toward the peaks
-        var ex0 = 430, ec = Math.round((ex0 - x0) / 2);
-        if (ledgeTop && ec >= 0 && ec < cols) {
-          var gy = Math.min(ledgeTop[Math.max(0, ec - 2)], ledgeTop[ec], ledgeTop[Math.min(cols - 1, ec + 2)]) + 1.5;
-          ctx.save(); ctx.translate(ex0, gy); ctx.scale(1.05, 1.05);
-          ctx.fillStyle = "#231d18"; ctx.strokeStyle = "#231d18"; ctx.lineCap = "round"; ctx.lineJoin = "round";
-          ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(-12, -36); ctx.lineTo(-16, 0.5); ctx.stroke();       // stick
-          ctx.beginPath();                                                                                       // legs
-          ctx.moveTo(-6, -22); ctx.lineTo(-8.5, -0.5); ctx.lineTo(-4.6, -0.5); ctx.lineTo(-2.4, -18);
-          ctx.lineTo(0.6, -18); ctx.lineTo(3.6, -0.5); ctx.lineTo(7.4, -0.5); ctx.lineTo(4.4, -22); ctx.closePath(); ctx.fill();
-          ctx.beginPath(); ctx.ellipse(-6.4, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.ellipse(5.6, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath();                                                                                       // coat
-          ctx.moveTo(-7, -45); ctx.quadraticCurveTo(-1, -48, 6, -45); ctx.lineTo(9, -19); ctx.quadraticCurveTo(0, -16, -10.5, -19); ctx.closePath(); ctx.fill();
-          ctx.beginPath(); ctx.moveTo(-15, -47); ctx.lineTo(-6, -48); ctx.lineTo(-5, -27); ctx.lineTo(-14.5, -26); ctx.closePath(); ctx.fill();   // pack
-          ctx.beginPath(); ctx.ellipse(-10.6, -49.5, 5.6, 2.6, -0.1, 0, Math.PI * 2); ctx.fill();               // bedroll
-          ctx.lineWidth = 3.2; ctx.beginPath(); ctx.moveTo(4, -43); ctx.quadraticCurveTo(9, -45, 12, -50); ctx.stroke();   // arm
-          ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(8, -51); ctx.lineTo(29, -58.5); ctx.stroke();         // telescope
-          ctx.lineWidth = 1.7; ctx.beginPath(); ctx.moveTo(29, -58.5); ctx.lineTo(33, -60); ctx.stroke();
-          ctx.beginPath(); ctx.arc(1.5, -50.5, 4.2, 0, Math.PI * 2); ctx.fill();                                 // head
-          ctx.beginPath(); ctx.ellipse(1.5, -54, 7.6, 1.5, -0.05, 0, Math.PI * 2); ctx.fill();                   // hat brim
-          ctx.beginPath(); ctx.moveTo(-2.6, -54); ctx.quadraticCurveTo(1.5, -61.5, 5.6, -54); ctx.closePath(); ctx.fill();
-          ctx.beginPath(); ctx.moveTo(-3, -45); ctx.quadraticCurveTo(-10, -46, -15, -42); ctx.quadraticCurveTo(-9, -44, -3, -42.5); ctx.closePath();   // scarf
-          ctx.fillStyle = "#a8432e"; ctx.fill();
-          ctx.restore();
-        }
-      })();
+  // ---------------------------------------------------------------- the front: an explorer's chart of the duplicated genome
+  // An old sea chart: paralog pairs are twin islands of the same shape, transposons a scatter of identical islets,
+  // a small boat wanders a dotted course among them, and a sea serpent with a double-helix body guards the corner.
+  function blobPoints(seed, rx, ry, n) {
+    var R = rng(seed), pts = [];
+    for (var i = 0; i < n; i++) {
+      var a = i / n * Math.PI * 2, k = 0.78 + R() * 0.3 + 0.12 * Math.sin(a * 3 + seed);
+      pts.push([Math.cos(a) * rx * k, Math.sin(a) * ry * k]);
+    }
+    return pts;
+  }
+  function smoothClosed(pts, cx, cy, sx, sy) {
+    sx = sx || 1; sy = sy || 1;
+    var P = pts.map(function (p) { return [cx + p[0] * sx, cy + p[1] * sy]; }), n = P.length, d = "M" + f(P[0][0]) + "," + f(P[0][1]);
+    for (var i = 0; i < n; i++) {
+      var p0 = P[(i - 1 + n) % n], p1 = P[i], p2 = P[(i + 1) % n], p3 = P[(i + 2) % n];
+      d += " C" + f(p1[0] + (p2[0] - p0[0]) / 6) + "," + f(p1[1] + (p2[1] - p0[1]) / 6) + " " + f(p2[0] - (p3[0] - p1[0]) / 6) + "," + f(p2[1] - (p3[1] - p1[1]) / 6) + " " + f(p2[0]) + "," + f(p2[1]);
+    }
+    return d + "Z";
   }
   (function () {
-    var canvas = $("vign"); if (!canvas) return;
-    var paint = function () { drawEngraving(canvas, { focus: 1035, zoom: 1.75, bottom: 545 }); };
-    paint();
-    var timer;
-    window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(paint, 160); });
+    var svg = $("map"); if (!svg) return;
+    var W = 640, H = 360, R = rng(5);
+    var SEA = "#6f8aa0", LAND = "#d9c597";
+    var frame = el("clipPath", { id: "chartclip" }, svg);
+    el("rect", { x: 17, y: 17, width: W - 34, height: H - 34 }, frame);
+    var under = el("g", { "clip-path": "url(#chartclip)" }, svg), g = el("g", { filter: "url(#ink)" }, el("g", { "clip-path": "url(#chartclip)" }, svg));
+    // the sea: fine ruled lines, as on an engraved chart
+    var sea = "";
+    for (var y = 22; y < H - 18; y += 5) sea += " M22," + y + " L" + (W - 22) + "," + y;
+    path(under, sea, { w: .5, stroke: SEA, op: .32 });
+
+    function island(seed, cx, cy, rx, ry, label, sub, opts) {
+      opts = opts || {};
+      var pts = blobPoints(seed, rx, ry, 11), coast = smoothClosed(pts, cx, cy);
+      // water lines ringing the coast, fainter as they move out
+      [9, 6, 3].forEach(function (d, i) {
+        path(under, smoothClosed(pts, cx, cy, 1 + d / rx, 1 + d / ry), { w: .7, stroke: SEA, op: .25 + i * .15 });
+      });
+      el("path", { d: coast, fill: "#f4eedf" }, under);
+      wash(g, coast, opts.tint || LAND, .75);
+      // stipple and a few hills
+      var R2 = rng(seed + 9), dots = "";
+      for (var k = 0; k < rx * ry / 18; k++) {
+        var a = R2() * Math.PI * 2, r = Math.sqrt(R2()) * .7;
+        dots += " M" + f(cx + Math.cos(a) * rx * r) + "," + f(cy + Math.sin(a) * ry * r) + " l.6,0";
+      }
+      path(g, dots, { w: 1, stroke: INK, op: .45 });
+      if (rx > 22) for (var h = 0; h < 3; h++) {
+        var hx = cx - rx * .35 + h * rx * .3, hy = cy - ry * .1 + (h % 2) * 4;
+        path(g, "M" + f(hx - 5) + "," + f(hy + 3) + " L" + f(hx) + "," + f(hy - 4) + " L" + f(hx + 5) + "," + f(hy + 3), { w: 1 });
+        path(g, "M" + f(hx) + "," + f(hy - 4) + " L" + f(hx + 2.5) + "," + f(hy + 3), { w: .6, op: .6 });
+      }
+      path(g, coast, { w: 1.3 });
+      if (label) {
+        note(svg, cx + (opts.lx || 0), cy + ry + 15 + (opts.ly || 0), label, { size: 13, fill: INK, anchor: "middle" });
+        if (sub) note(svg, cx + (opts.lx || 0), cy + ry + 27 + (opts.ly || 0), sub, { size: 9.5, anchor: "middle", roman: true });
+      }
+    }
+    // twin islands: the same coastline, set down twice
+    island(41, 150, 118, 44, 26, "PMS2", "the gene");
+    island(41, 262, 186, 44, 26, "PMS2CL", "the pseudogene", { tint: "#cbbf9c" });
+    island(77, 418, 92, 26, 15, "SMN1");
+    island(77, 474, 120, 26, 15, "SMN2", null, { lx: 8 });
+    island(93, 520, 236, 22, 13, "HBA2", null, { lx: -2 });
+    island(93, 574, 252, 22, 13, "HBA1");
+    island(58, 82, 248, 30, 18, "CYP21A2");
+    island(58, 160, 284, 30, 18, "CYP21A1P", null, { tint: "#cbbf9c" });
+    // transposons: one small islet, copied again and again across the chart
+    var isle = blobPoints(12, 6, 4, 8), tes = [[246, 52], [268, 64], [292, 50], [318, 62], [342, 48], [366, 60], [548, 152], [572, 140], [596, 158]];
+    tes.forEach(function (t) {
+      [3].forEach(function (d) { path(under, smoothClosed(isle, t[0], t[1], 1 + d / 6, 1 + d / 4), { w: .6, stroke: SEA, op: .45 }); });
+      var c = smoothClosed(isle, t[0], t[1]);
+      el("path", { d: c, fill: "#f4eedf" }, under); wash(g, c, "#b9c48f", .8); path(g, c, { w: 1 });
+    });
+    note(svg, 306, 84, "transposons: one islet, copied many times", { size: 11, anchor: "middle" });
+
+    // the explorer's course: a dotted line wandering from the left edge through the islands and on, off the chart
+    var course = "M24,182 C70,170 96,150 122,160 S200,214 214,152 S300,120 330,140 S390,170 420,154 S470,180 500,186 S560,196 590,200 S622,220 640,214";
+    path(g, course, { w: 1.2, dash: "2 5", stroke: "#8a3b2a" });
+    // the boat, partway along
+    var bx = 330, by = 140;
+    var boat = el("g", { transform: "translate(" + bx + "," + (by - 2) + ")" }, g);
+    el("path", { d: "M-11,0 L11,0 L7,5 L-7,5Z", fill: "#7a4f2e", stroke: INK, "stroke-width": 1 }, boat);
+    path(boat, "M0,0 L0,-19", { w: 1.1 });
+    el("path", { d: "M1,-18 L11,-3 L1,-3Z", fill: "#fbf7ec", stroke: INK, "stroke-width": .9 }, boat);
+    el("path", { d: "M-1,-17 L-9,-4 L-1,-4Z", fill: "#efe6cf", stroke: INK, "stroke-width": .8 }, boat);
+    el("path", { d: "M0,-19 l6,1.6 l-6,1.6Z", fill: "#a8432e" }, boat);
+    path(boat, "M-14,7 q4,-2 8,0 M8,7 q4,-2 8,0", { w: .7, stroke: SEA });
+
+    // a sea serpent whose body is a double helix
+    var sx0 = 352, sy0 = 316;
+    path(g, "M" + (sx0 - 30) + "," + (sy0 + 1) + " q6,-3 12,0 M" + (sx0 + 120) + "," + (sy0 + 1) + " q6,-3 12,0", { w: .8, stroke: SEA });
+    var s1 = "", s2 = "", rung = "";
+    for (var t = 0; t <= 1.0001; t += 0.01) {
+      var x = sx0 - 18 + t * 132, hump = Math.max(0, Math.sin(t * Math.PI * 3)), yy = sy0 - hump * 20;
+      var tw = Math.sin(t * 34) * 4.2 * (hump > .05 ? 1 : 0);
+      if (hump <= .02) { s1 += " M" + f(x) + "," + f(yy); s2 += " M" + f(x) + "," + f(yy); continue; }
+      s1 += (s1 ? " L" : "M") + f(x) + "," + f(yy + tw); s2 += (s2 ? " L" : "M") + f(x) + "," + f(yy - tw);
+      if (Math.round(t * 100) % 3 === 0 && Math.abs(tw) > 1.5) rung += " M" + f(x) + "," + f(yy + tw) + " L" + f(x) + "," + f(yy - tw);
+    }
+    path(g, rung, { w: .9, stroke: "#a8432e", op: .8 });
+    var rip = "";
+    for (var k2 = 0; k2 <= 3; k2++) { var rx2 = sx0 - 18 + k2 / 3 * 132; rip += " M" + f(rx2 - 9) + "," + (sy0 + 3) + " q3,-2.4 6,0 q3,2.4 6,0 q3,-2.4 6,0"; }
+    path(g, rip, { w: .8, stroke: SEA });
+    path(g, s1, { w: 1.6 }); path(g, s2, { w: 1.6, stroke: "#2c4f72" });
+    // its head, rising from the last hump
+    var hx = sx0 + 118, hy = sy0 - 6;
+    el("path", { d: "M" + (hx - 6) + "," + (hy + 6) + " C" + (hx - 4) + "," + (hy - 10) + " " + (hx + 8) + "," + (hy - 16) + " " + (hx + 16) + "," + (hy - 10) + " C" + (hx + 20) + "," + (hy - 7) + " " + (hx + 16) + "," + (hy - 3) + " " + (hx + 9) + "," + (hy - 4) + " C" + (hx + 4) + "," + (hy - 3) + " " + (hx + 2) + "," + (hy + 2) + " " + (hx + 2) + "," + (hy + 6) + "Z",
+      fill: "#8fa3a0", stroke: INK, "stroke-width": 1.1 }, g);
+    el("circle", { cx: hx + 10, cy: hy - 10, r: 1.2, fill: INK }, g);
+    path(g, "M" + (hx + 17) + "," + (hy - 8) + " l5,1 m-5,-1 l4,-3", { w: .8, stroke: "#a8432e" });
+    // and the banner beside it
+    var bnx = 240, bny = 300;
+    el("path", { d: "M" + (bnx - 4) + "," + (bny + 4) + " l-8,-4 l8,-4 Z M" + (bnx + 82) + "," + (bny + 4) + " l8,-4 l-8,-4 Z", fill: "#e9dcbd", stroke: INK, "stroke-width": .8 }, g);
+    el("rect", { x: bnx - 4, y: bny - 10, width: 86, height: 16, fill: "#f6efdc", stroke: INK, "stroke-width": .9 }, g);
+    note(svg, bnx + 39, bny + 2, "Here be paralogs", { size: 11, fill: INK, anchor: "middle" });
+
+    // a small compass rose
+    var cx = 586, cy = 60, cr = rng(3);
+    el("circle", { cx: cx, cy: cy, r: 22, fill: "none", stroke: INK, "stroke-width": .8 }, g);
+    [0, 1, 2, 3].forEach(function (k) {
+      var a = -Math.PI / 2 + k * Math.PI / 2, L = 26, wdt = 5;
+      var tip = [cx + Math.cos(a) * L, cy + Math.sin(a) * L], l = [cx + Math.cos(a - Math.PI / 2) * wdt, cy + Math.sin(a - Math.PI / 2) * wdt], r = [cx + Math.cos(a + Math.PI / 2) * wdt, cy + Math.sin(a + Math.PI / 2) * wdt];
+      el("path", { d: "M" + cx + "," + cy + " L" + f(l[0]) + "," + f(l[1]) + " L" + f(tip[0]) + "," + f(tip[1]) + "Z", fill: k === 0 ? "#a8432e" : INK, stroke: INK, "stroke-width": .7 }, g);
+      el("path", { d: "M" + cx + "," + cy + " L" + f(r[0]) + "," + f(r[1]) + " L" + f(tip[0]) + "," + f(tip[1]) + "Z", fill: "#fbf7ec", stroke: INK, "stroke-width": .7 }, g);
+    });
+    note(svg, cx, cy - 31, "N", { size: 10, fill: INK, anchor: "middle", roman: true });
+
+    // the cartouche
+    el("rect", { x: 30, y: 28, width: 168, height: 46, fill: "#f6efdc", stroke: INK, "stroke-width": .9 }, svg);
+    el("rect", { x: 33, y: 31, width: 162, height: 40, fill: "none", stroke: INK, "stroke-width": .5 }, svg);
+    note(svg, 114, 48, "A CHART OF THE", { size: 9, fill: INK, anchor: "middle", roman: true, ls: ".18em" });
+    note(svg, 114, 63, "Duplicated Genome", { size: 14, fill: INK, anchor: "middle" });
+
+    // the border: a double rule with alternating degree marks, as on old charts
+    el("rect", { x: 10, y: 10, width: W - 20, height: H - 20, fill: "none", stroke: INK, "stroke-width": 1.4 }, svg);
+    el("rect", { x: 16, y: 16, width: W - 32, height: H - 32, fill: "none", stroke: INK, "stroke-width": .7 }, svg);
+    var ticks = "";
+    for (var x2 = 16, i2 = 0; x2 < W - 16; x2 += 24, i2++) if (i2 % 2 === 0) ticks += " M" + x2 + ",13 L" + Math.min(W - 16, x2 + 24) + ",13 M" + x2 + "," + (H - 13) + " L" + Math.min(W - 16, x2 + 24) + "," + (H - 13);
+    for (var y2 = 16, j2 = 0; y2 < H - 16; y2 += 24, j2++) if (j2 % 2 === 0) ticks += " M13," + y2 + " L13," + Math.min(H - 16, y2 + 24) + " M" + (W - 13) + "," + y2 + " L" + (W - 13) + "," + Math.min(H - 16, y2 + 24);
+    path(svg, ticks, { w: 3.2 });
   })();
 
   // ---------------------------------------------------------------- masthead mark: a compass rose
@@ -516,6 +484,83 @@
     note(svg, 200, 240, "difference mistaken for one.", { size: 13, fill: INK, anchor: "middle", roman: true });
   })();
 
+  // ---------------------------------------------------------------- plates V and VI: transposable elements
+  (function () {
+    var svg = $("pl5"); if (!svg) return;
+    var g = inkLayer(svg), R = rng(91), TEc = "#c0392b";
+    plateNo(svg, "PL. V");
+    // an ear of maize with spotted kernels, as in McClintock's work
+    var mx = 46, my = 136;
+    el("path", { d: "M" + (mx - 4) + "," + (my + 70) + " C" + (mx - 30) + "," + (my + 40) + " " + (mx - 24) + "," + (my - 10) + " " + (mx - 14) + "," + (my - 30), fill: "#b9c48f", opacity: .8, stroke: INK, "stroke-width": 1 }, g);
+    el("ellipse", { cx: mx, cy: my, rx: 17, ry: 62, fill: "#efd48a", stroke: INK, "stroke-width": 1.3 }, g);
+    for (var ky = my - 54; ky < my + 56; ky += 8) for (var kx = -12; kx <= 12; kx += 8) {
+      var w = Math.sqrt(Math.max(0, 1 - Math.pow((ky - my) / 62, 2))) * 17;
+      if (Math.abs(kx) > w - 4) continue;
+      var spot = R() < .32;
+      el("ellipse", { cx: mx + kx, cy: ky, rx: 3.4, ry: 3.2, fill: spot ? "#6b3a5a" : "#f3dc9a", stroke: INK, "stroke-width": .5, opacity: .95 }, g);
+    }
+    el("path", { d: "M" + (mx + 4) + "," + (my + 70) + " C" + (mx + 26) + "," + (my + 40) + " " + (mx + 24) + "," + (my - 6) + " " + (mx + 14) + "," + (my - 26), fill: "#a7b77a", opacity: .85, stroke: INK, "stroke-width": 1 }, g);
+    note(svg, mx, 226, "maize, where", { size: 10.5, anchor: "middle", roman: true });
+    note(svg, mx, 238, "they were found", { size: 10.5, anchor: "middle", roman: true });
+    function chrom(y) { el("rect", { x: 104, y: y - 8, width: 280, height: 16, rx: 8, fill: "#f6efdc", stroke: INK, "stroke-width": 1.3 }, g); }
+    // cut and paste
+    note(svg, 104, 34, "cut and paste", { size: 13, fill: INK });
+    note(svg, 196, 34, "(DNA transposons)", { size: 11, roman: true });
+    chrom(80);
+    ghost(g, 140, 72, 28, 16);
+    box(g, 300, 72, 28, 16, TEc, .85);
+    path(g, "M154,68 C182,46 288,46 312,66", { w: 1.3, dash: "4 4" });
+    arrow(g, 306, 58, 312, 67, { w: 1.3 });
+    note(svg, 154, 104, "leaves", { size: 11, anchor: "middle", roman: true });
+    note(svg, 314, 104, "moves", { size: 11, anchor: "middle", roman: true });
+    // copy and paste
+    note(svg, 104, 134, "copy and paste", { size: 13, fill: INK });
+    note(svg, 206, 134, "(retrotransposons)", { size: 11, roman: true });
+    chrom(186);
+    box(g, 140, 178, 28, 16, TEc, .85);
+    box(g, 300, 178, 28, 16, TEc, .85);
+    var rna = "M154,174";
+    for (var x = 160; x <= 300; x += 6) rna += " L" + x + "," + f(170 - 12 * Math.sin((x - 154) / 140 * Math.PI) + 2.2 * Math.sin(x / 3));
+    path(g, rna, { w: 1.2, stroke: "#9a4a12" });
+    arrow(g, 304, 165, 312, 174, { w: 1.2, stroke: "#9a4a12" });
+    note(svg, 232, 212, "an RNA copy makes a new insertion", { size: 11, anchor: "middle", roman: true });
+    note(svg, 244, 236, "the old copy stays, so numbers grow", { size: 11, anchor: "middle", fill: "#9a4a12", roman: true });
+  })();
+  (function () {
+    var svg = $("pl6"); if (!svg) return;
+    var g = inkLayer(svg);
+    plateNo(svg, "PL. VI");
+    // the human genome as one bar, from Lander et al. 2001
+    var x0 = 20, W = 360, y = 92, h = 26;
+    var parts = [["LINEs", 20.4, "#a8432e"], ["SINEs (e.g. Alu)", 13.1, "#c9683e"], ["LTR elements", 8.3, "#d99a5a"], ["DNA transposons", 2.9, "#e8c38f"]];
+    var x = x0;
+    parts.forEach(function (p, i) {
+      var w = W * p[1] / 100;
+      box(g, x, y, w, h, p[2], .9, 1);
+      // labels: two above the bar, two below, each on its own line
+      var lx = x + w / 2, above = i < 2, ly = [y - 12, y - 30, y + h + 18, y + h + 34][i];
+      path(g, "M" + f(lx) + "," + (above ? y - 2 : y + h + 2) + " L" + f(lx) + "," + (above ? ly + 4 : ly - 11), { w: .8 });
+      note(svg, i === 0 ? lx : i === 2 ? lx + 3 : lx - 3, ly, p[0], { size: 11, anchor: i === 0 ? "middle" : i === 2 ? "end" : "start", fill: INK, roman: true });
+      x += w;
+    });
+    var teEnd = x;
+    el("rect", { x: f(teEnd), y: y, width: f(x0 + W - teEnd), height: h, fill: "url(#hatch-fine)", stroke: INK, "stroke-width": 1 }, g);
+    var cw = W * 1.5 / 100, cx = x0 + W - 50;
+    box(g, cx, y, cw, h, A, .95, 1);
+    path(g, "M" + f(cx + cw / 2) + "," + (y + h + 2) + " L" + f(cx + cw / 2) + "," + (y + h + 18), { w: .8 });
+    note(svg, cx + cw / 2, y + h + 30, "protein-coding, ~1.5%", { size: 11, anchor: "middle", fill: "#2c4f72", roman: true });
+    path(g, "M" + x0 + "," + (y + h + 50) + " l0,5 l" + f(teEnd - x0) + ",0 l0,-5", { w: 1, stroke: "#a8432e" });
+    note(svg, x0 + (teEnd - x0) / 2, y + h + 70, "transposable elements: about 45%", { size: 13, anchor: "middle", fill: "#8e3a28", roman: true });
+    note(svg, x0 + W, y - 30, "the human genome", { size: 11, anchor: "end", roman: true });
+    // and one that still jumps
+    var gy = 222;
+    path(g, "M40," + gy + " L360," + gy, { w: 1.3 });
+    [[60, 18], [104, 14], [146, 20], [236, 16], [280, 20], [326, 18]].forEach(function (e) { box(g, e[0], gy - 8, e[1], 16, A, .7, 1); });
+    box(g, 186, gy - 8, 30, 16, "#a8432e", .9, 1.1);
+    arrow(g, 201, gy - 30, 201, gy - 11, { w: 1.2, stroke: "#8e3a28" });
+    note(svg, 222, gy - 20, "a new L1 insertion breaks the gene", { size: 11, fill: "#8e3a28", roman: true });
+    note(svg, 40, gy + 22, "factor VIII, hemophilia A (1988)", { size: 11, roman: true });
+  })();
   // ---------------------------------------------------------------- print: haplotype-resolved PMS2 case
   (function () {
     var svg = $("w1"); if (!svg) return;

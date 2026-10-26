@@ -1,0 +1,19 @@
+{%- comment -%}
+  Studies by other groups that use my work, for one research section.
+  Pass the section id as `project`. Renders nothing when there are none.
+{%- endcomment -%}
+{%- assign clips = site.data.used_by | where: "project", include.project -%}
+{%- if clips.size > 0 -%}
+<aside class="clippings" aria-label="Studies by other groups">
+  <p class="kicker">From other labs</p>
+  {%- for c in clips %}
+  <article class="clipping">
+    <p class="clip-kind">{{ c.kind }} &middot; {{ c.venue }}, {{ c.year }}</p>
+    <h4><a class="link" href="{{ c.url }}">{{ c.title }}</a></h4>
+    <p class="clip-by">{{ c.authors }}. {{ c.group }}.</p>
+    <p class="clip-find">{{ c.finding }}</p>
+    <p class="clip-status">{{ c.status }}.</p>
+  </article>
+  {%- endfor %}
+</aside>
+{%- endif -%}
