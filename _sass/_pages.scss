@@ -1,241 +1,51 @@
-/* ════════════════════════════════════════
-   PROSE PAGES: About, Publications, Talks
-   ════════════════════════════════════════ */
+//
+// INNER PAGES
+//
+// The masthead with its compass, and the ledger rows used for Recently,
+// Publications and Talks.
+//
 
-/* Section labels inside prose read as quiet eyebrows, not headings that
-   compete with the page title. */
-.page .entry h2 {
-  margin: 3em 0 0.9em;
-  font-size: var(--t-micro);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+/* inner pages: a shorter masthead with the kite as its mark */
+.masthead { --paper: var(--newsprint); }
+.masthead .inner { position: relative; padding-block: clamp(40px, 6vw, 80px) clamp(48px, 6vw, 88px); }
+.masthead h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); margin-top: 10px; max-width: 16ch; }
+.masthead .lede { max-width: 60ch; }
+.masthead .mark { position: absolute; right: unquote("max(var(--gutter), 16px)"); top: 18px; width: clamp(96px, 13vw, 170px); height: auto; pointer-events: none; }
+.toc { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 28px; font-family: var(--display); font-size: 1rem; }
+.toc a { text-decoration: none; }
+.toc a span { font-size: .78rem; letter-spacing: .14em; color: var(--tiger-ink); margin-right: 8px; }
+@media (max-width: 700px) { .masthead .mark { opacity: .35; } }
+
+/* ------------------------------------------------------------------ ledger rows */
+.notes { margin-top: 40px; display: grid; }
+.note { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 0 28px; padding: 18px 0 20px; position: relative; }
+.note + .note { border-top: 1px dashed rgba(90, 80, 71, .35); }
+.note .yr { font-family: var(--display); font-size: 1.15rem; color: #a5402f; text-align: right; line-height: 1.5; padding-right: 18px; border-right: 2px solid var(--margin-red); }
+.note .kind { font-family: var(--display); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.note .t { font-size: 1.12rem; line-height: 1.45; margin-top: 3px; }
+.note .au { font-size: .96rem; color: var(--ink-2); margin-top: 4px; }
+.note .au strong { color: var(--ink); font-weight: 500; }
+.note .v { font-size: 0.96rem; color: var(--ink-2); margin-top: 2px; }
+.note .acts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin-top: 8px; font-family: var(--display); font-size: .92rem; }
+.note .acts details { margin-top: 0; }
+.note .acts details[open] { flex-basis: 100%; }
+.note .acts details p { font-family: var(--body); }
+.note details { margin-top: 8px; }
+.note summary { cursor: pointer; font-family: var(--display); font-size: .92rem; color: var(--ink); list-style: none; display: inline-block; background: var(--brush) left 100% / 100% 0.42em no-repeat; padding-bottom: .12em; }
+.note summary::-webkit-details-marker { display: none; }
+.note summary::after { content: " +"; color: var(--tiger-ink); }
+.note details[open] summary::after { content: " \2212"; }
+.note details p { margin-top: 10px; font-size: .98rem; color: var(--ink-2); max-width: 75ch; padding-left: 14px; border-left: 2px solid rgba(217, 120, 42, .5); }
+.archive { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 32px; padding-left: 124px; font-family: var(--display); }
+.group-h { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 64px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.group-h small { font-family: var(--body); font-style: italic; font-size: 1rem; color: var(--ink-3); letter-spacing: 0; }
+.group-h:first-of-type { margin-top: 0; }
+@media (max-width: 620px) {
+  .note { grid-template-columns: minmax(0, 1fr); }
+  .note .yr { text-align: left; border-right: 0; padding: 0; }
+  .archive { padding-left: 0; }
 }
-
-.page .entry > hr {
-  border: none;
-  border-top: 1px solid var(--line);
-  margin: 2.6em 0 0;
-}
-
-/* The Research page keeps real headings; opt back out of the eyebrow look. */
-.page.is-wide .entry h2 {
-  margin: -0.18em 0 0.7em;
-  font-size: var(--t-h2);
-  font-weight: 700;
-  letter-spacing: -0.022em;
-  text-transform: none;
-  color: var(--ink);
-}
-
-/* ── Publication entries ── */
-
-.pub-entry {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 20px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line-soft);
-
-  &:last-of-type { border-bottom: none; }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 18px 0;
-  }
-}
-
-.pub-year {
-  font-size: var(--t-small);
-  font-weight: 600;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
-  padding-top: 3px;
-}
-
-.pub-content { min-width: 0; }
-.pub-content p { margin: 0; }
-
-.pub-title {
-  font-weight: 550;
-  font-size: var(--t-meta);
-  color: var(--ink);
-  line-height: 1.5;
-  margin-bottom: 4px !important;
-}
-
-.pub-authors,
-.pub-venue {
-  font-size: var(--t-small);
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-
-.pub-venue { color: var(--ink-3); }
-
-.pub-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.pub-link {
-  display: inline-block;
-  font-family: $bodyFont;
-  font-size: var(--t-micro);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 4px 11px;
-  border: none;
-  border-radius: var(--r-pill);
-  background: var(--bg-sunken);
-  color: var(--ink-2);
-  cursor: pointer;
-  text-decoration: none !important;
-  transition: background-color 0.15s, color 0.15s;
-
-  &:hover {
-    background: var(--accent-wash);
-    color: var(--accent);
-    text-decoration: none !important;
-  }
-
-  &.open { background: var(--ink); color: var(--bg); }
-}
-
-.pub-abstract {
-  display: none;
-  margin-top: 12px;
-  padding: 14px 18px;
-  font-size: var(--t-small);
-  color: var(--ink-2);
-  line-height: 1.7;
-  background: var(--bg-sunken);
-  border-radius: var(--r-md);
-
-  &.open { display: block; }
-}
-
-/* ── Talks: grouped by year, kind in the left column ── */
-
-.page .entry .talk-year h2 {
-  /* opt out of the eyebrow treatment: the year is the section marker */
-  margin: 2.6em 0 0.4em;
-  font-family: $displayFont;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  color: var(--ink);
-}
-
-.page .entry .talk-year:first-of-type h2 { margin-top: 1.4em; }
-
-.talk-year .pub-entry {
-  grid-template-columns: 132px minmax(0, 1fr);
-
-  @include mobile { grid-template-columns: 1fr; }
-}
-
-.talk-year .pub-year {
-  font-size: var(--t-micro);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.4;
-}
-
-/* ── About: CV rows ── */
-
-.cv-item {
-  display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  gap: 4px 24px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line-soft);
-
-  &:last-of-type { border-bottom: none; }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: 2px;
-    padding: 16px 0;
-  }
-}
-
-.cv-when {
-  margin: 0 !important;
-  padding-top: 2px;
-  font-size: var(--t-small);
-  font-weight: 600;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
-}
-
-.cv-what {
-  min-width: 0;
-
-  h3 {
-    margin: 0;
-    font-size: var(--t-meta);
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.45;
-  }
-
-  p {
-    margin: 4px 0 0;
-    font-size: var(--t-small);
-    line-height: 1.65;
-    color: var(--ink-2);
-  }
-
-  p:first-child { margin-top: 0; }
-}
-
-.cv-org {
-  color: var(--ink-3) !important;
-}
-
-/* ── 404 ── */
-
-.notfound {
-  text-align: center;
-  padding: 88px 0 48px;
-
-  @include mobile { padding: 48px 0 32px; }
-}
-
-.notfound-code {
-  margin: 0 0 10px;
-  font-family: $displayFont;
-  font-size: clamp(3.5rem, 9vw, 5rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.notfound-message {
-  margin: 0 auto 28px;
-  max-width: 42ch;
-  font-size: var(--t-meta);
-  color: var(--ink-2);
-}
-
-/* ── Small utilities used by prose pages ── */
-
-.link-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.note-small {
-  font-size: var(--t-small);
-  color: var(--ink-3);
-}
+.doodle-fly { position: absolute; right: unquote("max(var(--gutter), 16px)"); top: clamp(48px, 6vw, 90px); width: 140px; transform: rotate(14deg); }
+@media (max-width: 760px) { .doodle-fly { width: 84px; top: 30px; } }
+#notes .inner { position: relative; }
+.group-h + .notes { margin-top: 8px; }

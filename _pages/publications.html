@@ -1,0 +1,52 @@
+---
+layout: default
+title: Publications
+permalink: /publications/
+description: "Journal articles, application notes, conference abstracts, patents, dissertation, talks and posters by Shunhua Han in genomics, variant calling and transposable element biology."
+---
+{%- assign journal = site.data.publications | where: "type", "journal" -%}
+{%- assign appnotes = site.data.publications | where: "type", "appnote" -%}
+{%- assign articles = site.data.publications | where: "type", "article" -%}
+{%- assign industry = appnotes | concat: articles | sort: "sort_date" | reverse -%}
+{%- assign abstracts = site.data.publications | where: "type", "abstract" -%}
+{%- assign patents = site.data.publications | where: "type", "patent" -%}
+{%- assign thesis = site.data.publications | where: "type", "thesis" -%}
+{%- assign talks = site.data.talks | sort: "sort_date" | reverse -%}
+
+<header class="sheet masthead">
+  {% include nav.html %}
+  <div class="inner">
+    <svg class="mark" id="mark" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">Publications &amp; talks</p>
+    <h1>Papers, patents and talks</h1>
+    <p class="lede">For a full and up-to-date list, see my <a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google Scholar</a> profile. &dagger; indicates equal contribution.</p>
+    <nav class="toc" aria-label="Sections"><a href="#journal">Journal articles</a><a href="#application">Application notes</a><a href="#conference">Abstracts</a><a href="#patents">Patents</a><a href="#thesis">Thesis</a><a href="#talks">Talks &amp; posters</a></nav>
+  </div>
+</header>
+
+<section class="sheet quiet">
+  <div class="inner">
+    <h2 class="group-h" id="journal">Journal articles<small>{{ journal.size }} papers</small></h2>
+    <div class="notes">{% for item in journal %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="application">Application notes &amp; research articles<small>Illumina</small></h2>
+    <div class="notes">{% for item in industry %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="conference">Conference abstracts</h2>
+    <div class="notes">{% for item in abstracts %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="patents">Patents<small>applications</small></h2>
+    <div class="notes">{% for item in patents %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="thesis">Thesis</h2>
+    <div class="notes">{% for item in thesis %}{% include note-row.html item=item %}{% endfor %}</div>
+  </div>
+</section>
+
+<section class="sheet quiet alt" id="talks">
+  <div class="inner">
+    <p class="kicker">Talks &amp; posters</p>
+    <h2 class="sheet-title">At the podium and the poster board</h2>
+    <div class="notes">{% for item in talks %}{% include note-row.html item=item %}{% endfor %}</div>
+  </div>
+</section>

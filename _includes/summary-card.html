@@ -1,0 +1,14 @@
+{%- comment -%}
+  A taped index card summarising one flagship project. Text comes from
+  _data/projects.yml so the home page and this card cannot drift apart.
+{%- endcomment -%}
+{%- assign p = site.data.projects | where: "anchor", include.anchor | first -%}
+<div class="summary-card" id="{{ p.anchor }}"><span class="tape"></span>
+  <p class="lab">{{ p.short_title }}</p>
+  <p class="sum">{{ p.summary }}</p>
+  <p class="res">{{ p.result }}</p>
+  <p class="acts">{% for l in p.links %}<a class="link" href="{{ l.url }}">{{ l.label }}</a>{% endfor %}</p>
+  <details><summary>Method, contribution and evaluation</summary>
+    <dl><dt>Problem</dt><dd>{{ p.problem }}</dd><dt>Method</dt><dd>{{ p.idea }}</dd><dt>My role</dt><dd>{{ p.role }}</dd><dt>Evidence</dt><dd>{{ p.evidence }}</dd></dl>
+  </details>
+</div>

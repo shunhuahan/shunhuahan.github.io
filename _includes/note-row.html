@@ -1,0 +1,38 @@
+{%- comment -%}
+  One row of the ledger, for a publication or a talk. Pass the record as
+  `item`; set `short` to use its display_title and drop authors and links
+  (the home page's Recently list).
+{%- endcomment -%}
+{%- assign i = include.item -%}
+{%- case i.type -%}
+  {%- when "journal" -%}{%- assign kind = "Paper" -%}
+  {%- when "appnote" -%}{%- assign kind = "Application note" -%}
+  {%- when "article" -%}{%- assign kind = "Article" -%}
+  {%- when "abstract" -%}{%- assign kind = "Conference abstract" -%}
+  {%- when "patent" -%}{%- assign kind = "Patent" -%}
+  {%- when "thesis" -%}{%- assign kind = "Dissertation" -%}
+  {%- when "Platform Presentation" -%}{%- assign kind = "Platform talk" -%}
+  {%- when "Invited Talk" -%}{%- assign kind = "Invited talk" -%}
+  {%- else -%}{%- assign kind = i.type -%}
+{%- endcase -%}
+<div class="note"><span class="yr">{{ i.year }}</span><div>
+  <p class="kind">{{ kind }}</p>
+  <p class="t">{% if include.short %}{{ i.display_title | default: i.title }}{% else %}{{ i.title }}{% endif %}</p>
+  {%- if i.authors and include.short == nil %}<p class="au">{{ i.authors }}</p>{% endif %}
+  <p class="v">{{ i.venue }}{% if i.location %}, {{ i.location }}{% endif %}{% if i.date and include.short == nil %} &middot; {{ i.date }}{% endif %}</p>
+  {%- if include.short == nil -%}
+  {%- capture acts -%}
+    {%- if i.doi %}<a class="link" href="{{ i.doi }}">DOI</a>{% endif -%}
+    {%- if i.url -%}
+      {%- if i.link_label %}{% assign label = i.link_label %}{% elsif i.authors %}{% if i.type == "abstract" %}{% assign label = "Abstract" %}{% else %}{% assign label = "Read" %}{% endif %}{% else %}{% assign label = "Abstract" %}{% endif -%}
+      <a class="link" href="{{ i.url }}">{{ label }}</a>
+    {%- endif -%}
+    {%- if i.slides %}<a class="link" href="{{ i.slides | prepend: site.baseurl }}">Slides (PDF)</a>{% endif -%}
+    {%- if i.patent %}<a class="link" href="{{ i.patent }}">Patent</a>{% endif -%}
+    {%- if i.pdf %}<a class="link" href="{{ i.pdf | prepend: site.baseurl }}">Dissertation (PDF)</a>{% endif -%}
+    {%- if i.thesis %}<a class="link" href="{{ i.thesis }}">ProQuest</a>{% endif -%}
+    {%- if i.abstract %}<details><summary>Abstract</summary><p>{{ i.abstract }}</p></details>{% endif -%}
+  {%- endcapture -%}
+  {%- if acts != "" %}<div class="acts">{{ acts }}</div>{% endif -%}
+  {%- endif %}
+</div></div>

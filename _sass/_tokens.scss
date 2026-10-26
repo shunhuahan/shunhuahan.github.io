@@ -1,84 +1,48 @@
 //
 // DESIGN TOKENS
 //
-// One flat palette, declared twice (light, dark) and never again. Anything
-// that needs a colour reaches for a var(--…) so a page-level stylesheet can
-// stay theme-agnostic.
+// The palette, type faces and paper textures, declared once. The site is one
+// deliberate light world (paper and ink), so there is no dark theme. The
+// alignment demo reads --bg, --line, --read-ok, --read-bad and --diff.
 //
 
 :root {
-  /* ── Surfaces ─────────────────────────────────────── */
-  --bg:          #ffffff;
-  --bg-sunken:   #f4f5f7;   // quiet panels that sit inside prose
-  --bg-raised:   #ffffff;   // cards and plots that sit on a sunken panel
-  --bg-header:   rgba(255, 255, 255, 0.82);
+  --ink: #241f1a;          /* india ink */
+  --ink-2: #5a5047;        /* pencil */
+  --ink-3: #7a6f63;
+  --newsprint: #f3ecdb;
+  --plate: #efe5cc;
+  --kraft: #c7a57a;
+  --ledger: #f6f3ea;
+  --dotpaper: #f7f3ea;
+  --graph: #f3f5ef;
+  --night: #1f2b47;
+  --tiger: #d9782a;        /* the one accent: tiger orange */
+  --tiger-ink: #9a4a12;    /* the accent, dark enough for small text */
+  --copy-a: #4f6f95;       /* a gene */
+  --copy-b: #c08736;       /* its paralog */
+  --psv: #a8432e;          /* where the copies differ; a variant */
+  --rule-blue: #c3d4e2;
+  --margin-red: #d57a6c;
+  --tape: rgba(236, 224, 186, 0.82);
+  --display: "Cutive", "Courier New", Georgia, serif;
+  --body: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --gutter: clamp(16px, 4vw, 56px);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .24  0 0 0 0 .16  0 0 0 .075 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .22  0 0 0 .1 -.025'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  --brush: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C40 3 80 9 120 5 S180 6 198 6' fill='none' stroke='%23d9782a' stroke-width='4' stroke-linecap='round' opacity='.8'/%3E%3C/svg%3E");
 
-  /* ── Ink ──────────────────────────────────────────── */
-  --ink:         #0f1115;   // headings, numbers
-  --ink-body:    #22252d;   // running text
-  --ink-2:       #565c69;   // secondary text, captions
-  --ink-3:       #667080;   // meta, footnotes, axis labels
-
-  /* ── Lines ────────────────────────────────────────── */
-  --line:        #e3e6ec;
-  --line-soft:   #eef0f4;
-
-  /* ── Accent ───────────────────────────────────────── */
-  --accent:      #2f5fe0;
-  --accent-2:    #1c3fa8;   // hover / pressed
-  --accent-wash: #eef3ff;
-
-  /* ── Data colours (alignment demo) ────────────────── */
-  --read-ok:     #3f6fd8;   // read the aligner placed confidently
-  --read-bad:    #e0562d;   // read that fits both copies equally well
-  --diff:        #2b3040;   // where the two copies differ
-
-  /* ── Shape ────────────────────────────────────────── */
-  --r-sm:   8px;
-  --r-md:   14px;
-  --r-lg:   22px;
-  --r-pill: 999px;
-
-  --shadow-card: 0 1px 2px rgba(15, 17, 21, 0.05), 0 8px 24px rgba(15, 17, 21, 0.04);
-  --shadow-pop:  0 1px 3px rgba(15, 17, 21, 0.12);
-
-  /* ── Type scale ───────────────────────────────────── */
-  --t-micro:   0.75rem;      /* 12 — eyebrows, legends */
-  --t-small:   0.8125rem;    /* 13 — meta, captions */
-  --t-meta:    0.9375rem;    /* 15 — dense UI text */
-  --t-body:    1.0625rem;    /* 17 — running text */
-  --t-lead:    clamp(1.125rem, 1.5vw, 1.3125rem);
-  --t-h3:      1.1875rem;
-  --t-h2:      clamp(1.45rem, 2.5vw, 1.95rem);
-  --t-h1:      clamp(2.3rem, 5vw, 3.6rem);
-  --t-display: clamp(2.6rem, 7vw, 4.5rem);
-
-  /* ── Measure ──────────────────────────────────────── */
-  --measure: 68ch;
-}
-
-html.dark {
-  --bg:          #0a0b0f;
-  --bg-sunken:   #101219;
-  --bg-raised:   #0d0f15;
-  --bg-header:   rgba(10, 11, 15, 0.82);
-
-  --ink:         #edeff4;
-  --ink-body:    #d3d7e0;
-  --ink-2:       #a5abba;
-  --ink-3:       #9198a8;
-
-  --line:        #232733;
-  --line-soft:   #1a1d26;
-
-  --accent:      #7ba0ff;
-  --accent-2:    #a3bcff;
-  --accent-wash: #151b2e;
-
-  --read-ok:     #6f97ff;
-  --read-bad:    #ff7f55;
-  --diff:        #c8cddb;
-
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-pop:  0 1px 3px rgba(0, 0, 0, 0.6);
+  /* tokens the interactive alignment figure reads */
+  --bg: #fbf7ec;
+  --bg-sunken: #f1e9d6;
+  --line: #d8ccb4;
+  --read-ok: #4f6f95;
+  --read-bad: #c97a3a;
+  --diff: #241f1a;
+  --accent: #9a4a12;
+  --accent-wash: #f6e3cc;
+  --r-sm: 0; --r-md: 0; --r-lg: 0; --r-pill: 0;
+  --shadow-card: none; --shadow-pop: none;
+  --t-micro: 0.82rem; --t-small: 0.92rem; --t-meta: 1rem;
+  color-scheme: light;
 }

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Site navigation. On the home page it floats over the explorer scene; on
+  inner pages it carries the site name on the left.
+{%- endcomment -%}
+<nav class="topnav" aria-label="Site">
+  {%- if page.url != "/" %}
+  <a class="home" href="{{ site.baseurl }}/">{{ site.name }}</a>
+  {%- endif %}
+  <a href="{{ site.baseurl }}/#about">About</a>
+  <a href="{{ site.baseurl }}/research/"{% if page.url contains '/research' %} aria-current="page"{% endif %}>Research</a>
+  <a href="{{ site.baseurl }}/publications/"{% if page.url contains '/publications' %} aria-current="page"{% endif %}>Publications</a>
+  <a href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">CV</a>
+</nav>

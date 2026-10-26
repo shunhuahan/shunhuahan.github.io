@@ -1,0 +1,124 @@
+---
+layout: default
+title: Research
+permalink: /research/
+description: "Research on haplotype-resolved variant calling in paralogous genes, targeted callers for difficult clinical loci, and transposable element detection in Drosophila, by Shunhua Han."
+---
+<header class="sheet masthead">
+  {% include nav.html %}
+  <div class="inner">
+    <svg class="mark" id="mark" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">Research</p>
+    <h1>When the genome repeats itself</h1>
+    <p class="lede">My work connects paralogous genes, copy-number variation and transposable elements: finding which copies of a sequence are present, what they carry, and how they evolved.</p>
+    <nav class="toc" aria-label="Research topics"><a href="#paralogs"><span>I</span>Proximity sequencing</a><a href="#short-read"><span>II</span>Short-read callers</a><a href="#transposons"><span>III</span>Transposable elements</a><a href="#software"><span>IV</span>Software</a></nav>
+  </div>
+</header>
+
+<section class="sheet graph" id="paralogs">
+  <div class="inner">
+    <p class="kicker">I &middot; Proximity sequencing</p>
+    <h2 class="sheet-title">Resolving paralogous genes with proximity sequencing</h2>
+    {% include summary-card.html anchor="trupath" %}
+    <div class="prose" style="margin-top:48px">
+      <p>Genes such as <em>SMN1</em>, <em>PMS2</em> and <em>CYP21A2</em> share long, near-identical stretches with a paralog or pseudogene. A short read from one of those stretches fits both copies equally well, so the variant caller cannot tell which gene it is looking at.</p>
+    </div>
+{% include mappability-demo.html %}
+
+    <div class="prose" style="margin-top:48px">
+      <p>TruPath Genome (formerly Constellation) moves library preparation onto the flow cell, so each short read keeps a record of the long molecule it came from. I work on the analysis side: in DRAGEN, multi-region joint detection uses that linkage to count how many copies a sample carries, reconstruct each copy and its variants, and place the copies on the right gene.</p>
+      <h3>A worked case: <em>PMS2</em> and <em>PMS2CL</em></h3>
+      <p><em>PMS2CL</em> sequence can be copied into <em>PMS2</em> by gene conversion, which a gene-level call cannot see. Here the two reconstructed <em>PMS2</em> haplotypes are separated: one carries a <em>PMS2CL</em>-to-<em>PMS2</em> conversion tract, and <em>PMS2CL</em> itself is deleted on both chromosomes. The application note reports this configuration as consistent with the sample's prior characterization.</p>
+    </div>
+    <figure class="figprint" style="--r:0.3deg"><span class="tape"></span>
+      <div class="paper"><svg id="fig2" viewBox="0 0 1000 520" role="img" aria-label="Alignment tracks for two reconstructed PMS2 haplotypes over 16 kb. Haplotype 1 carries a PMS2CL-to-PMS2 gene conversion tract and is non-functional; haplotype 2 is functional. PMS2CL is deleted on both haplotypes."></svg></div>
+      <figcaption><b>Figure 2</b>Redrawn from the ACMG 2026 slides. Two reconstructed <em>PMS2</em> haplotypes. The source classifies haplotype 1, which carries the conversion tract, as non-functional without naming a causal change; haplotype 2 is unaffected. <em>PMS2CL</em> is deleted on both.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sheet kraft" id="short-read">
+  <div class="inner">
+    <p class="kicker">II &middot; Standard short reads</p>
+    <h2 class="sheet-title">Calling difficult clinical genes from standard sequencing</h2>
+    <p class="lede">Before proximity data, I built callers that get the most out of an ordinary genome or exome for a few high-value genes. Each one is designed around its locus: reading depth over sequence that is unique when the genes themselves are not, or analysing near-identical copies together instead of discarding the reads they share.</p>
+    <figure class="figprint" style="--r:-0.4deg"><span class="tape"></span>
+      <div class="paper"><svg id="agfig" viewBox="0 0 900 200" role="img" aria-label="Six alpha-globin genotypes from four genes to none. The two two-gene genotypes differ: both deletions on one chromosome (cis) or one on each (trans)."></svg></div>
+      <figcaption><b>Figure 3</b>The configuration matters, not just the count. Each pair of bars is the two copies of chromosome 16, each normally carrying two alpha-globin genes; hollow genes are deleted. The two middle genotypes carry the same two genes, so a gene count cannot separate them, and reads inside <em>HBA1</em> and <em>HBA2</em> are ambiguous in any case. Only the <em>cis</em> configuration passes on a chromosome with no alpha-globin genes. Deletions of different extent leave different depth signatures in the non-homologous sequence around the genes, and that is what the caller reads.</figcaption>
+    </figure>
+    <div class="works">
+      <article class="work" id="hba">
+        <div><p class="wk">Alpha-thalassemia &middot; whole genome</p>
+          <h3><em>HBA1</em>/<em>HBA2</em> copy-number caller</h3>
+          <p class="body"><em>HBA1</em> and <em>HBA2</em> sit back to back and are about 97% identical. The caller estimates copy number from several non-homologous regions in and near the locus and resolves 14 copy-number genotypes, including the common &minus;&alpha;<sup>3.7</sup>, &minus;&alpha;<sup>4.2</sup> and &minus;&minus;<sup>SEA</sup> deletions. Calls were Mendelian-consistent in all 575 trios tested, and across 3,201 1000 Genomes samples recovered alpha-thalassemia carrier frequencies of about 36% in African and 13% in South Asian populations.</p>
+          <p class="role">Led development &middot; first author &middot; first-named inventor on the patent application</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html">Article</a><a class="link" href="https://patents.google.com/patent/WO2024010812A2">Patent</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>246</b><span>samples compared with PacBio HiFi; 4 no-calls</span></div>
+      </article>
+      <article class="work" id="carrier-exome">
+        <div><p class="wk">Carrier screening &middot; exome</p>
+          <h3><em>HBA</em> and <em>SMN</em> in one exome workflow</h3>
+          <p class="body">Standard exome panels miss the non-coding sequence these callers depend on, so labs add MLPA or qPCR. A 359&nbsp;kb spike-in panel and within-batch depth normalisation bring the <em>HBA</em> and <em>SMN</em> callers to exome data. In an external, partly blinded clinical cohort of 1,009 samples, <em>SMN1</em> copy number and SMA status agreed with qPCR or MLPA in 99.8% of datasets.</p>
+          <p class="role">Co-author &middot; co-inventor on the patent application</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-SMN-genotyping.html">Article</a><a class="link" href="https://doi.org/10.1038/s41431-025-01932-8">ESHG abstract</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>1,099<small>/1,099</small></b><span><em>HBA</em> calls matching MLPA in the clinical cohort</span></div>
+      </article>
+      <article class="work" id="pms2">
+        <div><p class="wk">Lynch syndrome &middot; whole genome</p>
+          <h3>Small variants in <em>PMS2</em></h3>
+          <p class="body">The last exons of <em>PMS2</em> are nearly identical to its pseudogene <em>PMS2CL</em>, and gene conversion moves sequence between them. Analysing the two regions jointly, and keeping the reads a standard pipeline discards as ambiguous, recovered pathogenic variants that single-region calling misses, and found every expected clinically relevant variant in 22 samples from two clinical laboratories.</p>
+          <p class="role">Algorithm development &middot; first author of the ISMB 2023 evaluation &middot; first-named inventor on the patent application</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html">Article</a><a class="link" href="https://www.tempus.com/wp-content/uploads/2023/07/Han_etal_ISMB23.pdf">ISMB poster</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>99.7%</b><span>SNV recall against long-range PCR in 147 cell lines</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sheet dots" id="transposons">
+  <div class="inner">
+    <p class="kicker">III &middot; Genome evolution</p>
+    <h2 class="sheet-title">Reconstructing insertions and genome history</h2>
+    {% include summary-card.html anchor="telr" %}
+    <figure class="figprint" style="--r:0.4deg"><span class="tape"></span>
+      <div class="paper"><svg id="fig4" viewBox="0 0 1000 620" role="img" aria-label="TELR workflow in four stages: identify TE insertion candidate loci from structural variant calls, assemble and polish a local TE contig, identify the TE family and reference coordinates, and estimate intra-sample allele frequency from read depth."></svg></div>
+      <figcaption><b>Figure 4</b>The TELR pipeline: identify candidate TE insertion loci from structural variant calls, locally assemble and polish a contig spanning the insertion, identify the TE family and its reference coordinates, then estimate the insertion's intra-sample allele frequency from read depth.</figcaption>
+    </figure>
+    <div class="prose" style="margin-top:48px">
+      <h3 style="margin-top:0">What the family trees actually show</h3>
+      <p>Because TELR reconstructs the sequence of each insertion rather than only its location, we could build family trees for the most active TE families and ask how the extra copies in the S2R+ cell line are related to one another.</p>
+      <p>The answer turned out to depend on the family. The paper identifies a single expansion clade for <em>1731</em>, <em>gypsy</em>, <em>gypsy1</em>, <em>mdg3</em> and <em>Stalker2</em>, consistent with proliferation from one source lineage. It identifies multiple expansion clades for <em>jockey</em>, <em>Juan</em> and <em>3S18</em>. So the pattern is family-dependent, not uniform.</p>
+      <p>These sequence phylogenies reveal relationships among copies, not the number of separate introductions into the culture.</p>
+    </div>
+    <figure class="figprint narrow" style="--r:-0.6deg"><span class="tape"></span>
+      <div class="paper"><img src="{{ site.baseurl }}/images/research-telr-phylogeny.jpg" width="1288" height="1300" loading="lazy" alt="Phylogenetic trees for four transposable element families (1731, 297, jockey, and Juan) built from TELR-assembled insertion sequences, with highlighted clades marking expansions in the S2R+ cell line"></div>
+      <figcaption><b>Figure 5</b>Family trees for four TE families, built from sequences TELR assembled directly from long reads. Highlighted clades mark expansions in S2R+. The paper reports a single expansion clade for <em>1731</em> and multiple expansion clades for <em>jockey</em> and <em>Juan</em>, so expansion is family-dependent rather than uniformly single-source.</figcaption>
+    </figure>
+    <div class="prose" style="margin-top:48px">
+      <h3 style="margin-top:0">Why the biology matters</h3>
+      <p>TE insertions are individually rare and densely scattered, which makes them unusually good markers for telling cell lines apart. In <em>Drosophila</em> cell culture, genome-wide TE insertion profiles cluster replicate samples of the same line with 100% bootstrap support, and a panel of just six LTR retrotransposon families is enough to assign a sample correctly. That is a practical basis for cell-line authentication, and applying it surfaced lines whose recorded identity did not match their genome.</p>
+      <p>The same data connect TE activity to a second process. Large copy-neutral tracts of loss of heterozygosity (LOH) had erased SNP heterozygosity across whole chromosome arms. Ongoing transposition restores TE heterozygosity but not SNP heterozygosity, and that asymmetry is what makes a later, secondary LOH event recognisable. The interaction between the two processes, rather than either alone, is what reveals the order of events in a line's history.</p>
+    </div>
+    <details class="more"><summary>Evidence and inferred genome histories</summary><div><p><strong>What is measured and what is inferred.</strong> The clustering and its bootstrap support, the six-family authentication panel, and the copy-number and B-allele-frequency evidence for copy-neutral LOH are direct observations. Mitotic recombination as the mechanism behind those copy-neutral tracts, the specific histories proposed for the misidentified lines, and the reading of one line as an ancestral state of another are inferences drawn from those patterns. In the S2 subline study, likewise, the phylogeny and the copy-number differences are measured, while "ongoing episodic transposition rather than a single early burst" is a model that the insertion-site occupancy and ancestral-state analyses support rather than something observed directly.</p></div></details>
+    <div class="related">
+      <p class="kicker" style="margin-bottom:8px">Related papers</p>
+      <div class="rl"><h4>TE profiles reveal cell line identity and loss of heterozygosity</h4><p>Introduced ngs_te_mapper2 and used genome-wide TE insertion profiles to authenticate <em>Drosophila</em> cell lines, and identified LOH as a mechanism shaping those genomes. First author. <em>Genetics</em>, 2021.</p><p class="acts"><a class="link" href="https://doi.org/10.1093/genetics/iyab113">Paper</a></p></div>
+      <div class="rl"><h4>Ongoing transposition reveals the phylogeny of <em>Drosophila</em> S2 sublines</h4><p>Sequenced the genomes of 25 S2 sublines and used TE insertions as markers to reconstruct their relationships, finding that the S2 designation is paraphyletic and that copy-number evolution supports the same topology. First author. <em>Genetics</em>, 2022.</p><p class="acts"><a class="link" href="https://doi.org/10.1093/genetics/iyac077">Paper</a></p></div>
+      <div class="rl"><h4>Reproducible evaluation of TE detectors with McClintock 2</h4><p>A benchmarking meta-pipeline for twelve short-read TE detectors. Per the paper's contribution statement, the pipeline was developed by P. J. Basting with contributions from J. Chen, myself and C. M. Bergman. <em>Mobile DNA</em>, 2023.</p><p class="acts"><a class="link" href="https://doi.org/10.1186/s13100-023-00296-4">Paper</a></p></div>
+      <div class="rl"><h4><em>P</em> element target site prediction</h4><p>Machine learning models trained on engineered features to predict <em>P</em> element insertion site preferences. Unpublished Ph.D. work.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet plate" id="software">
+  <div class="inner">
+    <p class="kicker">IV &middot; Open source</p>
+    <h2 class="sheet-title">Research software</h2>
+    <p class="lede">Research software from my Ph.D., developed in the Bergman lab and released under open-source licences. My role differs between them, so it is stated on each.</p>
+    <div class="cards">
+      <div class="card" style="--r:-0.8deg"><h3>TELR</h3><p>TE detection and local assembly from long-read sequencing. I developed it.</p><p class="lic">BSD-2-Clause</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/TELR">Code</a><a class="link" href="https://github.com/bergmanlab/TELR#readme">Docs</a></p></div>
+      <div class="card" style="--r:0.6deg"><h3>ngs_te_mapper2</h3><p>TE insertion detection from short reads, used for cell-line authentication. I developed it.</p><p class="lic">BSD-2-Clause</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/ngs_te_mapper2">Code</a><a class="link" href="https://github.com/bergmanlab/ngs_te_mapper2#readme">Docs</a></p></div>
+      <div class="card" style="--r:-0.4deg"><h3>McClintock 2</h3><p>Benchmarking meta-pipeline for twelve short-read TE detectors. Developed by P. J. Basting; I contributed.</p><p class="lic">Bergman lab project</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/mcclintock">Code</a><a class="link" href="https://github.com/bergmanlab/mcclintock/wiki">Docs</a></p></div>
+    </div>
+  </div>
+</section>

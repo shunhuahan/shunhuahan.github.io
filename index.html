@@ -1,98 +1,121 @@
 ---
 layout: default
-description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina, developing variant-calling methods for complex and repetitive regions of the genome."
+description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina, developing methods that resolve genetic variation in segmental duplications and paralogous genes."
 ---
+{%- assign trupath = site.data.projects | where: "anchor", "trupath" | first -%}
+{%- assign telr = site.data.projects | where: "anchor", "telr" | first -%}
+{%- assign journal_pubs = site.data.publications | where: "type", "journal" -%}
+{%- assign app_notes = site.data.publications | where: "type", "appnote" -%}
+{%- assign recent = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse -%}
 
-<div class="hero">
-  <div class="hero-top">
-    <img src="/images/profile.jpg" alt="Shunhua Han" class="hero-photo" width="92" height="92">
-    <div class="hero-heading">
-      <p class="hero-eyebrow">Sr. Staff Bioinformatics Scientist &middot; Illumina &middot; San Diego</p>
-      <h1 class="hero-name">Shunhua Han</h1>
+<header class="sheet front">
+  <svg class="scene" id="hero" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+  {% include nav.html %}
+  <div class="nameplate">
+    <p class="kicker">Field notes of a genome explorer</p>
+    <h1>Shunhua Han</h1>
+    <p class="role">Sr. Staff Bioinformatics Scientist &middot; Illumina &middot; San Diego</p>
+    <p class="motto">I develop methods that resolve genetic variation where the genome repeats itself.</p>
+  </div>
+</header>
+
+<section class="sheet dots" id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div>
+        <p class="kicker">About</p>
+        <h2 class="sheet-title">Working where pipelines break</h2>
+        <div class="about-text">
+          <p>I'm a Sr. Staff Bioinformatics Scientist at Illumina in San Diego, where I develop computational methods to resolve genetic variation in repetitive and structurally complex regions of the genome. My current focus is copy-aware, haplotype-resolved analysis for TruPath Genome and DRAGEN. Before that I built targeted callers for the alpha-globin locus and for <em>PMS2</em>, two of the harder targets in carrier screening and hereditary cancer research.</p>
+          <p>I came to this problem through transposable elements. During my Ph.D. with Casey Bergman at the University of Georgia, I studied how TEs reshape the genomes of <em>Drosophila</em> cell lines, and built the software (TELR, ngs_te_mapper2) to find insertions that standard tools miss. Repetitive DNA breaks every assumption a pipeline makes, and I found I liked working exactly where things break.</p>
+          <p>The through-line is one puzzle: a lot of medically important genetic variation sits where the genome carries two nearly identical copies of the same sequence, and someone has to work out which copy a read came from. In different forms, it has kept me busy for a decade.</p>
+        </div>
+        <dl class="facts">
+          <dt>Now</dt><dd>Sr. Staff Bioinformatics Scientist, Illumina, 2025&ndash;</dd>
+          <dt>Before</dt><dd>Staff (2023&ndash;2025) and Senior (2022&ndash;2023) Bioinformatics Scientist, Illumina</dd>
+          <dt>Ph.D.</dt><dd>Bioinformatics, University of Georgia, 2021. Advisor: Casey Bergman. <a class="link" href="{{ site.baseurl }}/assets/shunhuahan-phd-thesis.pdf">Dissertation</a></dd>
+          <dt>B.S.</dt><dd>Pharmaceutical Sciences, East China University of Science and Technology, 2015</dd>
+          <dt>Tools</dt><dd>Python &middot; R &middot; C++ &middot; Bash &middot; Nextflow &middot; Docker &middot; AWS</dd>
+        </dl>
+        <p class="elsewhere"><a class="link" href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">CV (PDF)</a><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google Scholar</a><a class="link" href="https://orcid.org/0000-0002-8605-7547">ORCID</a><a class="link" href="https://www.linkedin.com/in/shunhua-han/">LinkedIn</a><a class="link" href="https://bsky.app/profile/shunhuahan.bsky.social">Bluesky</a></p>
+      </div>
+      <figure class="polaroid">
+        <span class="tape"></span><span class="tape r"></span>
+        <img src="{{ site.baseurl }}/images/profile.jpg" alt="Shunhua Han" width="480" height="480">
+        <figcaption>Shunhua Han</figcaption>
+      </figure>
     </div>
-  </div>
-
-  <p class="hero-tagline">I develop computational methods to resolve genetic variation in repetitive and structurally complex genomes.</p>
-  <p class="hero-context">Copy-aware, haplotype-resolved analysis at Illumina. Earlier work on transposable elements and genome evolution in <em>Drosophila</em>.</p>
-
-  <div class="hero-links">
-    <a href="{{ site.baseurl }}/research" class="btn-pill btn-pill-accent">
-      Selected research
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </a>
-    <a href="/assets/shunhuahan-cv.pdf" target="_blank" class="btn-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
-      CV (PDF)
-    </a>
-  </div>
-  <div class="hero-profiles" aria-label="Professional profiles">
-    <a href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&hl=en" target="_blank">
-      Google Scholar
-    </a>
-    <a href="https://orcid.org/0000-0002-8605-7547" target="_blank">
-      ORCID
-    </a>
-    <a href="https://www.linkedin.com/in/shunhua-han/" target="_blank">
-      LinkedIn
-    </a>
-    <a href="https://bsky.app/profile/shunhuahan.bsky.social" target="_blank">
-      Bluesky
-    </a>
-  </div>
-</div>
-
-<!-- ── Selected contributions (shared source: _data/projects.yml) ── -->
-<section class="home-section home-section-wide" id="selected">
-  <h2 class="home-section-title">Selected contributions</h2>
-  <div class="sel-grid">
-    {% for p in site.data.projects %}
-    <article class="sel-card">
-      <div class="sel-heading">
-        <p class="sel-eyebrow">0{{ forloop.index }} / {{ p.eyebrow }}</p>
-        <h3 class="sel-title"><a href="{{ site.baseurl }}/research/#{{ p.anchor }}">{{ p.short_title }} <span aria-hidden="true">↗</span></a></h3>
-      </div>
-      <div class="sel-body">
-        <p class="sel-description">{{ p.summary }}</p>
-        <p class="sel-result">{{ p.result }}</p>
-        <p class="sel-links">{% for l in p.links limit:2 %}<a href="{{ l.url }}">{{ l.label }}</a>{% endfor %}</p>
-      </div>
-    </article>
-    {% endfor %}
   </div>
 </section>
 
-<!-- ── Recent News ── -->
-{% assign journal_pubs = site.data.publications | where: "type", "journal" %}
-{% assign app_notes = site.data.publications | where: "type", "appnote" %}
-{% assign all_news = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse %}
-
-<section class="home-section">
-  <h2 class="home-section-title">Recent</h2>
-  {% for item in all_news limit:3 %}
-  <div class="news-item">
-    <span class="news-year">{{ item.year }}</span>
-    <div class="news-item-body">
-      {% if item.type == "journal" %}
-        <span class="news-kind">Publication</span>
-      {% elsif item.type == "appnote" %}
-        <span class="news-kind">Application note</span>
-      {% elsif item.type == "Platform Presentation" %}
-        <span class="news-kind">Platform talk</span>
-      {% elsif item.type == "Poster" %}
-        <span class="news-kind">Poster</span>
-      {% else %}
-        <span class="news-kind">Talk</span>
-      {% endif %}
-      <p class="news-title">{% if item.url %}<a href="{{ item.url }}" target="_blank">{{ item.display_title | default: item.title }}</a>{% else %}{{ item.display_title | default: item.title }}{% endif %}</p>
-      <p class="news-venue">{{ item.venue }}{% if item.location %}, {{ item.location }}{% endif %}</p>
+<section class="sheet plate" id="problem">
+  <div class="inner">
+    <p class="kicker">Background</p>
+    <h2 class="sheet-title">When the genome repeats itself</h2>
+    <p class="lede">About 7% of a complete human genome is made of segmental duplications: stretches of DNA, at least a thousand letters long, that appear in more than one place with 90% or more of their sequence shared. Some 950 human genes began in them. They are a record of how our genome grew, and they make some of the most important genes in medicine hard to test.</p>
+    <div class="plates">
+      <figure class="pl"><svg id="pl1" viewBox="0 0 400 250" role="img" aria-label="A segment of an ancestral chromosome is copied to a new place; millions of years later both copies remain, the copy carrying a few changes."></svg>
+        <figcaption><span class="no">PL. I</span><b>A copy, made long ago.</b> Segmental duplications began as copying accidents: a stretch of chromosome, sometimes carrying whole genes, was duplicated into a new place. The two copies drift apart slowly, so many are still almost identical today.</figcaption></figure>
+      <figure class="pl"><svg id="pl2" viewBox="0 0 400 250" role="img" aria-label="A primate family tree of macaque, orangutan, gorilla, chimpanzee and human, with duplication events concentrated on the branch leading to African great apes and humans."></svg>
+        <figcaption><span class="no">PL. II</span><b>A burst in our ancestors.</b> Comparing primate genomes, the Eichler lab found that duplication accelerated in the common ancestor of humans and the African great apes, roughly 8&ndash;12 million years ago, even as single-letter mutation was slowing down.</figcaption></figure>
+      <figure class="pl"><svg id="pl3" viewBox="0 0 400 250" role="img" aria-label="Top: HBA2 and HBA1, both intact. Bottom: PMS2 intact beside PMS2CL, a faded copy with broken and missing exons."></svg>
+        <figcaption><span class="no">PL. III</span><b>Gene, or pseudogene.</b> Sometimes both copies stay useful: the alpha-globin genes <em>HBA1</em> and <em>HBA2</em> both make protein. Often one copy collects disabling changes and becomes a pseudogene that still reads almost exactly like the working gene, as <em>PMS2CL</em> does beside <em>PMS2</em>.</figcaption></figure>
+      <figure class="pl"><svg id="pl4" viewBox="0 0 400 250" role="img" aria-label="A gene and its pseudogene written out letter by letter, identical but for one letter; a short read taken from the identical stretch matches both."></svg>
+        <figcaption><span class="no">PL. IV</span><b>A problem for genetic testing.</b> Sequencing reads DNA in short pieces, and a piece from the shared stretch fits the gene and the pseudogene equally well. Gene conversion, which copies pseudogene sequence into the gene, blurs them further. That is why <em>PMS2</em> (Lynch syndrome), <em>CYP21A2</em> (congenital adrenal hyperplasia) and <em>SMN1</em> (spinal muscular atrophy) have long needed extra lab tests.</figcaption></figure>
     </div>
+    <p class="plate-note">Drawings are schematic. Numbers from Vollger et al., <a href="https://doi.org/10.1126/science.abj6965"><em>Science</em> 2022</a>, and Marques-Bonet et al., <a href="https://doi.org/10.1038/nature07744"><em>Nature</em> 2009</a>.</p>
   </div>
-  {% endfor %}
-  <p class="archive-links"><a href="/publications/">All publications ↗</a><a href="/talks/">Talks &amp; posters ↗</a></p>
 </section>
 
-<!-- ── Contact ── -->
-<section class="home-section">
-  <h2 class="home-section-title">Contact</h2>
-  <p class="contact-text">Please reach out to me by email: <span class="contact-email">hanshunhua0829 [at] gmail [.] com</span></p>
+<section class="sheet kraft" id="work">
+  <div class="inner">
+    <p class="kicker">Selected work</p>
+    <h2 class="sheet-title">Reading the duplicated genome</h2>
+    <p class="lede">Most of my work is on medically relevant paralogous genes: telling near-identical copies apart and calling the variants each one carries. It grew out of my Ph.D. on transposable elements, another kind of repeated DNA.</p>
+    <div class="prints">
+      <p class="thread t1"><span>Paralogous genes</span></p>
+      <p class="thread t2"><span>Transposable elements</span></p>
+      <article class="print" style="--r:-1.2deg">
+        <span class="tape" style="--tr:-3deg"></span>
+        <div class="paper"><svg id="w1" viewBox="0 0 300 240" role="img" aria-label="Four reconstructed copies from one sample: PMS2 haplotype 1 carries a tract converted from PMS2CL, PMS2 haplotype 2 is intact, and PMS2CL is deleted on both haplotypes."></svg></div>
+        <p class="eyebrow">TruPath Genome &middot; 2025&ndash;now</p>
+        <h3>Haplotype-resolved calling in paralogous genes</h3>
+        <p class="gist">Multi-region joint detection analyses a gene and its paralogs together: it counts the copies a sample carries, reconstructs each copy and haplotype with its variants, and uses TruPath Genome proximity linkage to place each copy on the right gene. In this <em>PMS2</em> case, one haplotype carries a <em>PMS2CL</em>-derived conversion tract that a gene-level call cannot see.</p>
+        <p class="result">{{ trupath.result }}</p>
+        <p class="links"><a class="link" href="{{ trupath.links[0].url }}">Application note</a><a class="link" href="{{ site.baseurl }}/assets/han-acmg2026-trupath-slides.pdf">ACMG slides</a><a class="link" href="{{ site.baseurl }}/research/#paralogs">More</a></p>
+      </article>
+      <article class="print" style="--r:1deg">
+        <span class="tape" style="--tr:2deg"></span>
+        <div class="paper"><svg id="w2" viewBox="0 0 300 240" role="img" aria-label="Four alpha-globin genotypes with 4, 3, 2 and 2 genes; the two-gene genotypes differ in whether both deletions are on one chromosome or one on each."></svg></div>
+        <p class="eyebrow">Standard WGS &middot; 2022&ndash;2025</p>
+        <h3>Targeted callers: alpha-globin, <em>PMS2</em>, <em>SMN</em></h3>
+        <p class="gist">Before proximity data, callers built around single loci. For <em>HBA1</em>/<em>HBA2</em>, depth over non-homologous sequence resolves 14 copy-number genotypes, including &minus;&minus;<sup>SEA</sup>/&alpha;&alpha; versus &minus;&alpha;/&minus;&alpha;, which carry the same number of genes. For <em>PMS2</em>, joint analysis keeps the reads a standard pipeline discards.</p>
+        <p class="result">HBA: checked against long reads in 246 samples and Mendelian-consistent in 575 trios. PMS2: 99.7% SNV recall against long-range PCR in 147 cell lines.</p>
+        <p class="links"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html">HBA article</a><a class="link" href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html">PMS2 article</a><a class="link" href="{{ site.baseurl }}/research/#short-read">More</a></p>
+      </article>
+      <article class="print" style="--r:-0.6deg">
+        <span class="tape" style="--tr:-1deg"></span>
+        <div class="paper"><svg id="w3" viewBox="0 0 300 240" role="img" aria-label="A Drosophila fly above long reads spanning a transposable element insertion, which is present on one of four genome copies."></svg></div>
+        <p class="eyebrow">Ph.D. &middot; <i>Drosophila</i> cell lines</p>
+        <h3>Reconstructing transposon insertions</h3>
+        <p class="gist">TELR locally assembles long reads around each candidate insertion to recover its full sequence and family, then estimates how many of a sample's genome copies carry it, which matters in the tetraploid S2R+ cell line.</p>
+        <p class="result">{{ telr.result }}</p>
+        <p class="links"><a class="link" href="https://doi.org/10.1093/nar/gkac794">Paper</a><a class="link" href="https://github.com/bergmanlab/TELR">Code</a><a class="link" href="{{ site.baseurl }}/research/#transposons">More</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sheet ledger" id="notes">
+  <div class="inner">
+    <svg class="doodle-fly" id="fly" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">Field notes</p>
+    <h2 class="sheet-title">Recently</h2>
+    <div class="notes">
+      {%- for item in recent limit:5 %}
+      {% include note-row.html item=item short=true %}
+      {%- endfor %}
+    </div>
+    <p class="archive"><a class="link" href="{{ site.baseurl }}/publications/">All publications</a><a class="link" href="{{ site.baseurl }}/publications/#talks">Talks &amp; posters</a><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google Scholar</a></p>
+  </div>
 </section>
