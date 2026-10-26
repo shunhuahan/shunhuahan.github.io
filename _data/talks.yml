@@ -6,6 +6,7 @@
   location: "Baltimore, MD"
   date: "March 12, 2026"
   sort_date: "2026-03-12"
+  display_title_zh: "在 ACMG 年会介绍拷贝感知的变异分析"
   url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
   slides: "/assets/han-acmg2026-trupath-slides.pdf"
 
@@ -17,6 +18,7 @@
   location: "Dusit Thani Laguna, Singapore"
   date: "March 7, 2026"
   sort_date: "2026-03-07"
+  display_title_zh: "在 InSiGHT 会议介绍单倍型解析分析"
 
 - year: 2026
   type: "Poster"
@@ -25,6 +27,7 @@
   location: "Orlando, Florida"
   date: "February 24, 2026"
   sort_date: "2026-02-24"
+  display_title_zh: "用 Illumina Constellation 在旁系同源“暗区”做单倍型解析的变异检测"
 
 - year: 2025
   type: "Poster"
@@ -33,6 +36,7 @@
   location: "Boston, MA"
   date: "October 17, 2025"
   sort_date: "2025-10-17"
+  display_title_zh: "用多区域联合检测，在医学相关的旁系同源基因中做单倍型解析的变异检测"
   url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025
@@ -42,6 +46,7 @@
   location: "Boston, MA"
   date: "October 17, 2025"
   sort_date: "2025-10-17"
+  display_title_zh: "一种快速的全基因组新方法：借助流动槽邻近测序与单倍型解析，在高同源假基因区域检出致病变异"
   url: "https://www.ashg.org/wp-content/uploads/2025/10/2025-Poster-Abstracts.pdf"
 
 - year: 2025

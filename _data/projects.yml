@@ -8,7 +8,8 @@
 #   idea      the key methodological idea, one sentence
 #   role      my contribution, stated only as far as sources support it
 #   evidence  what was measured, with the qualification kept next to the claim
-#   links     label/url pairs; labels are Paper, Article, Slides, Abstract,
+#   *_zh      the same fields in Chinese, for the /zh/ pages
+#   links     label/url pairs (label_zh for Chinese); labels are Paper, Article, Slides, Abstract,
 #             Code, Documentation, Application note
 
 - anchor: trupath
@@ -34,12 +35,21 @@
     recovered the expected pathogenic finding in every sample, agreeing with orthogonal methods
     including long-read sequencing. Research use only; this is recovery of known findings in an
     evaluation set, not a measure of diagnostic sensitivity.
+  summary_zh: "在旁系同源基因让短读段无法定位的区域，重建每一份基因拷贝及其单倍型。我设计并评估了把联合分析与邻近连锁信息结合起来的算法。"
+  result_zh: "在涵盖八个基因座的 31 份评估样本中，均检出了已知的致病性发现；这是一个评估集，并不代表诊断灵敏度。"
+  problem_zh: "<em>SMN1</em>、<em>PMS2</em>、<em>CYP21A2</em> 等基因与相邻的旁系同源基因或假基因有 98–99.9% 的序列相同，短读段因此无法确定比对位置，临床实验室只能依赖一连串 MLPA 和长片段 PCR 检测。"
+  idea_zh: "多区域联合检测（Multi-region Joint Detection，MRJD）不再逐个区域分析，而是把一个基因与它的旁系同源序列放在一起：估计总拷贝数、重建每一份拷贝，并借助 TruPath Genome 在流动槽上建立的邻近连锁信息，判断每份拷贝属于哪个基因。"
+  role_zh: "算法设计与评估。多区域联合检测专利申请的第一发明人；在 ACMG 2026 年会上以大会报告介绍了 TruPath 的评估结果，并撰写了 Illumina 应用说明。"
+  evidence_zh: "在 31 份样本、八个旁系同源基因座（18–357 kb，序列相同度 98.2–99.9%）中，评估均检出了预期的致病性发现，与包括长读长测序在内的正交方法一致。仅限科研用途；这是在评估集中对已知发现的检出，并不代表诊断灵敏度。"
   links:
     - label: "Application note"
+      label_zh: "应用说明"
       url: "https://www.illumina.com/content/dam/illumina/gcs/assembled-assets/marketing-literature/trupath-genome-app-note-m-gl-04321/trupath-genome-app-note-m-gl-04321.pdf"
     - label: "Slides"
+      label_zh: "幻灯片"
       url: "/assets/han-acmg2026-trupath-slides.pdf"
     - label: "Abstract"
+      label_zh: "摘要"
       url: "https://www.gimopen.org/article/S2949-7744(26)00818-6/fulltext"
 
 - anchor: hba
@@ -60,8 +70,15 @@
   evidence: >-
     Evaluation against PacBio HiFi data in 246 diverse 1000 Genomes samples showed high concordance (four no-calls),
     and calls were consistent with Mendelian inheritance in 575 trios. Research use only.
+  summary_zh: "从全基因组测序数据中解析常见的 α 珠蛋白拷贝数构型。我主导开发了针对 HBA 的靶向检测工具。"
+  result_zh: "在 246 份样本中与长读长数据对照验证；另在 575 个家系三联体中，基因型结果均符合孟德尔遗传。"
+  problem_zh: "α 珠蛋白基因座结构复杂，两个几乎相同的基因让标准的短读段分型失效，α 地中海贫血背后的拷贝数构型也就看不清楚。"
+  idea_zh: "一个靶向检测工具：读取 <em>HBA</em> 基因座内部及附近若干非同源区域的测序深度来估计拷贝数基因型，覆盖 14 种构型，涵盖常见的分子亚型。"
+  role_zh: "主导开发该工具；Illumina 技术文章第一作者，相关拷贝数分型专利申请的第一发明人。"
+  evidence_zh: "以 246 份不同人群的千人基因组样本的 PacBio HiFi 数据为对照，结果高度一致（4 份未出结果）；575 个三联体的结果均符合孟德尔遗传。仅限科研用途。"
   links:
     - label: "Article"
+      label_zh: "技术文章"
       url: "https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html"
 
 - anchor: telr
@@ -85,8 +102,16 @@
     Applied to the <em>Drosophila</em> S2R+ cell line, TELR reconstructed insertion sequences for
     expanded TE families and estimated their intra-sample allele frequencies, supporting
     family-level phylogenetic analysis.
+  summary_zh: "在复杂基因组中重建转座子插入，并估计它们的等位基因频率。我开发了这套软件并参与分析，与 Guilherme B. Dias 并列第一作者。"
+  result_zh: "在果蝇 S2R+ 细胞系中重建出的插入序列，支撑了以转座子家族为单位的系统发育分析。"
+  problem_zh: "许多转座子比一条短读段还长。即使有长读段跨过插入，也无法直接得到插入的精确边界、所属家族，以及样本中有多少份基因组拷贝携带它；在非整倍体的细胞系中，这一点尤其重要。"
+  idea_zh: "TELR 从结构变异检测结果中取得候选插入位点，对跨越每个插入的读段做局部组装和校正，确定转座子家族与参考坐标，再根据测序深度估计样本内的等位基因频率。"
+  role_zh: "软件开发与分析。与 Guilherme B. Dias 并列第一作者（论文注明前两位作者为共同第一作者）。"
+  evidence_zh: "应用于果蝇 S2R+ 细胞系时，TELR 重建了扩增转座子家族的插入序列，并估计了它们在样本内的等位基因频率，为家族层面的系统发育分析提供了依据。"
   links:
     - label: "Paper"
+      label_zh: "论文"
       url: "https://doi.org/10.1093/nar/gkac794"
     - label: "Code"
+      label_zh: "代码"
       url: "https://github.com/bergmanlab/TELR"

@@ -14,10 +14,18 @@ Personal academic website for [Shunhua Han](https://shunhuahan.github.io), Ph.D.
 - `assets/site.js`: every drawing (the scene, plates, figures and footer) is generated here into the page's empty `<svg>` elements by id
 - `assets/style.scss`: imports `_sass/_tokens.scss` (palette, faces and paper textures as CSS custom properties) plus `_paper`, `_home`, `_research` and `_pages`. Pages carry no `<style>` blocks. GitHub Pages (github-pages 232) compiles with Ruby Sass 3.7.4, which treats `max()` as a Sass function, so CSS `max()` values are written as `unquote("max(...)")`, and which cannot parse a data-URI `url()` directly in a custom property, so those are Sass variables interpolated into the token.
 
+## Two languages
+
+The site is in English and Chinese. English pages live at `/`, `/research/` and `/publications/`; their Chinese counterparts are `zh/index.html` (`/zh/`), `_pages/research_zh.html` and `_pages/publications_zh.html`. Each page names its counterpart in `alt_url`, which drives the language switch in the navigation and the `hreflang` links. Chinese pages set `lang: zh`.
+
+- Interface strings (navigation, footer, publication labels) are in `_data/i18n.yml`.
+- Data files carry Chinese next to English in fields ending `_zh` (`projects.yml`, `used_by.yml`, and `display_title_zh` for the Recently list). Publication titles stay in English.
+- Figure labels are translated in `assets/site.js`: on a Chinese page, every label is looked up in the `ZH` table, and anything missing is drawn as written.
+
 ## Updating content
 
 - **New publication or talk:** add an entry to `_data/publications.yml` or `_data/talks.yml`.
-- **Bio, experience, links:** edit the About section of `index.html`.
+- **Bio, experience, links:** edit the About section of `index.html`, and of `zh/index.html` for Chinese.
 
 ## Analytics
 

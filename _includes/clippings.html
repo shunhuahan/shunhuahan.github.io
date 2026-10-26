@@ -3,16 +3,17 @@
   Pass the section id as `project`. Renders nothing when there are none.
 {%- endcomment -%}
 {%- assign clips = site.data.used_by | where: "project", include.project -%}
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
 {%- if clips.size > 0 -%}
 <aside class="clippings" aria-label="Studies by other groups">
-  <p class="kicker">From other labs</p>
+  <p class="kicker">{{ t.from_other_labs }}</p>
   {%- for c in clips %}
   <article class="clipping">
-    <p class="clip-kind">{{ c.kind }} &middot; {{ c.venue }}, {{ c.year }}</p>
+    <p class="clip-kind">{% if page.lang == "zh" %}{{ c.kind_zh }}{% else %}{{ c.kind }}{% endif %} &middot; {{ c.venue }}, {{ c.year }}</p>
     <h4><a class="link" href="{{ c.url }}">{{ c.title }}</a></h4>
     <p class="clip-by">{{ c.authors }}. {{ c.group }}.</p>
-    <p class="clip-find">{{ c.finding }}</p>
-    <p class="clip-status">{{ c.status }}.</p>
+    <p class="clip-find">{% if page.lang == "zh" %}{{ c.finding_zh }}{% else %}{{ c.finding }}{% endif %}</p>
+    <p class="clip-status">{% if page.lang == "zh" %}{{ c.status_zh }}{% else %}{{ c.status }}.{% endif %}</p>
   </article>
   {%- endfor %}
 </aside>

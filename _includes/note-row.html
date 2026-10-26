@@ -4,34 +4,25 @@
   (the home page's Recently list).
 {%- endcomment -%}
 {%- assign i = include.item -%}
-{%- case i.type -%}
-  {%- when "journal" -%}{%- assign kind = "Paper" -%}
-  {%- when "appnote" -%}{%- assign kind = "Application note" -%}
-  {%- when "article" -%}{%- assign kind = "Article" -%}
-  {%- when "abstract" -%}{%- assign kind = "Conference abstract" -%}
-  {%- when "patent" -%}{%- assign kind = "Patent" -%}
-  {%- when "thesis" -%}{%- assign kind = "Dissertation" -%}
-  {%- when "Platform Presentation" -%}{%- assign kind = "Platform talk" -%}
-  {%- when "Invited Talk" -%}{%- assign kind = "Invited talk" -%}
-  {%- else -%}{%- assign kind = i.type -%}
-{%- endcase -%}
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
+{%- assign kind = t.kinds[i.type] | default: i.type -%}
 <div class="note"><span class="yr">{{ i.year }}</span><div>
   <p class="kind">{{ kind }}</p>
-  <p class="t">{% if include.short %}{{ i.display_title | default: i.title }}{% else %}{{ i.title }}{% endif %}</p>
+  <p class="t">{% if include.short %}{% if page.lang == "zh" and i.display_title_zh %}{{ i.display_title_zh }}{% else %}{{ i.display_title | default: i.title }}{% endif %}{% else %}{{ i.title }}{% endif %}</p>
   {%- if i.authors and include.short == nil %}<p class="au">{{ i.authors }}</p>{% endif %}
   <p class="v">{{ i.venue }}{% if i.location %}, {{ i.location }}{% endif %}{% if i.date and include.short == nil %} &middot; {{ i.date }}{% endif %}</p>
   {%- if include.short == nil -%}
   {%- capture acts -%}
     {%- if i.doi %}<a class="link" href="{{ i.doi }}">DOI</a>{% endif -%}
     {%- if i.url -%}
-      {%- if i.link_label %}{% assign label = i.link_label %}{% elsif i.authors %}{% if i.type == "abstract" %}{% assign label = "Abstract" %}{% else %}{% assign label = "Read" %}{% endif %}{% else %}{% assign label = "Abstract" %}{% endif -%}
+      {%- if i.link_label %}{% if page.lang == "zh" %}{% assign label = t.links.read %}{% else %}{% assign label = i.link_label %}{% endif %}{% elsif i.authors %}{% if i.type == "abstract" %}{% assign label = t.links.abstract %}{% else %}{% assign label = t.links.read %}{% endif %}{% else %}{% assign label = t.links.abstract %}{% endif -%}
       <a class="link" href="{{ i.url }}">{{ label }}</a>
     {%- endif -%}
-    {%- if i.slides %}<a class="link" href="{{ i.slides | prepend: site.baseurl }}">Slides (PDF)</a>{% endif -%}
-    {%- if i.patent %}<a class="link" href="{{ i.patent }}">Patent</a>{% endif -%}
-    {%- if i.pdf %}<a class="link" href="{{ i.pdf | prepend: site.baseurl }}">Dissertation (PDF)</a>{% endif -%}
+    {%- if i.slides %}<a class="link" href="{{ i.slides | prepend: site.baseurl }}">{{ t.links.slides }}</a>{% endif -%}
+    {%- if i.patent %}<a class="link" href="{{ i.patent }}">{{ t.links.patent }}</a>{% endif -%}
+    {%- if i.pdf %}<a class="link" href="{{ i.pdf | prepend: site.baseurl }}">{{ t.links.dissertation }}</a>{% endif -%}
     {%- if i.thesis %}<a class="link" href="{{ i.thesis }}">ProQuest</a>{% endif -%}
-    {%- if i.abstract %}<details><summary>Abstract</summary><p>{{ i.abstract }}</p></details>{% endif -%}
+    {%- if i.abstract %}<details><summary>{{ t.links.abstract }}</summary><p>{{ i.abstract }}</p></details>{% endif -%}
   {%- endcapture -%}
   {%- if acts != "" %}<div class="acts">{{ acts }}</div>{% endif -%}
   {%- endif %}

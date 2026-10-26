@@ -1,0 +1,54 @@
+---
+layout: default
+lang: zh
+title: 论文与报告
+permalink: /zh/publications/
+alt_url: /publications/
+description: "韩顺华在基因组学、变异检测与转座子生物学方向的期刊论文、应用说明、会议摘要、专利、博士论文以及学术报告与墙报。"
+---
+{%- assign journal = site.data.publications | where: "type", "journal" -%}
+{%- assign appnotes = site.data.publications | where: "type", "appnote" -%}
+{%- assign articles = site.data.publications | where: "type", "article" -%}
+{%- assign industry = appnotes | concat: articles | sort: "sort_date" | reverse -%}
+{%- assign abstracts = site.data.publications | where: "type", "abstract" -%}
+{%- assign patents = site.data.publications | where: "type", "patent" -%}
+{%- assign thesis = site.data.publications | where: "type", "thesis" -%}
+{%- assign talks = site.data.talks | sort: "sort_date" | reverse -%}
+
+<header class="sheet masthead">
+  {% include nav.html %}
+  <div class="inner">
+    <svg class="mark" id="mark" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">论文与报告</p>
+    <h1>论文、专利与学术报告</h1>
+    <p class="lede">完整、最新的列表请见我的 <a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google 学术</a>主页。论文题目保留英文原文；&dagger; 表示共同第一作者。</p>
+    <nav class="toc" aria-label="栏目"><a href="#journal">期刊论文</a><a href="#application">应用说明</a><a href="#conference">会议摘要</a><a href="#patents">专利</a><a href="#thesis">博士论文</a><a href="#talks">报告与墙报</a></nav>
+  </div>
+</header>
+
+<section class="sheet quiet">
+  <div class="inner">
+    <h2 class="group-h" id="journal">期刊论文<small>共 {{ journal.size }} 篇</small></h2>
+    <div class="notes">{% for item in journal %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="application">应用说明与技术文章<small>Illumina</small></h2>
+    <div class="notes">{% for item in industry %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="conference">会议摘要</h2>
+    <div class="notes">{% for item in abstracts %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="patents">专利<small>申请</small></h2>
+    <div class="notes">{% for item in patents %}{% include note-row.html item=item %}{% endfor %}</div>
+
+    <h2 class="group-h" id="thesis">博士论文</h2>
+    <div class="notes">{% for item in thesis %}{% include note-row.html item=item %}{% endfor %}</div>
+  </div>
+</section>
+
+<section class="sheet quiet alt" id="talks">
+  <div class="inner">
+    <p class="kicker">报告与墙报</p>
+    <h2 class="sheet-title">讲台上与墙报前</h2>
+    <div class="notes">{% for item in talks %}{% include note-row.html item=item %}{% endfor %}</div>
+  </div>
+</section>

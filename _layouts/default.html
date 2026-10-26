@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% if page.lang == "zh" %}zh-Hans{% else %}en{% endif %}">
   <head>
-    <title>{% if page.title %}{{ page.title }} · {{ site.name }}{% else %}{{ site.name }} – {{ site.description }}{% endif %}</title>
+    {%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
+    <title>{% if page.title %}{{ page.title }} · {{ t.site_name }}{% elsif page.lang == "zh" %}韩顺华 Shunhua Han · Illumina 高级资深生物信息科学家{% else %}{{ site.name }} – {{ site.description }}{% endif %}</title>
     {% seo title=false %}
     {% include meta.html %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500{% if page.lang == "zh" %}&family=Noto+Serif+SC:wght@400;500;600{% endif %}&display=swap">
 
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/assets/style.css" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
@@ -18,13 +19,18 @@
       HTML comment, emitting the whole SEO block a second time.
     {% endcomment %}
 
+    {%- if page.alt_url %}
+    {%- if page.lang == "zh" %}{% assign en_url = page.alt_url %}{% assign zh_url = page.url %}{% else %}{% assign en_url = page.url %}{% assign zh_url = page.alt_url %}{% endif %}
+    <link rel="alternate" hreflang="en" href="{{ site.url }}{{ site.baseurl }}{{ en_url }}">
+    <link rel="alternate" hreflang="zh-Hans" href="{{ site.url }}{{ site.baseurl }}{{ zh_url }}">
+    {%- endif %}
     <meta name="theme-color" content="#f3ecdb">
     <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/images/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/images/favicon-32x32.png">
   </head>
 
   <body>
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">{{ t.skip }}</a>
     {% include paper-defs.html %}
 
     <main id="main">

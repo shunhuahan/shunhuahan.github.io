@@ -1,10 +1,11 @@
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
 <footer class="sheet night">
   <div class="inner">
-    <h2>{{ site.name }}</h2>
-    <p class="bye">There's a lot of genome left to explore.</p>
-    <p class="contact">Write to me at <code>hanshunhua0829 [at] gmail [.] com</code></p>
-    <p class="links"><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google Scholar</a><a class="link" href="https://orcid.org/0000-0002-8605-7547">ORCID</a><a class="link" href="https://github.com/shunhuahan">GitHub</a><a class="link" href="https://www.linkedin.com/in/shunhua-han/">LinkedIn</a><a class="link" href="https://bsky.app/profile/shunhuahan.bsky.social">Bluesky</a></p>
+    <h2>{{ t.site_name }}</h2>
+    <p class="bye">{{ t.bye }}</p>
+    <p class="contact">{{ t.write }} <code>hanshunhua0829 [at] gmail [.] com</code></p>
+    <p class="links"><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">{{ t.scholar }}</a><a class="link" href="https://orcid.org/0000-0002-8605-7547">ORCID</a><a class="link" href="https://github.com/shunhuahan">GitHub</a><a class="link" href="https://www.linkedin.com/in/shunhua-han/">LinkedIn</a><a class="link" href="https://bsky.app/profile/shunhuahan.bsky.social">Bluesky</a></p>
   </div>
   <svg class="scene" id="snow" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
-  <div class="inner footnote"><small>&copy; {{ site.time | date: "%Y" }} {{ site.name }} &middot; drawn in ink, watercolour and JavaScript</small></div>
+  <div class="inner footnote"><small>&copy; {{ site.time | date: "%Y" }} {{ t.site_name }} &middot; {{ t.colophon }}</small></div>
 </footer>

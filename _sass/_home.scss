@@ -6,7 +6,7 @@
 
 /* ------------------------------------------------------------------ front: a title page */
 /* set like the title page of an old scientific book: a spaced line of small capitals, a double rule,
-   the name, the role, then an explorer's chart of the duplicated genome */
+   the name, the role, then a star chart of Gemini, the Twins */
 .front { --paper: var(--newsprint); }
 .titlepage { display: flex; flex-direction: column; align-items: center; text-align: center; padding-block: clamp(40px, 6vw, 72px) clamp(64px, 8vw, 104px);
   padding-left: unquote("max(var(--gutter), env(safe-area-inset-left, 0px))"); padding-right: unquote("max(var(--gutter), env(safe-area-inset-right, 0px))"); }
@@ -14,7 +14,7 @@
 .titlepage .rules { width: 440px; max-width: 70vw; height: 5px; border-top: 1.5px solid var(--ink); border-bottom: .75px solid var(--ink); margin: 18px 0 22px; }
 .titlepage h1 { font-size: clamp(3.2rem, 8vw, 6.4rem); line-height: 1; letter-spacing: -0.01em; font-weight: 400; }
 .titlepage .role { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--ink-2); margin-top: 16px; letter-spacing: .02em; }
-.titlepage .chart { display: block; width: 780px; max-width: 100%; height: auto; margin: clamp(26px, 3.6vw, 40px) 0 clamp(18px, 2.4vw, 26px); }
+.titlepage .chart { display: block; width: 640px; max-width: 100%; height: auto; margin: clamp(26px, 3.6vw, 40px) 0 clamp(18px, 2.4vw, 26px); }
 .titlepage .motto { font-style: italic; font-size: clamp(1.2rem, 2vw, 1.5rem); max-width: 34ch; }
 .titlepage .rule-s { width: 48px; border-top: .75px solid var(--ink-2); margin-top: 22px; }
 

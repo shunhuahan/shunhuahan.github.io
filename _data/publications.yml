@@ -66,6 +66,7 @@
   display_title: "TruPath Genome: reconstructing paralogous gene copies"
   year: 2026
   sort_date: "2026-08-03"
+  display_title_zh: "TruPath Genome：重建旁系同源基因的每一份拷贝"
   title: "Deliver haplotype-resolved, copy-aware small variant detection in paralogous regions within a single WGS workflow: enabled by Illumina TruPath Genome using Multi-region Joint Detection."
   authors: "<strong>Han S</strong>"
   venue: "<em>Illumina Application Note</em>, M-GL-04321."

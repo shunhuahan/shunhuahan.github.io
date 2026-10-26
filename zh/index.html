@@ -1,0 +1,131 @@
+---
+layout: default
+home: true
+lang: zh
+permalink: /zh/
+alt_url: /
+description: "韩顺华博士，Illumina 高级资深生物信息科学家，研究如何在片段重复与旁系同源基因中解析遗传变异。"
+---
+{%- assign trupath = site.data.projects | where: "anchor", "trupath" | first -%}
+{%- assign telr = site.data.projects | where: "anchor", "telr" | first -%}
+{%- assign journal_pubs = site.data.publications | where: "type", "journal" -%}
+{%- assign app_notes = site.data.publications | where: "type", "appnote" -%}
+{%- assign recent = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse -%}
+
+<header class="sheet front">
+  {% include nav.html %}
+  <div class="titlepage">
+    <p class="over">基因组田野笔记</p>
+    <div class="rules" aria-hidden="true"></div>
+    <h1>韩顺华</h1>
+    <p class="name-sub" lang="en">Shunhua Han</p>
+    <p class="role">Illumina 高级资深生物信息科学家 &middot; 圣地亚哥</p>
+    <svg class="chart" id="gemini" viewBox="0 0 640 430" role="img" aria-label="一幅按真实星位绘制的双子座星图，标出北河二（Castor）与北河三（Pollux）、黄道和银河。从地球上看，这两颗星像一对孪生；神话中两兄弟一个凡人、一个永生，正如基因与它的假基因。"></svg>
+    <p class="motto">在基因组重复之处，解析遗传变异。</p>
+    <div class="rule-s" aria-hidden="true"></div>
+  </div>
+</header>
+
+<section class="sheet dots" id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div>
+        <p class="kicker">关于我</p>
+        <h2 class="sheet-title">分辨几乎相同的拷贝</h2>
+        <div class="about-text">
+          <p>我是 Illumina 的高级资深生物信息科学家，在圣地亚哥工作，研究如何在基因组中高度重复、结构复杂的区域准确解析遗传变异。目前我专注于 TruPath Genome 与 DRAGEN 中拷贝感知、单倍型解析的分析方法。在此之前，我为 α 珠蛋白基因座和 <em>PMS2</em> 开发了靶向检测工具，这两处正是携带者筛查与遗传性肿瘤研究中的难点。</p>
+          <p>我是从转座子走进这个领域的。在佐治亚大学跟随 Casey Bergman 读博期间，我研究转座子如何重塑果蝇细胞系的基因组，并开发了 TELR、ngs_te_mapper2 等软件，找出常规工具漏掉的插入。重复序列往往是标准方法走不通的地方，而我喜欢解决这类难题：每解决一个，就为过去做不到的发现腾出了空间。</p>
+          <p>临床上许多重要的遗传变异，恰恰位于重复区域：一个基因旁边，紧挨着一份几乎相同的拷贝。我的目标，是让这些区域像基因组其他部分一样清晰可读：每一份拷贝都被数清，每一条单倍型都被解析，每一个变异都被放回真正携带它的那份拷贝上。</p>
+        </div>
+        <dl class="facts">
+          <dt>现任</dt><dd>Illumina 高级资深生物信息科学家，2025 年至今</dd>
+          <dt>博士</dt><dd>生物信息学，佐治亚大学，2021 年。导师：Casey Bergman。<a class="link" href="{{ site.baseurl }}/assets/shunhuahan-phd-thesis.pdf">博士论文</a></dd>
+          <dt>学士</dt><dd>药学，华东理工大学，2015 年</dd>
+        </dl>
+        <p class="elsewhere"><a class="link" href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">英文简历 (PDF)</a><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google 学术</a><a class="link" href="https://orcid.org/0000-0002-8605-7547">ORCID</a><a class="link" href="https://www.linkedin.com/in/shunhua-han/">LinkedIn</a><a class="link" href="https://bsky.app/profile/shunhuahan.bsky.social">Bluesky</a></p>
+      </div>
+      <figure class="polaroid">
+        <span class="tape"></span><span class="tape r"></span>
+        <img src="{{ site.baseurl }}/images/profile.jpg" alt="韩顺华" width="480" height="480">
+        <figcaption>韩顺华</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sheet plate" id="problem">
+  <div class="inner">
+    <p class="kicker">背景</p>
+    <h2 class="sheet-title">当基因组自我重复</h2>
+    <p class="lede">我们的基因组里到处是重复。完整的人类基因组中，约 7% 是片段重复：长度至少一千个碱基、在基因组中出现不止一次、序列相同度在 90% 以上的 DNA 片段。将近一半则是转座子，一类能把自己复制到新位置的序列。它们记录着基因组成长的历史；而片段重复，也让医学上一些最重要的基因变得难以检测。</p>
+    <div class="plates">
+      <figure class="pl"><svg id="pl1" viewBox="0 0 400 250" role="img" aria-label="祖先染色体上的一段被复制到新的位置；数百万年后，两份拷贝都还在，拷贝上带着少数差异。"></svg>
+        <figcaption><span class="no">图版 I</span><b>很久以前的一次复制。</b>片段重复起源于复制时的“意外”：一段染色体，有时连同整个基因，被复制到了新的位置。两份拷贝分化得很慢，所以许多至今仍几乎一模一样。</figcaption></figure>
+      <figure class="pl"><svg id="pl2" viewBox="0 0 400 250" role="img" aria-label="猕猴、猩猩、大猩猩、黑猩猩和人类的系统树，每个物种配有小头像。重复事件集中出现在通往非洲大猿与人类的分支上，约 800 万至 1200 万年前。"></svg>
+        <figcaption><span class="no">图版 II</span><b>祖先中的一次爆发。</b>比较灵长类基因组后，Eichler 实验室发现，在人类与非洲大猿的共同祖先中（约 800 万至 1200 万年前），重复的速度明显加快。这件事的意义有两层。重复是新基因的主要来源：<em>SRGAP2C</em>、<em>NOTCH2NL</em> 等人类特有的拷贝，被认为与新皮层的扩张有关。重复也让基因组变得不稳定：拷贝之间的重组会反复造成缺失和重复，例如发生在 <em>NOTCH2NL</em> 基因座的 1q21.1 综合征。</figcaption></figure>
+      <figure class="pl"><svg id="pl3" viewBox="0 0 400 262" role="img" aria-label="上：HBA2 与 HBA1 都完整，二者共同编码 α 珠蛋白，占成人血红蛋白的一半。下：PMS2 参与 DNA 错配修复，其功能丧失可致林奇综合征；旁边的 PMS2CL 是一份外显子已残缺、失去功能的拷贝。"></svg>
+        <figcaption><span class="no">图版 III</span><b>基因，还是假基因？</b>有时两份拷贝都保留了功能：α 珠蛋白基因 <em>HBA1</em> 和 <em>HBA2</em> 都能产生蛋白。更多时候，其中一份不断积累失活突变，成为假基因，序列却仍与正常基因几乎相同，就像 <em>PMS2</em> 旁边的 <em>PMS2CL</em>。</figcaption></figure>
+      <figure class="pl"><svg id="pl4" viewBox="0 0 400 250" role="img" aria-label="PMS2 与 PMS2CL 的序列逐字母写出，只有一个字母不同。来自共有片段的一条短读段同时匹配两者，因此检测无法判断它来自哪个基因。"></svg>
+        <figcaption><span class="no">图版 IV</span><b>遗传检测的难题。</b>测序是把 DNA 切成短片段来读的。来自两者共有区域的片段，与基因和假基因匹配得一样好，于是其中的变异可能被漏掉，或被算到错误的拷贝上。基因转换会把假基因的序列复制进基因，让两者更难区分。正因如此，<em>PMS2</em>（林奇综合征）、<em>CYP21A2</em>（先天性肾上腺皮质增生症）和 <em>SMN1</em>（脊髓性肌萎缩症）长期需要额外的实验室检测。</figcaption></figure>
+      <p class="plates-sub">另一类重复：转座子</p>
+      <figure class="pl"><svg id="pl5" viewBox="0 0 400 250" role="img" aria-label="左：一穗带斑点籽粒的玉米。右：DNA 转座子把自己剪下、搬到新的位置，原位置留空；逆转录转座子先产生 RNA 拷贝，再插入到别处，原拷贝保留，数量随之增加。"></svg>
+        <figcaption><span class="no">图版 V</span><b>会跳的基因。</b>1940 年代，Barbara McClintock 追踪玉米籽粒上的斑点，在玉米中发现了转座子，并因此获得 1983 年诺贝尔奖。有些转座子把自己“剪”下来，搬到新的位置；另一些通过 RNA 复制自己，再把拷贝“粘贴”到别处，于是每跳一次，数量就多一份。</figcaption></figure>
+      <figure class="pl"><svg id="pl6" viewBox="0 0 400 250" role="img" aria-label="人类基因组画成一根横条：LINE、SINE、LTR 元件和 DNA 转座子合计约占 45%，而编码蛋白质的序列约占 1.5%。下方，一个新的 L1 插入破坏了凝血因子 VIII 基因。"></svg>
+        <figcaption><span class="no">图版 VI</span><b>我们的近一半。</b>转座子约占人类基因组的 45%，而编码蛋白质的序列只有约 1.5%。大多数拷贝早已不再移动，但仍有少数会跳：1988 年，研究者在血友病 A 患者的凝血因子 VIII 基因中，发现了新发生的 L1 插入。在果蝇细胞系里，它们更加活跃，这正是我博士期间追踪的对象。</figcaption></figure>
+    </div>
+    <p class="plate-note">图为示意。数据来源：Vollger et al., <a href="https://doi.org/10.1126/science.abj6965"><em>Science</em> 2022</a>；Marques-Bonet et al., <a href="https://doi.org/10.1038/nature07744"><em>Nature</em> 2009</a>；Lander et al., <a href="https://doi.org/10.1038/35057062"><em>Nature</em> 2001</a>；Kazazian et al., <a href="https://doi.org/10.1038/332164a0"><em>Nature</em> 1988</a>。</p>
+  </div>
+</section>
+
+<section class="sheet kraft" id="work">
+  <div class="inner">
+    <p class="kicker">代表工作</p>
+    <h2 class="sheet-title">读懂重复的基因组</h2>
+    <p class="lede">我的大部分工作围绕医学相关的旁系同源基因：分辨几乎相同的拷贝，并检出每一份拷贝上的变异。这条路起步于我博士期间对转座子的研究，那是另一类重复 DNA。</p>
+    <div class="prints">
+      <p class="thread t1"><span>旁系同源基因</span></p>
+      <p class="thread t2"><span>转座子</span></p>
+      <article class="print" style="--r:-1.2deg">
+        <span class="tape" style="--tr:-3deg"></span>
+        <div class="paper"><svg id="w1" viewBox="-14 0 314 270" role="img" aria-label="上：PMS2 与 PMS2CL 两个参考区域，下方的读段与两处匹配得一样好。多区域联合检测（MRJD）把它们重建为四份完整拷贝：PMS2 的两条单倍型（其中一条带有来自 PMS2CL 的基因转换片段）和 PMS2CL 的两条单倍型，各自带有变异。"></svg></div>
+        <p class="eyebrow">TruPath Genome &middot; 2025 年至今</p>
+        <h3><a class="stretch" href="{{ site.baseurl }}/zh/research/#paralogs">旁系同源基因的单倍型解析检测</a></h3>
+        <p class="gist">多区域联合检测（Multi-region Joint Detection，MRJD）把一个基因和它的假基因放在一起分析。借助 TruPath Genome 的邻近连锁信息，它能重建每一份拷贝的完整序列，包括基因的两条单倍型和假基因的两条单倍型，并分清哪份属于哪个基因；即使基因转换已把假基因的序列复制进了基因，也不会混淆。</p>
+        <p class="result">{{ trupath.result_zh }}</p>
+        <p class="links"><a class="link" href="{{ trupath.links[0].url }}">应用说明</a><a class="link" href="{{ site.baseurl }}/assets/han-acmg2026-trupath-slides.pdf">ACMG 幻灯片</a><a class="link" href="{{ site.baseurl }}/zh/research/#paralogs">详情</a></p>
+      </article>
+      <article class="print" style="--r:1deg">
+        <span class="tape" style="--tr:2deg"></span>
+        <div class="paper"><svg id="w2" viewBox="0 -15 300 270" role="img" aria-label="四种 α 珠蛋白基因型，分别有 4、3、2、2 个基因；两种两基因型的区别在于缺失位于同一条染色体上，还是分别位于两条染色体上。"></svg></div>
+        <p class="eyebrow">常规全基因组测序 &middot; 2022–2025</p>
+        <h3><a class="stretch" href="{{ site.baseurl }}/zh/research/#short-read">靶向检测工具：α 珠蛋白、<em>PMS2</em>、<em>SMN</em></a></h3>
+        <p class="gist">在有邻近测序数据之前，我为单个基因座量身打造检测工具。对 <em>HBA1</em>/<em>HBA2</em>，利用非同源区域的测序深度，可以区分 14 种拷贝数基因型，其中包括 &minus;&minus;<sup>SEA</sup>/&alpha;&alpha; 与 &minus;&alpha;/&minus;&alpha;：两者都是携带两个基因的携带者，但只有前者会把一条不含 α 基因的染色体传给孩子。对 <em>PMS2</em>，联合分析保留了常规流程丢弃的读段。</p>
+        <p class="result">HBA：在 246 份样本中与长读长数据对照验证，575 个三联体均符合孟德尔遗传。PMS2：以长片段 PCR 为对照，在 147 个细胞系中 SNV 检出率达 99.7%。</p>
+        <p class="links"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html">HBA 技术文章</a><a class="link" href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html">PMS2 技术文章</a><a class="link" href="{{ site.baseurl }}/zh/research/#short-read">详情</a></p>
+      </article>
+      <article class="print" style="--r:-0.6deg">
+        <span class="tape" style="--tr:-1deg"></span>
+        <div class="paper"><svg id="w3" viewBox="0 -15 300 270" role="img" aria-label="一只果蝇，下方的染色体上，一个转座子跳到新的位置，形成一份新拷贝。"></svg></div>
+        <p class="eyebrow">博士研究 &middot; 果蝇细胞系</p>
+        <h3><a class="stretch" href="{{ site.baseurl }}/zh/research/#transposons">重建转座子插入</a></h3>
+        <p class="gist">转座子会把自己复制到基因组的新位置。TELR 在长读段中找出这些新插入，逐一组装，还原其完整序列与所属家族，并估计样本中有多少份基因组拷贝携带它；对四倍体的果蝇 S2R+ 细胞系来说，这一点至关重要。</p>
+        <p class="result">{{ telr.result_zh }}</p>
+        <p class="links"><a class="link" href="https://doi.org/10.1093/nar/gkac794">论文</a><a class="link" href="https://github.com/bergmanlab/TELR">代码</a><a class="link" href="{{ site.baseurl }}/zh/research/#transposons">详情</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sheet ledger" id="notes">
+  <div class="inner">
+    <svg class="doodle-fly" id="fly" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">田野笔记</p>
+    <h2 class="sheet-title">近期动态</h2>
+    <div class="notes">
+      {%- for item in recent limit:5 %}
+      {% include note-row.html item=item short=true %}
+      {%- endfor %}
+    </div>
+    <p class="archive"><a class="link" href="{{ site.baseurl }}/zh/publications/">全部论文</a><a class="link" href="{{ site.baseurl }}/zh/publications/#talks">报告与墙报</a><a class="link" href="https://scholar.google.com/citations?user=jweOSn4AAAAJ&amp;hl=en">Google 学术</a></p>
+  </div>
+</section>

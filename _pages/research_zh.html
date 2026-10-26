@@ -1,0 +1,130 @@
+---
+layout: default
+lang: zh
+title: 研究
+permalink: /zh/research/
+alt_url: /research/
+description: "韩顺华的研究：旁系同源基因的单倍型解析变异检测、针对疑难临床基因的靶向检测工具，以及果蝇中的转座子检测。"
+---
+<header class="sheet masthead">
+  {% include nav.html %}
+  <div class="inner">
+    <svg class="mark" id="mark" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <p class="kicker">研究</p>
+    <h1>当基因组自我重复</h1>
+    <p class="lede">我的工作把旁系同源基因、拷贝数变异和转座子串在一起：弄清一段序列有哪些拷贝、每份拷贝携带什么变异，以及它们是如何演化而来的。</p>
+    <nav class="toc" aria-label="研究主题"><a href="#paralogs"><span>I</span>邻近测序</a><a href="#short-read"><span>II</span>短读段检测工具</a><a href="#transposons"><span>III</span>转座子</a><a href="#software"><span>IV</span>软件</a></nav>
+  </div>
+</header>
+
+<section class="sheet graph" id="paralogs">
+  <div class="inner">
+    <p class="kicker">I &middot; 邻近测序</p>
+    <h2 class="sheet-title">用邻近测序解析旁系同源基因</h2>
+    {% include summary-card.html anchor="trupath" %}
+    <div class="prose" style="margin-top:48px">
+      <p><em>SMN1</em>、<em>PMS2</em>、<em>CYP21A2</em> 等基因与它们的旁系同源基因或假基因共享很长的、几乎相同的片段。来自这些片段的短读段与两份拷贝匹配得一样好，变异检测工具因此无法判断自己看到的是哪个基因。</p>
+    </div>
+    <figure class="figprint">
+      <div class="paper"><svg id="fig1" viewBox="0 0 1000 486" role="img" aria-label="样本中的读段画在 SMN1 与几乎相同的拷贝 SMN2 之间。覆盖到两份拷贝差异位点的读段可以确定来源基因；其余读段与两个基因同样匹配，被舍弃，因此只有差异位点附近的短片段可以检测。"></svg></div>
+      <figcaption><b>图 1</b>短读段在哪里“迷路”。<em>SMN1</em> 与 <em>SMN2</em> 只在少数位点上不同（红色）。读段只有覆盖到其中一个位点，才能被放回正确的基因；其余读段与两个基因同样匹配，比对质量为零，于是被舍弃。最终能检测的，只剩差异位点周围的几小段。示意图。</figcaption>
+    </figure>
+
+    <div class="prose" style="margin-top:48px">
+      <p>TruPath Genome（原名 Constellation）把文库制备搬到了流动槽上，让每条短读段都保留着它来自哪条长分子的记录。我负责其中的信息学算法：在 DRAGEN 中，多区域联合检测（Multi-region Joint Detection）利用这种连锁信息，数清样本携带多少份拷贝，重建每一份拷贝及其变异，并把它们放回正确的基因和单倍型上。</p>
+      <h3>一个实例：<em>PMS2</em> 与 <em>PMS2CL</em></h3>
+      <p>基因转换可以把 <em>PMS2CL</em> 的序列复制进 <em>PMS2</em>，而只看基因层面的结果是发现不了的。在这个样本中，两条重建出的 <em>PMS2</em> 单倍型被清楚地分开：其中一条带有一段从 <em>PMS2CL</em> 转换到 <em>PMS2</em> 的序列，而 <em>PMS2CL</em> 本身在两条染色体上都已缺失。应用说明指出，这一构型与该样本此前的鉴定结果一致。</p>
+    </div>
+    <figure class="figprint" style="--r:0.3deg"><span class="tape"></span>
+      <div class="paper"><svg id="fig2" viewBox="0 0 1000 580" role="img" aria-label="一个 16 kb 区域内两条重建出的 PMS2 单倍型的比对轨道。单倍型 1 带有一段从 PMS2CL 转换到 PMS2 的序列，失去功能；单倍型 2 有功能。PMS2CL 在两条单倍型上都已缺失。"></svg></div>
+      <figcaption><b>图 2</b>两条重建出的 <em>PMS2</em> 单倍型，据 ACMG 2026 年会幻灯片重绘。单倍型 1 带有基因转换片段，被判为失去功能，但原资料未指明具体的致病改变；单倍型 2 有功能。<em>PMS2CL</em> 在两条单倍型上均缺失。</figcaption>
+    </figure>
+    {% include clippings.html project="paralogs" %}
+  </div>
+</section>
+
+<section class="sheet kraft" id="short-read">
+  <div class="inner">
+    <p class="kicker">II &middot; 常规短读段</p>
+    <h2 class="sheet-title">用常规测序检测疑难临床基因</h2>
+    <p class="lede">在有邻近测序数据之前，我为少数几个高价值基因开发检测工具，尽可能从普通的全基因组或外显子组数据中榨出信息。每个工具都围绕它的基因座设计：在基因本身无法区分时，读取周边独有序列的测序深度；或者把几乎相同的拷贝放在一起分析，而不是丢掉它们共享的读段。</p>
+    <figure class="figprint" style="--r:-0.4deg"><span class="tape"></span>
+      <div class="paper"><svg id="agfig" viewBox="0 0 900 262" role="img" aria-label="从四个基因到零个基因的六种 α 珠蛋白基因型。两种两基因型都是携带者；只有顺式构型可能传下一条不含 α 珠蛋白基因的染色体。"></svg></div>
+      <figcaption><b>图 3</b>重要的不只是数量，还有排布。每一对横条代表 16 号染色体的两份拷贝，每份通常带有两个 α 珠蛋白基因；空心表示缺失。两种两基因型都属于 α 地中海贫血携带者，症状轻微或没有症状。区别在于父母会传下什么：顺式携带者（&minus;&minus;/&alpha;&alpha;）可能传下一条完全不含 α 珠蛋白基因的染色体，因此两位顺式携带者生育时，孩子有四分之一的概率患 Hb Bart 胎儿水肿综合征；而反式携带者（&minus;&alpha;/&minus;&alpha;）总会传下一个基因。只数基因个数无法区分两者，<em>HBA1</em> 与 <em>HBA2</em> 内部的读段又难以归属，所以检测工具读取的是：不同范围的缺失，在基因周围非同源序列中留下的不同深度特征。</figcaption>
+    </figure>
+    <div class="works">
+      <article class="work" id="hba">
+        <div><p class="wk">α 地中海贫血 &middot; 全基因组</p>
+          <h3><em>HBA1</em>/<em>HBA2</em> 拷贝数检测工具</h3>
+          <p class="body"><em>HBA1</em> 与 <em>HBA2</em> 首尾相接，序列约 97% 相同。该工具根据基因座内部及附近若干非同源区域估计拷贝数，可区分 14 种拷贝数基因型，包括常见的 &minus;&alpha;<sup>3.7</sup>、&minus;&alpha;<sup>4.2</sup> 和 &minus;&minus;<sup>SEA</sup> 缺失。在全部 575 个三联体中，结果均符合孟德尔遗传；在 3,201 份千人基因组样本中，估算出的 α 地中海贫血携带率在非洲人群中约为 36%，在南亚人群中约为 13%。</p>
+          <p class="role">主导开发 &middot; 第一作者 &middot; 专利申请第一发明人</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-targeted-caller.html">技术文章</a><a class="link" href="https://patents.google.com/patent/WO2024010812A2">专利</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>246</b><span>份样本以 PacBio HiFi 为对照；4 份未出结果</span></div>
+      </article>
+      <article class="work" id="carrier-exome">
+        <div><p class="wk">携带者筛查 &middot; 外显子组</p>
+          <h3>一个外显子组流程同时检测 <em>HBA</em> 与 <em>SMN</em></h3>
+          <p class="body">常规外显子组探针覆盖不到这些工具所依赖的非编码序列，因此实验室还得另做 MLPA 或 qPCR。通过加入一个 359&nbsp;kb 的补充探针组，并在批次内做深度归一化，<em>HBA</em> 和 <em>SMN</em> 检测工具得以用于外显子组数据。在一个外部的、部分盲法的 1,009 例临床队列中，<em>SMN1</em> 拷贝数与 SMA 状态在 99.8% 的数据集中与 qPCR 或 MLPA 一致。</p>
+          <p class="role">合著者 &middot; 专利申请共同发明人</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/HBA-SMN-genotyping.html">技术文章</a><a class="link" href="https://doi.org/10.1038/s41431-025-01932-8">ESHG 会议摘要</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>1,099<small>/1,099</small></b><span>临床队列中 <em>HBA</em> 结果与 MLPA 一致</span></div>
+      </article>
+      <article class="work" id="pms2">
+        <div><p class="wk">林奇综合征 &middot; 全基因组</p>
+          <h3><em>PMS2</em> 的小变异检测</h3>
+          <p class="body"><em>PMS2</em> 的最后几个外显子与其假基因 <em>PMS2CL</em> 几乎相同，基因转换还会在两者之间搬运序列。把两个区域放在一起分析，并保留常规流程当作“无法归属”而丢弃的读段，就能找回单区域检测漏掉的致病变异；在来自两家临床实验室的 22 份样本中，所有预期的临床相关变异均被检出。</p>
+          <p class="role">算法开发 &middot; ISMB 2023 评估第一作者 &middot; 专利申请第一发明人</p>
+          <p class="acts"><a class="link" href="https://www.illumina.com/science/genomics-research/articles/PMS2-small-variant-detection.html">技术文章</a><a class="link" href="https://www.tempus.com/wp-content/uploads/2023/07/Han_etal_ISMB23.pdf">ISMB 墙报</a></p></div>
+        <div class="stamp"><span class="tape"></span><b>99.7%</b><span>以长片段 PCR 为对照，147 个细胞系中的 SNV 检出率</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sheet dots" id="transposons">
+  <div class="inner">
+    <p class="kicker">III &middot; 基因组演化</p>
+    <h2 class="sheet-title">重建插入，追溯基因组的历史</h2>
+    {% include summary-card.html anchor="telr" %}
+    <figure class="figprint" style="--r:0.4deg"><span class="tape"></span>
+      <div class="paper"><svg id="fig4" viewBox="0 0 1000 760" role="img" aria-label="TELR 流程的四个阶段：从结构变异结果中找出候选转座子插入位点；局部组装并校正一条跨越插入的重叠群；确定转座子家族和参考坐标；根据测序深度估计样本内的等位基因频率。"></svg></div>
+      <figcaption><b>图 4</b>TELR 流程：从结构变异检测结果中找出候选转座子插入位点，局部组装并校正一条跨越插入的重叠群，确定转座子家族及其参考坐标，再根据测序深度估计该插入在样本内的等位基因频率。</figcaption>
+    </figure>
+    <div class="prose" style="margin-top:48px">
+      <h3 style="margin-top:0">家族树告诉了我们什么</h3>
+      <p>TELR 重建的是每个插入的完整序列，而不只是它的位置，所以我们可以为最活跃的转座子家族构建家族树，追问 S2R+ 细胞系中多出来的那些拷贝彼此是什么关系。</p>
+      <p>答案因家族而异。论文发现，<em>1731</em>、<em>gypsy</em>、<em>gypsy1</em>、<em>mdg3</em> 和 <em>Stalker2</em> 各只有一个扩增分支，说明它们由单一的来源谱系扩增而来；而 <em>jockey</em>、<em>Juan</em> 和 <em>3S18</em> 则有多个扩增分支。</p>
+      <p>这些序列系统发育揭示的是拷贝之间的亲缘关系，而不是它们被独立引入细胞培养的次数。</p>
+    </div>
+    <figure class="figprint narrow" style="--r:-0.6deg"><span class="tape"></span>
+      <div class="paper"><img src="{{ site.baseurl }}/images/research-telr-phylogeny.jpg" width="1288" height="1300" loading="lazy" alt="四个转座子家族（1731、297、jockey 和 Juan）的系统发育树，由 TELR 组装的插入序列构建，高亮的分支标出了在 S2R+ 细胞系中的扩增。"></div>
+      <figcaption><b>图 5</b>四个转座子家族的家族树，由 TELR 直接从长读段组装出的序列构建。高亮的分支标出了在 S2R+ 中的扩增。论文报告 <em>1731</em> 只有一个扩增分支，而 <em>jockey</em> 和 <em>Juan</em> 有多个，可见扩增方式因家族而异，并非都源自单一来源。</figcaption>
+    </figure>
+    <div class="prose" style="margin-top:48px">
+      <h3 style="margin-top:0">这些生物学发现为何重要</h3>
+      <p>单个转座子插入很少见，但在基因组中分布密集，因此是区分细胞系的绝佳标记。在果蝇细胞培养中，全基因组的转座子插入图谱能以 100% 的自展支持度把同一细胞系的重复样本聚在一起，而仅用六个 LTR 逆转录转座子家族组成的标记组，就足以正确判定样本归属。这为细胞系鉴定提供了实用的依据，实际应用中还发现了一些登记身份与基因组不符的细胞系。</p>
+      <p>同样的数据还把转座子活动与另一个过程联系了起来。大段拷贝数中性的杂合性丢失（LOH）抹去了整条染色体臂上的 SNP 杂合性。持续的转座会恢复转座子的杂合性，却不会恢复 SNP 的杂合性；正是这种不对称，让后来发生的第二次 LOH 得以被识别。揭示一个细胞系历史中事件先后顺序的，不是其中任何一个过程本身，而是两者之间的相互作用。</p>
+    </div>
+    <details class="more"><summary>证据与推断出的基因组历史</summary><div><p><strong>哪些是测量结果，哪些是推断。</strong>聚类结果及其自展支持度、六个家族的鉴定标记组，以及支持拷贝数中性 LOH 的拷贝数与 B 等位基因频率证据，都是直接观察。把有丝分裂重组当作这些拷贝数中性片段的成因、为身份错误的细胞系提出的具体历史，以及把某一细胞系看作另一细胞系的祖先状态，则是根据这些模式做出的推断。同样，在 S2 亚系研究中，系统发育关系和拷贝数差异是测量结果，而“持续的间歇性转座，而非早期的一次性爆发”是一个模型：插入位点占据情况和祖先状态分析支持它，但它并非直接观察到的事实。</p></div></details>
+    <div class="related">
+      <p class="kicker" style="margin-bottom:8px">相关论文</p>
+      <div class="rl"><h4 lang="en">TE profiles reveal cell line identity and loss of heterozygosity</h4><p>提出 ngs_te_mapper2，利用全基因组转座子插入图谱鉴定果蝇细胞系，并发现 LOH 是塑造这些基因组的机制之一。第一作者。<em>Genetics</em>，2021。</p><p class="acts"><a class="link" href="https://doi.org/10.1093/genetics/iyab113">论文</a></p></div>
+      <div class="rl"><h4 lang="en">Ongoing transposition reveals the phylogeny of <em>Drosophila</em> S2 sublines</h4><p>对 25 个 S2 亚系测序，以转座子插入为标记重建它们的亲缘关系，发现“S2”这一名称对应的并不是一个单系类群，而拷贝数的演化也支持同样的拓扑结构。第一作者。<em>Genetics</em>，2022。</p><p class="acts"><a class="link" href="https://doi.org/10.1093/genetics/iyac077">论文</a></p></div>
+      <div class="rl"><h4 lang="en">Reproducible evaluation of TE detectors with McClintock 2</h4><p>一个用于评测十二种短读段转座子检测工具的元流程。据论文的作者贡献声明，该流程由 P. J. Basting 开发，J. Chen、我和 C. M. Bergman 参与贡献。<em>Mobile DNA</em>，2023。</p><p class="acts"><a class="link" href="https://doi.org/10.1186/s13100-023-00296-4">论文</a></p></div>
+      <div class="rl"><h4><em>P</em> 因子靶位点预测</h4><p>基于人工构造特征训练的机器学习模型，用于预测 <em>P</em> 因子的插入位点偏好。博士期间的未发表工作。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sheet plate" id="software">
+  <div class="inner">
+    <p class="kicker">IV &middot; 开源软件</p>
+    <h2 class="sheet-title">研究软件</h2>
+    <p class="lede">这些软件开发于我的博士阶段，在 Bergman 实验室完成，并以开源协议发布。我在其中的角色各不相同，下面分别注明。</p>
+    <div class="cards">
+      <div class="card" style="--r:-0.8deg"><h3>TELR</h3><p>基于长读段测序的转座子检测与局部组装。由我开发。</p><p class="lic">BSD-2-Clause</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/TELR">代码</a><a class="link" href="https://github.com/bergmanlab/TELR#readme">文档</a></p></div>
+      <div class="card" style="--r:0.6deg"><h3>ngs_te_mapper2</h3><p>基于短读段的转座子插入检测，用于细胞系鉴定。由我开发。</p><p class="lic">BSD-2-Clause</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/ngs_te_mapper2">代码</a><a class="link" href="https://github.com/bergmanlab/ngs_te_mapper2#readme">文档</a></p></div>
+      <div class="card" style="--r:-0.4deg"><h3>McClintock 2</h3><p>用于评测十二种短读段转座子检测工具的元流程。由 P. J. Basting 开发，我参与贡献。</p><p class="lic">Bergman 实验室项目</p><p class="acts"><a class="link" href="https://github.com/bergmanlab/mcclintock">代码</a><a class="link" href="https://github.com/bergmanlab/mcclintock/wiki">文档</a></p></div>
+    </div>
+  </div>
+</section>

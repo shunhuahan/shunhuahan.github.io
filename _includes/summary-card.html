@@ -1,14 +1,23 @@
 {%- comment -%}
   A taped index card summarising one flagship project. Text comes from
-  _data/projects.yml so the home page and this card cannot drift apart.
+  _data/projects.yml (fields ending _zh on the Chinese pages) so the home
+  page and this card cannot drift apart.
 {%- endcomment -%}
 {%- assign p = site.data.projects | where: "anchor", include.anchor | first -%}
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
+{%- if page.lang == "zh" -%}
+  {%- assign sum = p.summary_zh -%}{%- assign res = p.result_zh -%}{%- assign prob = p.problem_zh -%}
+  {%- assign idea = p.idea_zh -%}{%- assign role = p.role_zh -%}{%- assign ev = p.evidence_zh -%}
+{%- else -%}
+  {%- assign sum = p.summary -%}{%- assign res = p.result -%}{%- assign prob = p.problem -%}
+  {%- assign idea = p.idea -%}{%- assign role = p.role -%}{%- assign ev = p.evidence -%}
+{%- endif -%}
 <div class="summary-card" id="{{ p.anchor }}"><span class="tape"></span>
   <p class="lab">{{ p.short_title }}</p>
-  <p class="sum">{{ p.summary }}</p>
-  <p class="res">{{ p.result }}</p>
-  <p class="acts">{% for l in p.links %}<a class="link" href="{{ l.url }}">{{ l.label }}</a>{% endfor %}</p>
-  <details><summary>Method, contribution and evaluation</summary>
-    <dl><dt>Problem</dt><dd>{{ p.problem }}</dd><dt>Method</dt><dd>{{ p.idea }}</dd><dt>My role</dt><dd>{{ p.role }}</dd><dt>Evidence</dt><dd>{{ p.evidence }}</dd></dl>
+  <p class="sum">{{ sum }}</p>
+  <p class="res">{{ res }}</p>
+  <p class="acts">{% for l in p.links %}<a class="link" href="{{ l.url }}">{% if page.lang == "zh" %}{{ l.label_zh | default: l.label }}{% else %}{{ l.label }}{% endif %}</a>{% endfor %}</p>
+  <details><summary>{{ t.method_details }}</summary>
+    <dl><dt>{{ t.problem }}</dt><dd>{{ prob }}</dd><dt>{{ t.method }}</dt><dd>{{ idea }}</dd><dt>{{ t.role }}</dt><dd>{{ role }}</dd><dt>{{ t.evidence }}</dt><dd>{{ ev }}</dd></dl>
   </details>
 </div>

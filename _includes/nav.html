@@ -1,13 +1,18 @@
 {%- comment -%}
-  Site navigation. On the home page it floats over the explorer scene; on
-  inner pages it carries the site name on the left.
+  Site navigation, in the page's language, with a switch to the other one.
+  Pages give their counterpart in `alt_url`; without it there is no switch.
 {%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n.en -%}
+{%- if page.lang == "zh" %}{% assign base = site.baseurl | append: "/zh" %}{% else %}{% assign base = site.baseurl %}{% endif -%}
 <nav class="topnav" aria-label="Site">
-  {%- if page.url != "/" %}
-  <a class="home" href="{{ site.baseurl }}/">{{ site.name }}</a>
+  {%- unless page.home %}
+  <a class="home" href="{{ base }}/">{{ t.site_name }}</a>
+  {%- endunless %}
+  <a href="{{ base }}/#about">{{ t.about }}</a>
+  <a href="{{ base }}/research/"{% if page.url contains '/research' %} aria-current="page"{% endif %}>{{ t.research }}</a>
+  <a href="{{ base }}/publications/"{% if page.url contains '/publications' %} aria-current="page"{% endif %}>{{ t.publications }}</a>
+  <a href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">{{ t.cv }}</a>
+  {%- if page.alt_url %}
+  <a class="lang" href="{{ site.baseurl }}{{ page.alt_url }}" hreflang="{% if page.lang == 'zh' %}en{% else %}zh{% endif %}" lang="{% if page.lang == 'zh' %}en{% else %}zh{% endif %}" title="{{ t.switch_label }}">{{ t.switch }}</a>
   {%- endif %}
-  <a href="{{ site.baseurl }}/#about">About</a>
-  <a href="{{ site.baseurl }}/research/"{% if page.url contains '/research' %} aria-current="page"{% endif %}>Research</a>
-  <a href="{{ site.baseurl }}/publications/"{% if page.url contains '/publications' %} aria-current="page"{% endif %}>Publications</a>
-  <a href="{{ site.baseurl }}/assets/shunhuahan-cv.pdf">CV</a>
 </nav>

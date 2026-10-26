@@ -4,7 +4,62 @@
   var NS = "http://www.w3.org/2000/svg";
   var INK = "#241f1a", PENCIL = "#5a5047", A = "#4f6f95", B = "#c08736", RED = "#a8432e";
   var FLANK = "#cf8a45", TE = "#7f9f4a", LEAF = "#5f7f3a";
-  var SERIF = "EB Garamond, Garamond, Georgia, serif", DISPLAY = SERIF;
+  var SERIF = "EB Garamond, Noto Serif SC, Songti SC, Garamond, Georgia, serif", DISPLAY = SERIF;
+  // On the Chinese pages (<html lang="zh-Hans">) every figure label is looked up here; anything missing stays as written.
+  var LANG = (document.documentElement.getAttribute("lang") || "en").slice(0, 2);
+  var ZH = {
+    "PL. I": "图版 I", "PL. II": "图版 II", "PL. III": "图版 III", "PL. IV": "图版 IV", "PL. V": "图版 V", "PL. VI": "图版 VI", "N": "北",
+    // the star chart
+    "GEMINI": "双子座", "the Twins": "双子", "Castor": "北河二", "Pollux": "北河三", "the ecliptic": "黄道",
+    // plate I
+    "an ancestral chromosome": "祖先染色体", "copied": "复制", "millions of years": "数百万年后", "today": "如今",
+    "original": "原本", "copy": "拷贝", "with a few changes": "带着少数差异",
+    // plate II
+    "a burst of duplication": "一次重复爆发", "~8–12 million years ago": "约 800–1200 万年前", "duplication events": "重复事件",
+    "macaque": "猕猴", "orangutan": "猩猩", "gorilla": "大猩猩", "chimpanzee": "黑猩猩", "human": "人类",
+    // plate III
+    "both copies keep working": "两份拷贝都保留功能", "together they make α-globin, half of adult haemoglobin": "二者共同编码 α 珠蛋白，占成人血红蛋白的一半",
+    "one copy decays into a pseudogene": "一份拷贝退化为假基因", "DNA mismatch repair;": "参与 DNA 错配修复，", "losing it causes Lynch syndrome": "功能丧失可致林奇综合征",
+    "disabled, but": "已失去功能，", "still almost identical": "序列却几乎相同",
+    // plate IV
+    "the gene": "基因", "the pseudogene": "假基因", "the one difference": "唯一的差异", "a short read": "一条短读段", "from the sample": "来自样本",
+    "matches": "同时匹配", "both copies": "两份拷贝", "So the test cannot tell which gene the read came from:": "因此，检测无法判断这条读段来自哪个基因：",
+    "a real variant can be missed, or a pseudogene": "真实的变异可能被漏掉，", "difference mistaken for one.": "假基因的差异也可能被误判为变异。",
+    // plate V
+    "maize, where": "玉米：转座子", "they were found": "最早的发现地", "cut and paste": "剪切与粘贴", "(DNA transposons)": "（DNA 转座子）",
+    "leaves": "离开", "moves": "迁入", "copy and paste": "复制与粘贴", "(retrotransposons)": "（逆转录转座子）",
+    "an RNA copy makes a new insertion": "RNA 拷贝形成新的插入", "the old copy stays, so numbers grow": "原拷贝留在原处，数量随之增加",
+    // plate VI
+    "LINEs": "LINE", "SINEs (e.g. Alu)": "SINE（如 Alu）", "LTR elements": "LTR 元件", "DNA transposons": "DNA 转座子",
+    "protein-coding, ~1.5%": "蛋白编码序列，约 1.5%", "transposable elements: about 45%": "转座子：约 45%", "the human genome": "人类基因组",
+    "a new L1 insertion breaks the gene": "新的 L1 插入破坏了基因", "factor VIII, hemophilia A (1988)": "凝血因子 VIII，血友病 A（1988）",
+    // selected work
+    "reads align equally well to both: ambiguous": "读段与两处匹配得一样好：无法归属", "Multi-region Joint Detection (MRJD)": "多区域联合检测（MRJD）",
+    "with TruPath proximity linkage": "结合 TruPath 邻近连锁信息", "gene": "基因", "pseudogene": "假基因", "hap 1": "单倍型 1", "hap 2": "单倍型 2",
+    "gene conversion: PMS2CL": "基因转换：PMS2CL", "sequence copied into PMS2": "序列被复制进 PMS2", "= a variant": "= 变异",
+    "Every copy rebuilt in full, gene and": "每份拷贝都被完整重建，", "pseudogene told apart.": "基因与假基因得以区分。",
+    "2 genes each, both carriers": "各有 2 个基因，都是携带者", "normal": "正常", "silent carrier": "静止型携带者", "carrier": "携带者", "cis": "顺式", "trans": "反式",
+    "Only cis can pass on a chromosome with no α genes;": "只有顺式会传下不含 α 基因的染色体；", "a child with two has Hb Bart's hydrops fetalis.": "孩子若得到两条，即患 Hb Bart 胎儿水肿综合征。",
+    "boing!": "嗖！", "transposon": "转座子", "new copy": "新拷贝",
+    "TELR finds new insertions in long reads,": "TELR 在长读段中找出新的插入，", "rebuilds each one, and counts the copies carrying it.": "逐一重建，并估计携带它的拷贝数。",
+    // research figures
+    "two genes each: both carriers, different risk to children": "同样两个基因：都是携带者，对后代的风险却不同",
+    "carrier (trait)": "携带者（轻型）", "cis: can pass on −−": "顺式：可能传下 −−", "trans: passes on −α": "反式：只传下 −α",
+    "HbH disease": "HbH 病", "Hb Bart's hydrops": "Hb Bart", "fetalis": "胎儿水肿综合征",
+    "its copy": "它的拷贝", "callable": "可检测", "covers a base where the copies differ: placed on its gene": "覆盖到两份拷贝的差异位点：可以确定来源基因",
+    "covers none: fits both genes equally, so the caller sets it aside": "未覆盖任何差异位点：与两个基因同样匹配，被检测工具舍弃",
+    "PMS2 haplotype 1": "PMS2 单倍型 1", "PMS2 haplotype 2": "PMS2 单倍型 2", "PMS2CL → PMS2 gene conversion": "PMS2CL → PMS2 基因转换",
+    "PMS2CL → PMS2 conversion": "PMS2CL → PMS2 转换", "haplotype 1": "单倍型 1", "haplotype 2": "单倍型 2",
+    "non-functional PMS2": "失去功能的 PMS2", "functional PMS2": "有功能的 PMS2", "PMS2CL deleted": "PMS2CL 缺失",
+    "1  Find candidate insertions": "1　寻找候选插入", "2  Assemble a local contig": "2　局部组装重叠群", "3  Name the family, place it": "3　确定家族与位置", "4  Estimate allele frequency": "4　估计等位基因频率",
+    "reference": "参考基因组", "SV insertion": "结构变异插入", "align long reads,": "比对长读段，", "call SVs": "检出结构变异", "inserted sequence": "插入序列",
+    "matches a TE consensus?": "是否匹配转座子共有序列？", "yes: candidate": "是：候选位点", "no: discard": "否：舍弃", "polished contig": "校正后的重叠群",
+    "assemble, polish": "组装并校正", "annotated contig": "注释后的重叠群", "TE family, coordinates and": "转座子家族、坐标，", "target-site duplication": "以及靶位点重复",
+    "annotate the TE": "注释转座子", "reads with": "含插入的", "the insertion": "读段", "reads without": "无插入读段", "realign to": "重新比对到",
+    "the TE contig": "转座子重叠群", "depth": "深度", "depth-based estimate (SAMtools)": "基于测序深度估计（SAMtools）",
+    "5′ flank": "5′ 侧翼", "5′ TE": "5′ 端", "3′ TE": "3′ 端", "3′ flank": "3′ 侧翼"
+  };
+  function tr(s) { return LANG === "zh" && Object.prototype.hasOwnProperty.call(ZH, s) ? ZH[s] : s; }
 
   function el(tag, attrs, parent, text) {
     var e = document.createElementNS(NS, tag);
@@ -26,6 +81,8 @@
   // a label in the body face (italic unless asked otherwise); labels never take the ink wobble
   function note(g, x, y, s, o) {
     o = o || {};
+    s = tr(s);
+    if (/[\u3000-\u9fff]/.test(s)) o = Object.assign({}, o, { roman: true, ls: "" });   // Chinese is never slanted
     if (g.getAttribute && g.getAttribute("filter")) g = g.parentNode;
     return el("text", { x: x, y: y, "font-family": o.display ? DISPLAY : SERIF, "font-style": o.display || o.roman ? "normal" : "italic",
       "font-size": o.size || 13, fill: o.fill || PENCIL, "text-anchor": o.anchor || "start", "letter-spacing": o.ls || "",
@@ -144,148 +201,95 @@
     document.documentElement.style.setProperty("--tear", "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")");
   })();
 
-  // ---------------------------------------------------------------- the front: an explorer's chart of the duplicated genome
-  // An old sea chart: paralog pairs are twin islands of the same shape, transposons a scatter of identical islets,
-  // a small boat wanders a dotted course among them, and a sea serpent with a double-helix body guards the corner.
-  function blobPoints(seed, rx, ry, n) {
-    var R = rng(seed), pts = [];
-    for (var i = 0; i < n; i++) {
-      var a = i / n * Math.PI * 2, k = 0.78 + R() * 0.3 + 0.12 * Math.sin(a * 3 + seed);
-      pts.push([Math.cos(a) * rx * k, Math.sin(a) * ry * k]);
-    }
-    return pts;
-  }
-  function smoothClosed(pts, cx, cy, sx, sy) {
-    sx = sx || 1; sy = sy || 1;
-    var P = pts.map(function (p) { return [cx + p[0] * sx, cy + p[1] * sy]; }), n = P.length, d = "M" + f(P[0][0]) + "," + f(P[0][1]);
-    for (var i = 0; i < n; i++) {
-      var p0 = P[(i - 1 + n) % n], p1 = P[i], p2 = P[(i + 1) % n], p3 = P[(i + 2) % n];
-      d += " C" + f(p1[0] + (p2[0] - p0[0]) / 6) + "," + f(p1[1] + (p2[1] - p0[1]) / 6) + " " + f(p2[0] - (p3[0] - p1[0]) / 6) + "," + f(p2[1] - (p3[1] - p1[1]) / 6) + " " + f(p2[0]) + "," + f(p2[1]);
-    }
-    return d + "Z";
-  }
+  // ---------------------------------------------------------------- the front: a star chart of Gemini
+  // Drawn from catalogue positions. Castor and Pollux look like a matched pair from Earth; in the myth one twin
+  // was mortal and one immortal, like a gene and its pseudogene. Pollux, the mortal-born twin made immortal, is in rust.
   (function () {
-    var svg = $("map"); if (!svg) return;
-    var W = 640, H = 360, R = rng(5);
-    var SEA = "#6f8aa0", LAND = "#d9c597";
-    var frame = el("clipPath", { id: "chartclip" }, svg);
-    el("rect", { x: 17, y: 17, width: W - 34, height: H - 34 }, frame);
-    var under = el("g", { "clip-path": "url(#chartclip)" }, svg), g = el("g", { filter: "url(#ink)" }, el("g", { "clip-path": "url(#chartclip)" }, svg));
-    // the sea: fine ruled lines, as on an engraved chart
-    var sea = "";
-    for (var y = 22; y < H - 18; y += 5) sea += " M22," + y + " L" + (W - 22) + "," + y;
-    path(under, sea, { w: .5, stroke: SEA, op: .32 });
-
-    function island(seed, cx, cy, rx, ry, label, sub, opts) {
-      opts = opts || {};
-      var pts = blobPoints(seed, rx, ry, 11), coast = smoothClosed(pts, cx, cy);
-      // water lines ringing the coast, fainter as they move out
-      [9, 6, 3].forEach(function (d, i) {
-        path(under, smoothClosed(pts, cx, cy, 1 + d / rx, 1 + d / ry), { w: .7, stroke: SEA, op: .25 + i * .15 });
-      });
-      el("path", { d: coast, fill: "#f4eedf" }, under);
-      wash(g, coast, opts.tint || LAND, .75);
-      // stipple and a few hills
-      var R2 = rng(seed + 9), dots = "";
-      for (var k = 0; k < rx * ry / 18; k++) {
-        var a = R2() * Math.PI * 2, r = Math.sqrt(R2()) * .7;
-        dots += " M" + f(cx + Math.cos(a) * rx * r) + "," + f(cy + Math.sin(a) * ry * r) + " l.6,0";
-      }
-      path(g, dots, { w: 1, stroke: INK, op: .45 });
-      if (rx > 22) for (var h = 0; h < 3; h++) {
-        var hx = cx - rx * .35 + h * rx * .3, hy = cy - ry * .1 + (h % 2) * 4;
-        path(g, "M" + f(hx - 5) + "," + f(hy + 3) + " L" + f(hx) + "," + f(hy - 4) + " L" + f(hx + 5) + "," + f(hy + 3), { w: 1 });
-        path(g, "M" + f(hx) + "," + f(hy - 4) + " L" + f(hx + 2.5) + "," + f(hy + 3), { w: .6, op: .6 });
-      }
-      path(g, coast, { w: 1.3 });
-      if (label) {
-        note(svg, cx + (opts.lx || 0), cy + ry + 15 + (opts.ly || 0), label, { size: 13, fill: INK, anchor: "middle" });
-        if (sub) note(svg, cx + (opts.lx || 0), cy + ry + 27 + (opts.ly || 0), sub, { size: 9.5, anchor: "middle", roman: true });
-      }
+    function line(g, d, w, c, o) { return el("path", { d: d, fill: "none", stroke: c || INK, "stroke-width": w || 1, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: o == null ? "" : o }, g); }
+    function text(g, x, y, s, o) {
+      o = o || {}; s = tr(s);
+      var cjk = /[\u3400-\u9fff]/.test(s);
+      return el("text", { x: x, y: y, "font-family": SERIF, "font-size": o.size || 12, "font-style": o.italic && !cjk ? "italic" : "normal", fill: o.fill || INK,
+        "text-anchor": o.anchor || "middle", "letter-spacing": o.ls || "" }, g, s);
     }
-    // twin islands: the same coastline, set down twice
-    island(41, 150, 118, 44, 26, "PMS2", "the gene");
-    island(41, 262, 186, 44, 26, "PMS2CL", "the pseudogene", { tint: "#cbbf9c" });
-    island(77, 418, 92, 26, 15, "SMN1");
-    island(77, 474, 120, 26, 15, "SMN2", null, { lx: 8 });
-    island(93, 520, 236, 22, 13, "HBA2", null, { lx: -2 });
-    island(93, 574, 252, 22, 13, "HBA1");
-    island(58, 82, 248, 30, 18, "CYP21A2");
-    island(58, 160, 284, 30, 18, "CYP21A1P", null, { tint: "#cbbf9c" });
-    // transposons: one small islet, copied again and again across the chart
-    var isle = blobPoints(12, 6, 4, 8), tes = [[246, 52], [268, 64], [292, 50], [318, 62], [342, 48], [366, 60], [548, 152], [572, 140], [596, 158]];
-    tes.forEach(function (t) {
-      [3].forEach(function (d) { path(under, smoothClosed(isle, t[0], t[1], 1 + d / 6, 1 + d / 4), { w: .6, stroke: SEA, op: .45 }); });
-      var c = smoothClosed(isle, t[0], t[1]);
-      el("path", { d: c, fill: "#f4eedf" }, under); wash(g, c, "#b9c48f", .8); path(g, c, { w: 1 });
-    });
-    note(svg, 306, 84, "transposons: one islet, copied many times", { size: 11, anchor: "middle" });
-
-    // the explorer's course: a dotted line wandering from the left edge through the islands and on, off the chart
-    var course = "M24,182 C70,170 96,150 122,160 S200,214 214,152 S300,120 330,140 S390,170 420,154 S470,180 500,186 S560,196 590,200 S622,220 640,214";
-    path(g, course, { w: 1.2, dash: "2 5", stroke: "#8a3b2a" });
-    // the boat, partway along
-    var bx = 330, by = 140;
-    var boat = el("g", { transform: "translate(" + bx + "," + (by - 2) + ")" }, g);
-    el("path", { d: "M-11,0 L11,0 L7,5 L-7,5Z", fill: "#7a4f2e", stroke: INK, "stroke-width": 1 }, boat);
-    path(boat, "M0,0 L0,-19", { w: 1.1 });
-    el("path", { d: "M1,-18 L11,-3 L1,-3Z", fill: "#fbf7ec", stroke: INK, "stroke-width": .9 }, boat);
-    el("path", { d: "M-1,-17 L-9,-4 L-1,-4Z", fill: "#efe6cf", stroke: INK, "stroke-width": .8 }, boat);
-    el("path", { d: "M0,-19 l6,1.6 l-6,1.6Z", fill: "#a8432e" }, boat);
-    path(boat, "M-14,7 q4,-2 8,0 M8,7 q4,-2 8,0", { w: .7, stroke: SEA });
-
-    // a sea serpent whose body is a double helix
-    var sx0 = 352, sy0 = 316;
-    path(g, "M" + (sx0 - 30) + "," + (sy0 + 1) + " q6,-3 12,0 M" + (sx0 + 120) + "," + (sy0 + 1) + " q6,-3 12,0", { w: .8, stroke: SEA });
-    var s1 = "", s2 = "", rung = "";
-    for (var t = 0; t <= 1.0001; t += 0.01) {
-      var x = sx0 - 18 + t * 132, hump = Math.max(0, Math.sin(t * Math.PI * 3)), yy = sy0 - hump * 20;
-      var tw = Math.sin(t * 34) * 4.2 * (hump > .05 ? 1 : 0);
-      if (hump <= .02) { s1 += " M" + f(x) + "," + f(yy); s2 += " M" + f(x) + "," + f(yy); continue; }
-      s1 += (s1 ? " L" : "M") + f(x) + "," + f(yy + tw); s2 += (s2 ? " L" : "M") + f(x) + "," + f(yy - tw);
-      if (Math.round(t * 100) % 3 === 0 && Math.abs(tw) > 1.5) rung += " M" + f(x) + "," + f(yy + tw) + " L" + f(x) + "," + f(yy - tw);
+    function f(n) { return (+n).toFixed(2); }
+    var RUST = "#9a3b25";
+    var svg = document.getElementById("gemini"); if (!svg) return;
+    var W = 640, H = 430, R = rng(11);
+    var ra0 = 7.0 * 15, dec0 = 23.2, S = 14, cx = W / 2 + 4, cy = H / 2 - 2;
+    var D = Math.PI / 180;
+    function P(raH, dec) { var ra = raH * 15; return [cx - (ra - ra0) * Math.cos(dec * D) * S, cy - (dec - dec0) * S]; }
+    var g = el("g", {}, svg);
+    var clip = el("clipPath", { id: "geminiclip" }, svg); el("rect", { x: 34, y: 30, width: W - 68, height: H - 64 }, clip);
+    var inner = el("g", { "clip-path": "url(#geminiclip)" }, g);
+    // the Milky Way, as a soft stipple along the galactic plane near the anticentre
+    var mw = "";
+    for (var i = 0; i < 2600; i++) {
+      var t = R(), off = (R() + R() + R() - 1.5) * 4.2;
+      var raH = 5.75 + t * 1.25, dec = 30 - t * 26 + off;
+      var p = P(raH, dec); mw += "M" + f(p[0]) + "," + f(p[1]) + "h.01";
     }
-    path(g, rung, { w: .9, stroke: "#a8432e", op: .8 });
-    var rip = "";
-    for (var k2 = 0; k2 <= 3; k2++) { var rx2 = sx0 - 18 + k2 / 3 * 132; rip += " M" + f(rx2 - 9) + "," + (sy0 + 3) + " q3,-2.4 6,0 q3,2.4 6,0 q3,-2.4 6,0"; }
-    path(g, rip, { w: .8, stroke: SEA });
-    path(g, s1, { w: 1.6 }); path(g, s2, { w: 1.6, stroke: "#2c4f72" });
-    // its head, rising from the last hump
-    var hx = sx0 + 118, hy = sy0 - 6;
-    el("path", { d: "M" + (hx - 6) + "," + (hy + 6) + " C" + (hx - 4) + "," + (hy - 10) + " " + (hx + 8) + "," + (hy - 16) + " " + (hx + 16) + "," + (hy - 10) + " C" + (hx + 20) + "," + (hy - 7) + " " + (hx + 16) + "," + (hy - 3) + " " + (hx + 9) + "," + (hy - 4) + " C" + (hx + 4) + "," + (hy - 3) + " " + (hx + 2) + "," + (hy + 2) + " " + (hx + 2) + "," + (hy + 6) + "Z",
-      fill: "#8fa3a0", stroke: INK, "stroke-width": 1.1 }, g);
-    el("circle", { cx: hx + 10, cy: hy - 10, r: 1.2, fill: INK }, g);
-    path(g, "M" + (hx + 17) + "," + (hy - 8) + " l5,1 m-5,-1 l4,-3", { w: .8, stroke: "#a8432e" });
-    // and the banner beside it
-    var bnx = 240, bny = 300;
-    el("path", { d: "M" + (bnx - 4) + "," + (bny + 4) + " l-8,-4 l8,-4 Z M" + (bnx + 82) + "," + (bny + 4) + " l8,-4 l-8,-4 Z", fill: "#e9dcbd", stroke: INK, "stroke-width": .8 }, g);
-    el("rect", { x: bnx - 4, y: bny - 10, width: 86, height: 16, fill: "#f6efdc", stroke: INK, "stroke-width": .9 }, g);
-    note(svg, bnx + 39, bny + 2, "Here be paralogs", { size: 11, fill: INK, anchor: "middle" });
-
-    // a small compass rose
-    var cx = 586, cy = 60, cr = rng(3);
-    el("circle", { cx: cx, cy: cy, r: 22, fill: "none", stroke: INK, "stroke-width": .8 }, g);
-    [0, 1, 2, 3].forEach(function (k) {
-      var a = -Math.PI / 2 + k * Math.PI / 2, L = 26, wdt = 5;
-      var tip = [cx + Math.cos(a) * L, cy + Math.sin(a) * L], l = [cx + Math.cos(a - Math.PI / 2) * wdt, cy + Math.sin(a - Math.PI / 2) * wdt], r = [cx + Math.cos(a + Math.PI / 2) * wdt, cy + Math.sin(a + Math.PI / 2) * wdt];
-      el("path", { d: "M" + cx + "," + cy + " L" + f(l[0]) + "," + f(l[1]) + " L" + f(tip[0]) + "," + f(tip[1]) + "Z", fill: k === 0 ? "#a8432e" : INK, stroke: INK, "stroke-width": .7 }, g);
-      el("path", { d: "M" + cx + "," + cy + " L" + f(r[0]) + "," + f(r[1]) + " L" + f(tip[0]) + "," + f(tip[1]) + "Z", fill: "#fbf7ec", stroke: INK, "stroke-width": .7 }, g);
+    line(inner, mw, 1.25, "#8d8270", .35);
+    // graticule: hour circles curve slightly, declination lines run straight
+    var grat = "";
+    for (var h = 5.75; h <= 8.25; h += 0.25) { var d = ""; for (var dd = 2; dd <= 42; dd += 1) { var q = P(h, dd); d += (d ? "L" : "M") + f(q[0]) + "," + f(q[1]); } grat += d; }
+    for (var de = 5; de <= 40; de += 5) { var q0 = P(8.3, de), q1 = P(5.7, de); grat += "M" + f(q0[0]) + "," + f(q0[1]) + "L" + f(q1[0]) + "," + f(q1[1]); }
+    line(inner, grat, .5, "#7a6f63", .55);
+    // the ecliptic, dashed, with the Sun's path marked
+    var ecl = "", eps = 23.44 * D;
+    for (var lam = 70; lam <= 130; lam += 1) {
+      var L = lam * D, ra = Math.atan2(Math.cos(eps) * Math.sin(L), Math.cos(L)) / D, dc = Math.asin(Math.sin(eps) * Math.sin(L)) / D;
+      if (ra < 0) ra += 360;
+      var q2 = P(ra / 15, dc); ecl += (ecl ? "L" : "M") + f(q2[0]) + "," + f(q2[1]);
+    }
+    line(inner, ecl, .9, RUST, .7).setAttribute("stroke-dasharray", "5 4");
+    var el0 = P(6.42, 23.6); text(inner, el0[0] + 4, el0[1] - 6, "the ecliptic", { size: 10.5, italic: true, fill: RUST, anchor: "start" });
+    // faint background stars
+    var faint = "";
+    for (var k = 0; k < 340; k++) { var fp = P(5.7 + R() * 2.6, 3 + R() * 38); var r = .35 + Math.pow(R(), 3) * 1.1; faint += "M" + f(fp[0] - r) + "," + f(fp[1]) + "a" + f(r) + "," + f(r) + " 0 1,0 " + f(2 * r) + ",0a" + f(r) + "," + f(r) + " 0 1,0 " + f(-2 * r) + ",0"; }
+    el("path", { d: faint, fill: INK, opacity: .55 }, inner);
+    // Gemini, from the catalogue: right ascension (hours), declination (degrees), magnitude
+    var stars = {
+      castor: [7.5766, 31.888, 1.58, "Castor", "α"], pollux: [7.7553, 28.026, 1.14, "Pollux", "β"], alhena: [6.6285, 16.399, 1.92, "", "γ"],
+      wasat: [7.3354, 21.982, 3.53, "", "δ"], mebsuta: [6.7322, 25.131, 2.98, "", "ε"], mekbuda: [7.0685, 20.570, 3.79, "", "ζ"],
+      propus: [6.2481, 22.507, 3.28, "", "η"], theta: [6.8797, 33.961, 3.60, "", "θ"], iota: [7.4288, 27.798, 3.79, "", "ι"],
+      kappa: [7.7406, 24.398, 3.57, "", "κ"], lambda: [7.3017, 16.540, 3.58, "", "λ"], mu: [6.3827, 22.514, 2.87, "", "μ"],
+      nu: [6.4829, 20.212, 4.15, "", "ν"], xi: [6.7547, 12.896, 3.36, "", "ξ"], tau: [7.1856, 30.245, 4.41, "", "τ"],
+      upsilon: [7.5988, 26.896, 4.06, "", "υ"]
+    };
+    var figure = [["castor", "tau"], ["tau", "iota"], ["iota", "upsilon"], ["upsilon", "pollux"], ["pollux", "kappa"], ["tau", "theta"], ["tau", "mebsuta"],
+      ["mebsuta", "nu"], ["mebsuta", "mu"], ["mu", "propus"], ["upsilon", "wasat"], ["wasat", "mekbuda"], ["mekbuda", "alhena"], ["wasat", "lambda"], ["lambda", "xi"]];
+    var fig = "";
+    figure.forEach(function (e) { var a = P(stars[e[0]][0], stars[e[0]][1]), b = P(stars[e[1]][0], stars[e[1]][1]);
+      var dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy), ga = 7 / n;
+      fig += "M" + f(a[0] + dx * ga) + "," + f(a[1] + dy * ga) + "L" + f(b[0] - dx * ga) + "," + f(b[1] - dy * ga); });
+    line(inner, fig, .9, INK, .75);
+    function starGlyph(x, y, mag, red) {
+      var r = Math.max(1.3, 6.2 - mag * 1.25), c = red ? RUST : INK;
+      if (mag < 2.2) {
+        var pts = "", n = 8;
+        for (var i = 0; i < n * 2; i++) { var a = i / (n * 2) * Math.PI * 2 - Math.PI / 2, rr = i % 2 ? r * .42 : r * 1.9; pts += (i ? "L" : "M") + f(x + Math.cos(a) * rr) + "," + f(y + Math.sin(a) * rr); }
+        el("path", { d: pts + "Z", fill: c }, inner);
+        el("circle", { cx: f(x), cy: f(y), r: f(r * .62), fill: "#f6efdc", stroke: c, "stroke-width": .8 }, inner);
+      } else el("circle", { cx: f(x), cy: f(y), r: f(r), fill: c }, inner);
+    }
+    Object.keys(stars).forEach(function (k) {
+      var s = stars[k], p = P(s[0], s[1]);
+      starGlyph(p[0], p[1], s[2], k === "pollux");
+      if (s[3]) text(inner, p[0] + (k === "castor" ? -14 : 14), p[1] - 12, s[3], { size: 15, italic: true, anchor: k === "castor" ? "end" : "start", fill: k === "pollux" ? RUST : INK });
+      else text(inner, p[0] + 9, p[1] - 6, s[4], { size: 10.5, italic: true, anchor: "start", fill: PENCIL });
     });
-    note(svg, cx, cy - 31, "N", { size: 10, fill: INK, anchor: "middle", roman: true });
-
-    // the cartouche
-    el("rect", { x: 30, y: 28, width: 168, height: 46, fill: "#f6efdc", stroke: INK, "stroke-width": .9 }, svg);
-    el("rect", { x: 33, y: 31, width: 162, height: 40, fill: "none", stroke: INK, "stroke-width": .5 }, svg);
-    note(svg, 114, 48, "A CHART OF THE", { size: 9, fill: INK, anchor: "middle", roman: true, ls: ".18em" });
-    note(svg, 114, 63, "Duplicated Genome", { size: 14, fill: INK, anchor: "middle" });
-
-    // the border: a double rule with alternating degree marks, as on old charts
-    el("rect", { x: 10, y: 10, width: W - 20, height: H - 20, fill: "none", stroke: INK, "stroke-width": 1.4 }, svg);
-    el("rect", { x: 16, y: 16, width: W - 32, height: H - 32, fill: "none", stroke: INK, "stroke-width": .7 }, svg);
+    var gp = P(6.95, 31.5); text(inner, gp[0], gp[1], "GEMINI", { size: 14, ls: ".42em", fill: INK });
+    var gp2 = P(6.95, 29.9); text(inner, gp2[0], gp2[1], "the Twins", { size: 11, italic: true, fill: PENCIL });
+    // the frame: a double rule with hour and degree marks on its edges
+    el("rect", { x: 34, y: 30, width: W - 68, height: H - 64, fill: "none", stroke: INK, "stroke-width": .9 }, g);
+    el("rect", { x: 28, y: 24, width: W - 56, height: H - 52, fill: "none", stroke: INK, "stroke-width": 1.6 }, g);
     var ticks = "";
-    for (var x2 = 16, i2 = 0; x2 < W - 16; x2 += 24, i2++) if (i2 % 2 === 0) ticks += " M" + x2 + ",13 L" + Math.min(W - 16, x2 + 24) + ",13 M" + x2 + "," + (H - 13) + " L" + Math.min(W - 16, x2 + 24) + "," + (H - 13);
-    for (var y2 = 16, j2 = 0; y2 < H - 16; y2 += 24, j2++) if (j2 % 2 === 0) ticks += " M13," + y2 + " L13," + Math.min(H - 16, y2 + 24) + " M" + (W - 13) + "," + y2 + " L" + (W - 13) + "," + Math.min(H - 16, y2 + 24);
-    path(svg, ticks, { w: 3.2 });
+    for (var hh = 6; hh <= 8; hh += 0.25) { var tp = P(hh, 1); if (tp[0] < 34 || tp[0] > W - 34) continue; ticks += "M" + f(tp[0]) + "," + (H - 34) + "l0," + (hh % 1 === 0 ? 6 : 3); }
+    for (var dg = 5; dg <= 40; dg += 5) { var dp = P(8.3, dg); if (dp[1] < 30 || dp[1] > H - 34) continue; ticks += "M28," + f(dp[1]) + "l6,0M" + (W - 34) + "," + f(dp[1]) + "l6,0";
+      text(g, 22, dp[1] + 3.5, "+" + dg + "°", { size: 9.5, anchor: "end", fill: PENCIL }); }
+    line(g, ticks, .9);
+    [6, 7, 8].forEach(function (hh) { var tp = P(hh, 1); if (tp[0] > 40 && tp[0] < W - 40) text(g, tp[0], H - 10, ["VI", "VII", "VIII"][hh - 6] + "ʰ", { size: 10.5, fill: PENCIL }); });
   })();
 
   // ---------------------------------------------------------------- masthead mark: a compass rose
