@@ -18,7 +18,7 @@ $mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   --ink-3: #7a6f63;
   --newsprint: #f4eedf;     /* the main paper */
   --plate: #ece3cd;         /* a warmer sheet, for alternating sections */
-  --kraft: #c9aa80;
+  --kraft: #e2d0ad;     /* light kraft: dark text stays easy to read */
   --night: #1f2b47;
   --tiger: #d9782a;        /* the one accent: tiger orange */
   --tiger-ink: #9a4a12;    /* the accent, dark enough for small text */
@@ -26,9 +26,9 @@ $mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
   --copy-b: #c08736;       /* its paralog */
   --psv: #a8432e;          /* where the copies differ; a variant */
   --tape: rgba(236, 224, 186, 0.82);
-  /* one family throughout: Newsreader, whose optical sizes cover display and text */
-  --display: "Newsreader", "Iowan Old Style", Georgia, serif;
-  --body: "Newsreader", "Iowan Old Style", Georgia, serif;
+  /* one family throughout: EB Garamond, with true small capitals for labels */
+  --display: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  --body: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
   --gutter: clamp(16px, 4vw, 56px);
   --grain: #{$grain};
   --mottle: #{$mottle};

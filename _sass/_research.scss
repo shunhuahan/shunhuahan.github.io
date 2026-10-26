@@ -14,7 +14,7 @@
 .summary-card { position: relative; margin-top: 36px; max-width: 760px; background: #fffdf6; padding: 26px clamp(20px, 3vw, 34px) 24px;
   box-shadow: 0 1px 2px rgba(36,31,26,.1), 0 10px 22px -14px rgba(36,31,26,.32); }
 .summary-card .tape { display: none; }
-.summary-card .lab { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--tiger-ink); }
+.summary-card .lab { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--tiger-ink); }
 .summary-card .sum { font-size: 1.12rem; margin-top: 8px; }
 .summary-card .res { color: var(--ink-2); margin-top: 8px; }
 .summary-card .acts { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; }
@@ -24,7 +24,7 @@
 .summary-card summary::before, details.more summary::before { content: "+ "; color: var(--tiger-ink); }
 .summary-card details[open] summary::before, details.more[open] summary::before { content: "\2212 "; }
 .summary-card dl { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 10px 20px; margin: 16px 0 0; font-size: 1rem; }
-.summary-card dt { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+.summary-card dt { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--ink-3); padding-top: 3px; }
 .summary-card dd { margin: 0; }
 @media (max-width: 620px) { .summary-card dl { grid-template-columns: minmax(0, 1fr); gap: 2px; } .summary-card dd { margin-bottom: 10px; } }
 details.more { margin-top: 28px; max-width: 66ch; padding: 16px 0; border-top: 1px solid rgba(36,31,26,.2); border-bottom: 1px solid rgba(36,31,26,.2); }
@@ -36,13 +36,13 @@ details.more > div { margin-top: 12px; font-size: 1rem; color: var(--ink-2); }
 .figprint .paper { background: #fffdf7; padding: 14px; box-shadow: 0 1px 2px rgba(36,31,26,.12), 0 12px 24px -14px rgba(36,31,26,.35); }
 .figprint .paper img, .figprint .paper svg { display: block; width: 100%; height: auto; background: #fbf7ec; }
 .figprint figcaption { margin-top: 16px; font-size: 1rem; color: var(--ink-2); max-width: 75ch; }
-.figprint figcaption b { font-weight: 400; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--tiger-ink); margin-right: 10px; }
+.figprint figcaption b { font-weight: 400; font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--tiger-ink); margin-right: 10px; }
 .figprint.narrow { max-width: 620px; }
 
 .works { display: grid; gap: 0; margin-top: 40px; }
 .work { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px clamp(24px, 4vw, 56px); padding: 32px 0; border-top: 1px solid rgba(36,31,26,.25); }
 .work:last-child { border-bottom: 1px solid rgba(36,31,26,.25); }
-.work .wk { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #5a2b0a; }
+.work .wk { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: #5a2b0a; }
 .work h3 { font-size: 1.5rem; margin-top: 6px; }
 .work p.body { margin-top: 10px; max-width: 64ch; font-size: 1.04rem; }
 .work .role { margin-top: 10px; font-size: .98rem; color: #3f3226; }
@@ -70,7 +70,7 @@ details.more > div { margin-top: 12px; font-size: 1rem; color: var(--ink-2); }
 
 /* the interactive alignment figure, on paper */
 .fig-panel { background: #fffdf7 !important; border-radius: 0 !important; box-shadow: 0 1px 2px rgba(36,31,26,.12), 0 12px 24px -14px rgba(36,31,26,.35) !important; margin: 48px 0 0 !important; max-width: 1080px; }
-.fig-label { font-family: var(--body) !important; letter-spacing: .14em !important; text-transform: uppercase; color: var(--tiger-ink) !important; font-size: .8rem !important; }
+.fig-label { font-family: var(--body) !important; letter-spacing: .08em !important; font-variant-caps: all-small-caps; text-transform: none !important; color: var(--tiger-ink) !important; font-size: 1.02rem !important; }
 .fig-title, .demo-stat b { font-family: var(--body) !important; font-weight: 400 !important; letter-spacing: -0.01em !important; }
 .fig-sub, .fig-panel figcaption, .demo-more-body p, .trk-label, .trk-meta, .demo-key, .demo-stat span { font-family: var(--body) !important; }
 .seg-btn { font-family: var(--body) !important; }

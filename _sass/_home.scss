@@ -4,14 +4,21 @@
 // The explorer scene, About, the background plates and the taped prints.
 //
 
-/* ------------------------------------------------------------------ front */
-.front { --paper: var(--newsprint); height: clamp(600px, 56vw, 860px); overflow: hidden; }
-.front .scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.nameplate { position: absolute; z-index: 2; left: unquote("max(var(--gutter), 6vw)"); top: 15%; max-width: 900px; padding-right: 16px; }
-.nameplate h1 { font-size: clamp(3rem, 6.6vw, 5.6rem); letter-spacing: -0.02em; margin-top: 8px; }
-.nameplate .role { font-size: clamp(1rem, 1.4vw, 1.15rem); color: var(--ink-2); margin-top: 10px; }
-.nameplate .motto { font-size: clamp(1.15rem, 1.8vw, 1.4rem); margin: 18px 0 0; max-width: 32ch; }
-@media (max-width: 700px) { .front { height: 640px; } .nameplate { top: 64px; left: 16px; } }
+/* ------------------------------------------------------------------ front: a title page */
+/* set like the title page of an old scientific book: a spaced line of small capitals, a double rule,
+   the name, the role, then a small vignette engraving of the twin peaks that fades into the paper */
+.front { --paper: var(--newsprint); }
+.titlepage { display: flex; flex-direction: column; align-items: center; text-align: center; padding-block: clamp(40px, 6vw, 72px) clamp(64px, 8vw, 104px);
+  padding-left: unquote("max(var(--gutter), env(safe-area-inset-left, 0px))"); padding-right: unquote("max(var(--gutter), env(safe-area-inset-right, 0px))"); }
+.titlepage .over { font-variant-caps: all-small-caps; letter-spacing: .32em; font-size: 1.12rem; color: var(--ink-2); padding-left: .32em; }
+.titlepage .rules { width: 440px; max-width: 70vw; height: 5px; border-top: 1.5px solid var(--ink); border-bottom: .75px solid var(--ink); margin: 18px 0 22px; }
+.titlepage h1 { font-size: clamp(3.2rem, 8vw, 6.4rem); line-height: 1; letter-spacing: -0.01em; font-weight: 400; }
+.titlepage .role { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--ink-2); margin-top: 16px; letter-spacing: .02em; }
+.titlepage .vignette { position: relative; width: 460px; max-width: 86vw; aspect-ratio: 1.75; max-width: 100%; margin: clamp(22px, 3.4vw, 36px) 0 clamp(14px, 2vw, 22px); }
+.titlepage .vignette canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); }
+.titlepage .motto { font-style: italic; font-size: clamp(1.2rem, 2vw, 1.5rem); max-width: 34ch; }
+.titlepage .rule-s { width: 48px; border-top: .75px solid var(--ink-2); margin-top: 22px; }
 
 /* ------------------------------------------------------------------ about */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
@@ -19,7 +26,7 @@
 #about .sheet-title { font-size: clamp(2.2rem, 4vw, 3.1rem); }
 .about-text { display: grid; gap: 18px; max-width: 62ch; margin-top: 26px; }
 .facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 22px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(36, 31, 26, .22); font-size: 1rem; max-width: 62ch; }
-.facts dt { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+.facts dt { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--ink-3); padding-top: 3px; }
 .facts dd { margin: 0; }
 .elsewhere { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 26px; }
 .polaroid { position: relative; justify-self: center; width: 100%; max-width: 236px; margin: 40px 0 0; background: #fffdf8; padding: 12px 12px 44px; transform: rotate(1.6deg);
@@ -35,7 +42,7 @@
 
 .prints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px clamp(24px, 3.5vw, 48px); margin-top: 56px; }
 @media (max-width: 960px) { .prints { grid-template-columns: minmax(0, 1fr); max-width: 480px; margin-inline: auto; } }
-.thread { margin: 0 0 -28px; display: flex; align-items: center; gap: 14px; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #4a2508; }
+.thread { margin: 0 0 -28px; display: flex; align-items: center; gap: 14px; font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: #4a2508; }
 .thread::after { content: ""; flex: 1; height: 1px; background: rgba(60, 35, 10, .35); }
 .thread.t1 { grid-column: 1 / span 2; }
 .thread.t2 { grid-column: 3; }
@@ -45,7 +52,7 @@
   box-shadow: 0 1px 2px rgba(36, 31, 26, .14), 0 10px 20px -10px rgba(36, 31, 26, .4); transition: transform .7s cubic-bezier(.25,.8,.3,1), box-shadow .7s cubic-bezier(.25,.8,.3,1); }
 .print:hover .paper { transform: rotate(calc(var(--r, 0deg) * .5)) perspective(1000px) rotateX(4deg); box-shadow: 0 1px 2px rgba(36,31,26,.1), 0 24px 26px -16px rgba(36,31,26,.45); }
 .print .paper svg { width: 100%; height: auto; background: #fbf7ec; }
-.print .eyebrow { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #5a2b0a; margin-top: 24px; }
+.print .eyebrow { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: #5a2b0a; margin-top: 24px; }
 .print h3 { font-size: 1.45rem; line-height: 1.2; margin-top: 6px; }
 .print .gist { font-size: 1.02rem; line-height: 1.52; margin-top: 10px; color: #2e251c; }
 .print .result { font-size: 0.98rem; line-height: 1.5; margin-top: 10px; color: #3f3226; }

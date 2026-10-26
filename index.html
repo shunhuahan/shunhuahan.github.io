@@ -9,12 +9,15 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
 {%- assign recent = journal_pubs | concat: app_notes | concat: site.data.talks | sort: "sort_date" | reverse -%}
 
 <header class="sheet front">
-  <canvas class="scene" id="hero" aria-hidden="true"></canvas>
   {% include nav.html %}
-  <div class="nameplate">
+  <div class="titlepage">
+    <p class="over">Field notes in genomics</p>
+    <div class="rules" aria-hidden="true"></div>
     <h1>Shunhua Han</h1>
     <p class="role">Sr. Staff Bioinformatics Scientist &middot; Illumina &middot; San Diego</p>
+    <div class="vignette"><canvas id="vign" role="img" aria-label="A small engraving of two identical mountain peaks; a flag stands on one of them."></canvas></div>
     <p class="motto">I develop methods that resolve genetic variation where the genome repeats itself.</p>
+    <div class="rule-s" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -55,7 +58,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
     <div class="plates">
       <figure class="pl"><svg id="pl1" viewBox="0 0 400 250" role="img" aria-label="A segment of an ancestral chromosome is copied to a new place; millions of years later both copies remain, the copy carrying a few changes."></svg>
         <figcaption><span class="no">PL. I</span><b>A copy, made long ago.</b> Segmental duplications began as copying accidents: a stretch of chromosome, sometimes carrying whole genes, was duplicated into a new place. The two copies drift apart slowly, so many are still almost identical today.</figcaption></figure>
-      <figure class="pl"><svg id="pl2" viewBox="0 0 400 250" role="img" aria-label="A primate family tree of macaque, orangutan, gorilla, chimpanzee and human. Duplications cluster on the branch leading to African great apes and humans; the human branch carries new genes such as SRGAP2C and NOTCH2NL."></svg>
+      <figure class="pl"><svg id="pl2" viewBox="0 0 400 250" role="img" aria-label="A primate family tree of macaque, orangutan, gorilla, chimpanzee and human, each with a small portrait. Duplications cluster on the branch leading to African great apes and humans, about 8 to 12 million years ago."></svg>
         <figcaption><span class="no">PL. II</span><b>A burst in our ancestors.</b> Comparing primate genomes, the Eichler lab found that duplication sped up in the common ancestor of humans and African great apes, roughly 8&ndash;12 million years ago. It matters for two reasons. Duplication is a main source of new genes: human-specific copies such as <em>SRGAP2C</em> and <em>NOTCH2NL</em> have been linked to the growth of our neocortex. And the repeats make the genome unstable: recombination between copies causes recurrent deletions and duplications, such as the 1q21.1 syndromes at the <em>NOTCH2NL</em> locus.</figcaption></figure>
       <figure class="pl"><svg id="pl3" viewBox="0 0 400 250" role="img" aria-label="Top: HBA2 and HBA1, both intact. Bottom: PMS2 intact beside PMS2CL, a faded copy with broken and missing exons."></svg>
         <figcaption><span class="no">PL. III</span><b>Gene, or pseudogene.</b> Sometimes both copies stay useful: the alpha-globin genes <em>HBA1</em> and <em>HBA2</em> both make protein. Often one copy collects disabling changes and becomes a pseudogene that still reads almost exactly like the working gene, as <em>PMS2CL</em> does beside <em>PMS2</em>.</figcaption></figure>
@@ -76,16 +79,16 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
       <p class="thread t2"><span>Transposable elements</span></p>
       <article class="print" style="--r:-1.2deg">
         <span class="tape" style="--tr:-3deg"></span>
-        <div class="paper"><svg id="w1" viewBox="0 0 300 240" role="img" aria-label="Reads that fit both PMS2 and PMS2CL are turned into four complete copies: two PMS2 haplotypes, one carrying a stretch of PMS2CL sequence from gene conversion, and two PMS2CL haplotypes, each with its own variants."></svg></div>
+        <div class="paper"><svg id="w1" viewBox="-14 0 314 270" role="img" aria-label="Top: the PMS2 and PMS2CL reference regions, with reads that align equally well to both. Multi-region Joint Detection (MRJD) turns them into four complete copies: two PMS2 haplotypes, one carrying a stretch of PMS2CL sequence from gene conversion, and two PMS2CL haplotypes, each with its own variants."></svg></div>
         <p class="eyebrow">TruPath Genome &middot; 2025&ndash;now</p>
         <h3>Haplotype-resolved calling in paralogous genes</h3>
-        <p class="gist">Multi-region joint detection analyses a gene and its pseudogene together. With TruPath Genome proximity linkage it rebuilds the full sequence of every copy, both haplotypes of the gene and both of the pseudogene, and tells which is which, even where gene conversion has copied pseudogene sequence into the gene.</p>
+        <p class="gist">Multi-region Joint Detection (MRJD) analyses a gene and its pseudogene together. With TruPath Genome proximity linkage it rebuilds the full sequence of every copy, both haplotypes of the gene and both of the pseudogene, and tells which is which, even where gene conversion has copied pseudogene sequence into the gene.</p>
         <p class="result">{{ trupath.result }}</p>
         <p class="links"><a class="link" href="{{ trupath.links[0].url }}">Application note</a><a class="link" href="{{ site.baseurl }}/assets/han-acmg2026-trupath-slides.pdf">ACMG slides</a><a class="link" href="{{ site.baseurl }}/research/#paralogs">More</a></p>
       </article>
       <article class="print" style="--r:1deg">
         <span class="tape" style="--tr:2deg"></span>
-        <div class="paper"><svg id="w2" viewBox="0 0 300 240" role="img" aria-label="Four alpha-globin genotypes with 4, 3, 2 and 2 genes; the two-gene genotypes differ in whether both deletions are on one chromosome or one on each."></svg></div>
+        <div class="paper"><svg id="w2" viewBox="0 -15 300 270" role="img" aria-label="Four alpha-globin genotypes with 4, 3, 2 and 2 genes; the two-gene genotypes differ in whether both deletions are on one chromosome or one on each."></svg></div>
         <p class="eyebrow">Standard WGS &middot; 2022&ndash;2025</p>
         <h3>Targeted callers: alpha-globin, <em>PMS2</em>, <em>SMN</em></h3>
         <p class="gist">Before proximity data, callers built around single loci. For <em>HBA1</em>/<em>HBA2</em>, depth over non-homologous sequence resolves 14 copy-number genotypes, including &minus;&minus;<sup>SEA</sup>/&alpha;&alpha; versus &minus;&alpha;/&minus;&alpha;: both are carriers with two genes, but only the first can pass a chromosome with no alpha genes to a child. For <em>PMS2</em>, joint analysis keeps the reads a standard pipeline discards.</p>
@@ -94,7 +97,7 @@ description: "Shunhua Han, Ph.D., Sr. Staff Bioinformatics Scientist at Illumina
       </article>
       <article class="print" style="--r:-0.6deg">
         <span class="tape" style="--tr:-1deg"></span>
-        <div class="paper"><svg id="w3" viewBox="0 0 300 240" role="img" aria-label="A fruit fly above a chromosome on which a transposon jumps to a new place, making a new copy."></svg></div>
+        <div class="paper"><svg id="w3" viewBox="0 -15 300 270" role="img" aria-label="A fruit fly above a chromosome on which a transposon jumps to a new place, making a new copy."></svg></div>
         <p class="eyebrow">Ph.D. &middot; <i>Drosophila</i> cell lines</p>
         <h3>Reconstructing transposon insertions</h3>
         <p class="gist">Transposons copy themselves into new places in the genome. TELR finds those new insertions in long reads, assembles each one to recover its full sequence and family, and estimates how many of a sample&rsquo;s genome copies carry it, which matters in the tetraploid <em>Drosophila</em> S2R+ cell line.</p>

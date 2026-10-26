@@ -4,7 +4,7 @@
   var NS = "http://www.w3.org/2000/svg";
   var INK = "#241f1a", PENCIL = "#5a5047", A = "#4f6f95", B = "#c08736", RED = "#a8432e";
   var FLANK = "#cf8a45", TE = "#7f9f4a", LEAF = "#5f7f3a";
-  var SERIF = "Newsreader, Georgia, serif", DISPLAY = SERIF;
+  var SERIF = "EB Garamond, Garamond, Georgia, serif", DISPLAY = SERIF;
 
   function el(tag, attrs, parent, text) {
     var e = document.createElementNS(NS, tag);
@@ -144,178 +144,180 @@
     document.documentElement.style.setProperty("--tear", "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")");
   })();
 
-  // ---------------------------------------------------------------- the front: an engraving of two identical peaks
-  // Drawn the way a survey engraver would: the land is cut into thin ridgelines, one per step of distance,
-  // nearer lines hide farther ones, and tone comes from how closely the lines are laid. Shadowed slopes get
-  // lines close together, sunlit ones far apart, snow almost none, and distance fades everything toward the
-  // paper. The two peaks are the same mountain twice; a flag on one summit is the only difference.
+  // ---------------------------------------------------------------- the front: a vignette engraving of two identical peaks
+  // Drawn the way a survey engraver would: the land is cut into ridgelines, nearer lines hide farther ones,
+  // tone comes from how closely lines are laid, and a flag on one summit is the only difference.
+  function drawEngraving(canvas, opts) {
+      opts = opts || {}; if (!canvas || !canvas.getContext) return;
+      var VW = 1440, VH = 800, F = 900, H0 = 520, CAMH = 1.2;
+      function hash(x, y) { var h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return h - Math.floor(h); }
+      function vnoise(x, y) {
+        var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+        var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+        var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+        return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+      }
+      function fbm(x, y, o) { var s = 0, a = .5, k = 1; for (var i = 0; i < o; i++) { s += a * vnoise(x * k, y * k); k *= 2.03; a *= .5; } return s; }
+      function ridged(x, y, o) { var s = 0, a = .55, k = 1; for (var i = 0; i < o; i++) { var n = 1 - Math.abs(vnoise(x * k, y * k) * 2 - 1); s += a * n * n; k *= 2.1; a *= .5; } return s; }
+
+      var PZ = 30, PH = 12.6, PR = 10.5, PEAKS = [6.4, 16.2];
+      function peak(dx, dz) {
+        var r = Math.sqrt(dx * dx + dz * dz * 0.7);
+        if (r >= PR) return 0;
+        var cone = Math.pow(1 - r / PR, 1.45);
+        return PH * cone * (0.8 + 0.42 * ridged(dx * 0.32 + 3.1, dz * 0.32 + 7.7, 4));
+      }
+      function height(X, Z) {
+        var h = 0;
+        for (var i = 0; i < PEAKS.length; i++) {
+          var dx = X - PEAKS[i], dz = Z - PZ;
+          if (Math.abs(dx) < PR && Math.abs(dz) < PR * 1.2) h = Math.max(h, peak(dx, dz));
+        }
+        // a far range behind, low rolling ground in the valley
+        h = Math.max(h, 3.2 * fbm(X * 0.05 + 11, Z * 0.05, 3) * Math.min(1, Math.max(0, (Z - 38) / 12)));
+        var ramp = Math.min(1, Math.max(0, (Z - 8) / 14)); ramp = ramp * ramp * (3 - 2 * ramp);
+        var valley = 0.25 + Math.pow(fbm(X * 0.075 + 5, Z * 0.075, 4), 1.6) * 5.2 * ramp;
+        h = Math.max(h, valley);
+        // the near ledge the explorer stands on, falling away to the right
+        var ledge = 1.42 * Math.exp(-Math.pow((Z - 4.8) / 1.9, 2)) / (1 + Math.exp((X + 0.75) * 1.9));
+        h = Math.max(h, ledge);
+        return h;
+      }
+      function snowy(X, Z, h) {
+        for (var i = 0; i < PEAKS.length; i++) if (Math.abs(X - PEAKS[i]) < PR && Math.abs(Z - PZ) < PR && h > 8.4 + 1.1 * vnoise(X * 1.3, Z * 1.3)) return true;
+        return false;
+      }
+
+      (function draw() {
+        var W = canvas.clientWidth, H = canvas.clientHeight; if (!W || !H) return;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        // cover the box from the bottom; on a narrow screen keep the whole valley in view instead
+        var s = Math.max(W / VW, Math.min(H / VH, W / 1100));
+        var s0 = s; s = s * (opts.zoom || 1); var ox = W / 2 - (opts.focus || 800) * s, oy = H - (opts.bottom || VH) * s;
+        var ctx = canvas.getContext("2d");
+        ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * ox, dpr * oy);
+        ctx.clearRect(0, 0, VW, VH);
+        var px = 1 / s;                       // one CSS pixel, in scene units
+        var x0 = Math.max(0, Math.floor(-ox / s) - 4), x1 = Math.min(VW, Math.ceil((W - ox) / s) + 4);
+
+        // a low warm light behind the peaks, laid on like a thin wash
+        var glow = ctx.createRadialGradient(1060, 470, 20, 1060, 470, 560);
+        glow.addColorStop(0, "rgba(222, 170, 104, 0.26)"); glow.addColorStop(1, "rgba(222, 170, 104, 0)");
+        ctx.fillStyle = glow; ctx.fillRect(0, 0, VW, VH);
+
+        // sky: ruled lines that thin out upward and toward the text, the way a vignette engraving fades
+        ctx.strokeStyle = "rgba(36, 31, 26, 0.32)";
+        for (var sy = H0 - 4; sy > 110; sy -= 5.2 * px) {
+          var fadeY = (H0 - sy) / (H0 - 110);
+          ctx.lineWidth = Math.max(0.35 * px, 0.75 * px * (1 - fadeY));
+          ctx.beginPath();
+          var on = false;
+          for (var sx = Math.max(x0, 600); sx <= x1; sx += 3) {
+            var ex = (sx - 1100) / 520, ey = (sy - 480) / 330;
+            var keep = ex * ex + ey * ey + 0.35 * vnoise(sx * 0.02, sy * 0.05) < 1;
+            var cloud = fbm(sx * 0.004 + 4, sy * 0.016, 3) > 0.6 + fadeY * 0.1;
+            if (keep && !cloud) { if (!on) { ctx.moveTo(sx, sy); on = true; } else ctx.lineTo(sx, sy); }
+            else on = false;
+          }
+          ctx.stroke();
+        }
+
+        // the land, nearest line first, each hidden wherever a nearer one already rose above it
+        var cols = Math.ceil((x1 - x0) / 2) + 1;
+        var occ = new Float32Array(cols).fill(1e9);
+        var ledgeTop = null;
+        var BUCKETS = 7, paths = [];
+        for (var b = 0; b < BUCKETS; b++) paths.push(new Path2D());
+        var Z = 1.6, row = 0, prevY = new Float32Array(cols).fill(NaN);
+        while (Z < 72) {
+          var fade = Math.max(0.28, 1 - (Z - 2) / 80);
+          var rowBucket = new Int8Array(cols).fill(-1), ys = new Float32Array(cols);
+          for (var c = 0; c < cols; c++) {
+            var X = (x0 + c * 2 - VW / 2) * Z / F, e = 0.06 * Z;
+            var h = height(X, Z), y = H0 - (h - CAMH) * F / Z;
+            ys[c] = y;
+            var dy = isNaN(prevY[c]) ? 1 : Math.max(0.05, prevY[c] - y);
+            prevY[c] = y;
+            if (y >= occ[c] - 0.15) continue;
+            var edge = occ[c] - y > 10 * px;   // a ridge rising into view always gets its outline
+            occ[c] = y;
+            // light from the upper left and a little behind the viewer
+            var hx = (height(X + e, Z) - height(X - e, Z)) / (2 * e), hz = (height(X, Z + e) - h) / e;
+            var nl = Math.sqrt(hx * hx + 1 + hz * hz);
+            var lit = Math.max(0, Math.min(1, (hx * 0.9 + 0.62 - hz * 0.35) / nl));
+            var snow = snowy(X, Z, h);
+            var gap = (snow ? 10 : 2.2 + 6.2 * Math.pow(lit, 1.5)) * px;
+            // draw every k-th row, k a power of two: lit ground keeps the lines a shadow would also draw
+            var k = Math.pow(2, Math.max(0, Math.min(8, Math.round(Math.log(gap / dy) / Math.LN2))));
+            if (!edge && row % k) continue;
+            var tone = (snow ? 0.3 : 0.5 + 0.5 * (1 - lit)) * fade * (edge ? 1.2 : 1);
+            rowBucket[c] = Math.max(0, Math.min(BUCKETS - 1, Math.round(tone * (BUCKETS - 1))));
+          }
+          for (var kk = 0; kk < cols; kk++) {
+            var bk = rowBucket[kk]; if (bk < 0) continue;
+            var p = paths[bk], xx = x0 + kk * 2;
+            if (kk > 0 && rowBucket[kk - 1] >= 0 && Math.abs(ys[kk - 1] - ys[kk]) < 8) { p.moveTo(xx - 2, ys[kk - 1]); p.lineTo(xx, ys[kk]); }
+            else { p.moveTo(xx - 0.6, ys[kk]); p.lineTo(xx + 0.6, ys[kk]); }
+          }
+          if (Z > 8 && !ledgeTop) ledgeTop = occ.slice();
+          Z += Z / 380; row++;
+        }
+        for (var q = 0; q < BUCKETS; q++) {
+          var t = q / (BUCKETS - 1);
+          ctx.strokeStyle = "rgba(36, 31, 26, " + (0.18 + 0.78 * t).toFixed(3) + ")";
+          ctx.lineWidth = (0.5 + 0.38 * t) * px;
+          ctx.lineCap = "round";
+          ctx.stroke(paths[q]);
+        }
+
+        // the flag on the first summit: the one place the two peaks differ
+        var fx = VW / 2 + PEAKS[0] * F / PZ, fh = peak(0, 0), fy = H0 - (fh - CAMH) * F / PZ;
+        ctx.strokeStyle = "#241f1a"; ctx.lineWidth = 1.1 * px;
+        ctx.beginPath(); ctx.moveTo(fx, fy + 1); ctx.lineTo(fx, fy - 22); ctx.stroke();
+        ctx.fillStyle = "#a8432e";
+        ctx.beginPath(); ctx.moveTo(fx, fy - 22); ctx.lineTo(fx + 14, fy - 18.5); ctx.lineTo(fx, fy - 15); ctx.closePath(); ctx.fill();
+
+        // a few birds, far off
+        ctx.strokeStyle = "rgba(36, 31, 26, 0.7)"; ctx.lineWidth = 1 * px;
+        [[760, 300, 1], [790, 286, .8], [812, 306, .7]].forEach(function (bd) {
+          var bx = bd[0], by = bd[1], bs = bd[2] * 6;
+          ctx.beginPath(); ctx.moveTo(bx - bs, by - bs * .3); ctx.quadraticCurveTo(bx - bs * .4, by - bs * .6, bx, by); ctx.quadraticCurveTo(bx + bs * .4, by - bs * .6, bx + bs, by - bs * .3); ctx.stroke();
+        });
+
+        // the explorer, a small figure on the ledge with a telescope raised toward the peaks
+        var ex0 = 430, ec = Math.round((ex0 - x0) / 2);
+        if (ledgeTop && ec >= 0 && ec < cols) {
+          var gy = Math.min(ledgeTop[Math.max(0, ec - 2)], ledgeTop[ec], ledgeTop[Math.min(cols - 1, ec + 2)]) + 1.5;
+          ctx.save(); ctx.translate(ex0, gy); ctx.scale(1.05, 1.05);
+          ctx.fillStyle = "#231d18"; ctx.strokeStyle = "#231d18"; ctx.lineCap = "round"; ctx.lineJoin = "round";
+          ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(-12, -36); ctx.lineTo(-16, 0.5); ctx.stroke();       // stick
+          ctx.beginPath();                                                                                       // legs
+          ctx.moveTo(-6, -22); ctx.lineTo(-8.5, -0.5); ctx.lineTo(-4.6, -0.5); ctx.lineTo(-2.4, -18);
+          ctx.lineTo(0.6, -18); ctx.lineTo(3.6, -0.5); ctx.lineTo(7.4, -0.5); ctx.lineTo(4.4, -22); ctx.closePath(); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(-6.4, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.ellipse(5.6, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath();                                                                                       // coat
+          ctx.moveTo(-7, -45); ctx.quadraticCurveTo(-1, -48, 6, -45); ctx.lineTo(9, -19); ctx.quadraticCurveTo(0, -16, -10.5, -19); ctx.closePath(); ctx.fill();
+          ctx.beginPath(); ctx.moveTo(-15, -47); ctx.lineTo(-6, -48); ctx.lineTo(-5, -27); ctx.lineTo(-14.5, -26); ctx.closePath(); ctx.fill();   // pack
+          ctx.beginPath(); ctx.ellipse(-10.6, -49.5, 5.6, 2.6, -0.1, 0, Math.PI * 2); ctx.fill();               // bedroll
+          ctx.lineWidth = 3.2; ctx.beginPath(); ctx.moveTo(4, -43); ctx.quadraticCurveTo(9, -45, 12, -50); ctx.stroke();   // arm
+          ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(8, -51); ctx.lineTo(29, -58.5); ctx.stroke();         // telescope
+          ctx.lineWidth = 1.7; ctx.beginPath(); ctx.moveTo(29, -58.5); ctx.lineTo(33, -60); ctx.stroke();
+          ctx.beginPath(); ctx.arc(1.5, -50.5, 4.2, 0, Math.PI * 2); ctx.fill();                                 // head
+          ctx.beginPath(); ctx.ellipse(1.5, -54, 7.6, 1.5, -0.05, 0, Math.PI * 2); ctx.fill();                   // hat brim
+          ctx.beginPath(); ctx.moveTo(-2.6, -54); ctx.quadraticCurveTo(1.5, -61.5, 5.6, -54); ctx.closePath(); ctx.fill();
+          ctx.beginPath(); ctx.moveTo(-3, -45); ctx.quadraticCurveTo(-10, -46, -15, -42); ctx.quadraticCurveTo(-9, -44, -3, -42.5); ctx.closePath();   // scarf
+          ctx.fillStyle = "#a8432e"; ctx.fill();
+          ctx.restore();
+        }
+      })();
+  }
   (function () {
-    var canvas = $("hero"); if (!canvas || !canvas.getContext) return;
-    var VW = 1440, VH = 800, F = 900, H0 = 520, CAMH = 1.2;
-    function hash(x, y) { var h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return h - Math.floor(h); }
-    function vnoise(x, y) {
-      var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
-      var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
-      var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
-      return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
-    }
-    function fbm(x, y, o) { var s = 0, a = .5, k = 1; for (var i = 0; i < o; i++) { s += a * vnoise(x * k, y * k); k *= 2.03; a *= .5; } return s; }
-    function ridged(x, y, o) { var s = 0, a = .55, k = 1; for (var i = 0; i < o; i++) { var n = 1 - Math.abs(vnoise(x * k, y * k) * 2 - 1); s += a * n * n; k *= 2.1; a *= .5; } return s; }
-
-    var PZ = 30, PH = 12.6, PR = 10.5, PEAKS = [6.4, 16.2];
-    function peak(dx, dz) {
-      var r = Math.sqrt(dx * dx + dz * dz * 0.7);
-      if (r >= PR) return 0;
-      var cone = Math.pow(1 - r / PR, 1.45);
-      return PH * cone * (0.8 + 0.42 * ridged(dx * 0.32 + 3.1, dz * 0.32 + 7.7, 4));
-    }
-    function height(X, Z) {
-      var h = 0;
-      for (var i = 0; i < PEAKS.length; i++) {
-        var dx = X - PEAKS[i], dz = Z - PZ;
-        if (Math.abs(dx) < PR && Math.abs(dz) < PR * 1.2) h = Math.max(h, peak(dx, dz));
-      }
-      // a far range behind, low rolling ground in the valley
-      h = Math.max(h, 3.2 * fbm(X * 0.05 + 11, Z * 0.05, 3) * Math.min(1, Math.max(0, (Z - 38) / 12)));
-      var ramp = Math.min(1, Math.max(0, (Z - 8) / 14)); ramp = ramp * ramp * (3 - 2 * ramp);
-      var valley = 0.25 + Math.pow(fbm(X * 0.075 + 5, Z * 0.075, 4), 1.6) * 5.2 * ramp;
-      h = Math.max(h, valley);
-      // the near ledge the explorer stands on, falling away to the right
-      var ledge = 1.42 * Math.exp(-Math.pow((Z - 4.8) / 1.9, 2)) / (1 + Math.exp((X + 0.75) * 1.9));
-      h = Math.max(h, ledge);
-      return h;
-    }
-    function snowy(X, Z, h) {
-      for (var i = 0; i < PEAKS.length; i++) if (Math.abs(X - PEAKS[i]) < PR && Math.abs(Z - PZ) < PR && h > 8.4 + 1.1 * vnoise(X * 1.3, Z * 1.3)) return true;
-      return false;
-    }
-
-    function draw() {
-      var W = canvas.clientWidth, H = canvas.clientHeight; if (!W || !H) return;
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-      // cover the box from the bottom; on a narrow screen keep the whole valley in view instead
-      var s = Math.max(W / VW, Math.min(H / VH, W / 1100));
-      var ox = Math.min(0, Math.max(W - VW * s, W / 2 - 800 * s)), oy = H - VH * s;
-      var ctx = canvas.getContext("2d");
-      ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * ox, dpr * oy);
-      ctx.clearRect(0, 0, VW, VH);
-      var px = 1 / s;                       // one CSS pixel, in scene units
-      var x0 = Math.max(0, Math.floor(-ox / s) - 4), x1 = Math.min(VW, Math.ceil((W - ox) / s) + 4);
-
-      // a low warm light behind the peaks, laid on like a thin wash
-      var glow = ctx.createRadialGradient(1060, 470, 20, 1060, 470, 560);
-      glow.addColorStop(0, "rgba(222, 170, 104, 0.26)"); glow.addColorStop(1, "rgba(222, 170, 104, 0)");
-      ctx.fillStyle = glow; ctx.fillRect(0, 0, VW, VH);
-
-      // sky: ruled lines that thin out upward and toward the text, the way a vignette engraving fades
-      ctx.strokeStyle = "rgba(36, 31, 26, 0.32)";
-      for (var sy = H0 - 4; sy > 110; sy -= 5.2 * px) {
-        var fadeY = (H0 - sy) / (H0 - 110);
-        ctx.lineWidth = Math.max(0.35 * px, 0.75 * px * (1 - fadeY));
-        ctx.beginPath();
-        var on = false;
-        for (var sx = Math.max(x0, 600); sx <= x1; sx += 3) {
-          var ex = (sx - 1100) / 520, ey = (sy - 480) / 330;
-          var keep = ex * ex + ey * ey + 0.35 * vnoise(sx * 0.02, sy * 0.05) < 1;
-          var cloud = fbm(sx * 0.004 + 4, sy * 0.016, 3) > 0.6 + fadeY * 0.1;
-          if (keep && !cloud) { if (!on) { ctx.moveTo(sx, sy); on = true; } else ctx.lineTo(sx, sy); }
-          else on = false;
-        }
-        ctx.stroke();
-      }
-
-      // the land, nearest line first, each hidden wherever a nearer one already rose above it
-      var cols = Math.ceil((x1 - x0) / 2) + 1;
-      var occ = new Float32Array(cols).fill(1e9);
-      var ledgeTop = null;
-      var BUCKETS = 7, paths = [];
-      for (var b = 0; b < BUCKETS; b++) paths.push(new Path2D());
-      var Z = 1.6, row = 0, prevY = new Float32Array(cols).fill(NaN);
-      while (Z < 72) {
-        var fade = Math.max(0.28, 1 - (Z - 2) / 80);
-        var rowBucket = new Int8Array(cols).fill(-1), ys = new Float32Array(cols);
-        for (var c = 0; c < cols; c++) {
-          var X = (x0 + c * 2 - VW / 2) * Z / F, e = 0.06 * Z;
-          var h = height(X, Z), y = H0 - (h - CAMH) * F / Z;
-          ys[c] = y;
-          var dy = isNaN(prevY[c]) ? 1 : Math.max(0.05, prevY[c] - y);
-          prevY[c] = y;
-          if (y >= occ[c] - 0.15) continue;
-          var edge = occ[c] - y > 10 * px;   // a ridge rising into view always gets its outline
-          occ[c] = y;
-          // light from the upper left and a little behind the viewer
-          var hx = (height(X + e, Z) - height(X - e, Z)) / (2 * e), hz = (height(X, Z + e) - h) / e;
-          var nl = Math.sqrt(hx * hx + 1 + hz * hz);
-          var lit = Math.max(0, Math.min(1, (hx * 0.9 + 0.62 - hz * 0.35) / nl));
-          var snow = snowy(X, Z, h);
-          var gap = (snow ? 10 : 2.2 + 6.2 * Math.pow(lit, 1.5)) * px;
-          // draw every k-th row, k a power of two: lit ground keeps the lines a shadow would also draw
-          var k = Math.pow(2, Math.max(0, Math.min(8, Math.round(Math.log(gap / dy) / Math.LN2))));
-          if (!edge && row % k) continue;
-          var tone = (snow ? 0.3 : 0.5 + 0.5 * (1 - lit)) * fade * (edge ? 1.2 : 1);
-          rowBucket[c] = Math.max(0, Math.min(BUCKETS - 1, Math.round(tone * (BUCKETS - 1))));
-        }
-        for (var kk = 0; kk < cols; kk++) {
-          var bk = rowBucket[kk]; if (bk < 0) continue;
-          var p = paths[bk], xx = x0 + kk * 2;
-          if (kk > 0 && rowBucket[kk - 1] >= 0 && Math.abs(ys[kk - 1] - ys[kk]) < 8) { p.moveTo(xx - 2, ys[kk - 1]); p.lineTo(xx, ys[kk]); }
-          else { p.moveTo(xx - 0.6, ys[kk]); p.lineTo(xx + 0.6, ys[kk]); }
-        }
-        if (Z > 8 && !ledgeTop) ledgeTop = occ.slice();
-        Z += Z / 380; row++;
-      }
-      for (var q = 0; q < BUCKETS; q++) {
-        var t = q / (BUCKETS - 1);
-        ctx.strokeStyle = "rgba(36, 31, 26, " + (0.18 + 0.78 * t).toFixed(3) + ")";
-        ctx.lineWidth = (0.5 + 0.38 * t) * px;
-        ctx.lineCap = "round";
-        ctx.stroke(paths[q]);
-      }
-
-      // the flag on the first summit: the one place the two peaks differ
-      var fx = VW / 2 + PEAKS[0] * F / PZ, fh = peak(0, 0), fy = H0 - (fh - CAMH) * F / PZ;
-      ctx.strokeStyle = "#241f1a"; ctx.lineWidth = 1.1 * px;
-      ctx.beginPath(); ctx.moveTo(fx, fy + 1); ctx.lineTo(fx, fy - 22); ctx.stroke();
-      ctx.fillStyle = "#a8432e";
-      ctx.beginPath(); ctx.moveTo(fx, fy - 22); ctx.lineTo(fx + 14, fy - 18.5); ctx.lineTo(fx, fy - 15); ctx.closePath(); ctx.fill();
-
-      // a few birds, far off
-      ctx.strokeStyle = "rgba(36, 31, 26, 0.7)"; ctx.lineWidth = 1 * px;
-      [[760, 300, 1], [790, 286, .8], [812, 306, .7]].forEach(function (bd) {
-        var bx = bd[0], by = bd[1], bs = bd[2] * 6;
-        ctx.beginPath(); ctx.moveTo(bx - bs, by - bs * .3); ctx.quadraticCurveTo(bx - bs * .4, by - bs * .6, bx, by); ctx.quadraticCurveTo(bx + bs * .4, by - bs * .6, bx + bs, by - bs * .3); ctx.stroke();
-      });
-
-      // the explorer, a small figure on the ledge with a telescope raised toward the peaks
-      var ex0 = 430, ec = Math.round((ex0 - x0) / 2);
-      if (ledgeTop && ec >= 0 && ec < cols) {
-        var gy = Math.min(ledgeTop[Math.max(0, ec - 2)], ledgeTop[ec], ledgeTop[Math.min(cols - 1, ec + 2)]) + 1.5;
-        ctx.save(); ctx.translate(ex0, gy); ctx.scale(1.05, 1.05);
-        ctx.fillStyle = "#231d18"; ctx.strokeStyle = "#231d18"; ctx.lineCap = "round"; ctx.lineJoin = "round";
-        ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(-12, -36); ctx.lineTo(-16, 0.5); ctx.stroke();       // stick
-        ctx.beginPath();                                                                                       // legs
-        ctx.moveTo(-6, -22); ctx.lineTo(-8.5, -0.5); ctx.lineTo(-4.6, -0.5); ctx.lineTo(-2.4, -18);
-        ctx.lineTo(0.6, -18); ctx.lineTo(3.6, -0.5); ctx.lineTo(7.4, -0.5); ctx.lineTo(4.4, -22); ctx.closePath(); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(-6.4, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.ellipse(5.6, 0, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath();                                                                                       // coat
-        ctx.moveTo(-7, -45); ctx.quadraticCurveTo(-1, -48, 6, -45); ctx.lineTo(9, -19); ctx.quadraticCurveTo(0, -16, -10.5, -19); ctx.closePath(); ctx.fill();
-        ctx.beginPath(); ctx.moveTo(-15, -47); ctx.lineTo(-6, -48); ctx.lineTo(-5, -27); ctx.lineTo(-14.5, -26); ctx.closePath(); ctx.fill();   // pack
-        ctx.beginPath(); ctx.ellipse(-10.6, -49.5, 5.6, 2.6, -0.1, 0, Math.PI * 2); ctx.fill();               // bedroll
-        ctx.lineWidth = 3.2; ctx.beginPath(); ctx.moveTo(4, -43); ctx.quadraticCurveTo(9, -45, 12, -50); ctx.stroke();   // arm
-        ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(8, -51); ctx.lineTo(29, -58.5); ctx.stroke();         // telescope
-        ctx.lineWidth = 1.7; ctx.beginPath(); ctx.moveTo(29, -58.5); ctx.lineTo(33, -60); ctx.stroke();
-        ctx.beginPath(); ctx.arc(1.5, -50.5, 4.2, 0, Math.PI * 2); ctx.fill();                                 // head
-        ctx.beginPath(); ctx.ellipse(1.5, -54, 7.6, 1.5, -0.05, 0, Math.PI * 2); ctx.fill();                   // hat brim
-        ctx.beginPath(); ctx.moveTo(-2.6, -54); ctx.quadraticCurveTo(1.5, -61.5, 5.6, -54); ctx.closePath(); ctx.fill();
-        ctx.beginPath(); ctx.moveTo(-3, -45); ctx.quadraticCurveTo(-10, -46, -15, -42); ctx.quadraticCurveTo(-9, -44, -3, -42.5); ctx.closePath();   // scarf
-        ctx.fillStyle = "#a8432e"; ctx.fill();
-        ctx.restore();
-      }
-    }
-    draw();
+    var canvas = $("vign"); if (!canvas) return;
+    var paint = function () { drawEngraving(canvas, { focus: 1035, zoom: 1.75, bottom: 545 }); };
+    paint();
     var timer;
-    window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(draw, 160); });
+    window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(paint, 160); });
   })();
 
   // ---------------------------------------------------------------- masthead mark: a compass rose
@@ -376,36 +378,61 @@
     note(svg, 287, 226, "copy", { size: 12.5, anchor: "middle" });
     note(svg, 287, 242, "with a few changes", { size: 11, anchor: "middle", fill: RED });
   })();
+  // a small portrait for each species: macaque, orangutan, gorilla, chimpanzee, human
+  function primate(svg, kind, cx, cy) {
+    var g = el("g", { transform: "translate(" + cx + "," + cy + ")" }, svg), w = 1.1;
+    function e(x, y, rx, ry, fill, sw) { return el("ellipse", { cx: x, cy: y, rx: rx, ry: ry, fill: fill, stroke: INK, "stroke-width": sw == null ? w : sw }, g); }
+    function eyes(y, dx) { el("circle", { cx: -dx, cy: y, r: 1.1, fill: INK }, g); el("circle", { cx: dx, cy: y, r: 1.1, fill: INK }, g); }
+    if (kind === "macaque") {
+      e(-8.5, -1, 2.6, 3, "#b49a7a"); e(8.5, -1, 2.6, 3, "#b49a7a");
+      e(0, 0, 8.5, 9.5, "#b49a7a"); e(0, 1.5, 5.6, 6.8, "#e3b4a0", .8); eyes(-0.5, 2.3);
+      path(g, "M-1.5,4.6 Q0,5.6 1.5,4.6", { w: .8 });
+    } else if (kind === "orangutan") {
+      e(0, 1, 11.5, 8.5, "#a8582c"); e(0, 1.5, 6.8, 7.6, "#6b4a35", .8); eyes(0, 2.4);
+      path(g, "M-2,5 Q0,6 2,5", { w: .8, stroke: "#e8d6c0" }); path(g, "M-6,-8 q6,-4 12,0", { w: 1.6, stroke: "#a8582c" });
+    } else if (kind === "gorilla") {
+      el("path", { d: "M-8,4 C-10,-6 -5,-13 0,-13 C5,-13 10,-6 8,4 C6,10 -6,10 -8,4Z", fill: "#2f2a27", stroke: INK, "stroke-width": w }, g);
+      e(0, 3.2, 5.6, 4.6, "#544a44", .8); path(g, "M-5,-2.5 L5,-2.5", { w: 1.6, stroke: "#161311" });
+      el("circle", { cx: -2.4, cy: -0.6, r: 1, fill: "#e8dccb" }, g); el("circle", { cx: 2.4, cy: -0.6, r: 1, fill: "#e8dccb" }, g);
+    } else if (kind === "chimpanzee") {
+      e(-9.5, -0.5, 3.6, 4.4, "#d8b48e"); e(9.5, -0.5, 3.6, 4.4, "#d8b48e");
+      e(0, -1, 8.4, 9.2, "#4a3a2e"); e(0, 2.4, 6, 5.8, "#d8b48e", .8); eyes(-1.2, 2.3);
+      path(g, "M-2.4,5 Q0,6.4 2.4,5", { w: .8 });
+    } else {
+      e(0, 0.5, 7.4, 9.4, "#e7c2a0"); el("path", { d: "M-7.6,-1 C-8,-9 -3,-10.8 0,-10.8 C3,-10.8 8,-9 7.6,-1 C5,-5.5 -5,-5.5 -7.6,-1Z", fill: "#2c2420", stroke: INK, "stroke-width": .8 }, g);
+      eyes(0.6, 2.6); path(g, "M0,1.6 L-0.8,4.2 L0.6,4.4 M-2,6.6 Q0,7.6 2,6.6", { w: .8 });
+    }
+  }
   (function () {
     var svg = $("pl2"); if (!svg) return;
     var g = inkLayer(svg), R = rng(62);
     plateNo(svg, "PL. II");
-    var leaves = [["macaque", 52], ["orangutan", 88], ["gorilla", 124], ["chimpanzee", 160], ["human", 196]];
-    var LX = 286, hc = [250, 178], ghc = [188, 151], oghc = [126, 119.5], root = [56, 85.75];
-    function elbow(px, py, cx, cy, marks, thick, human) {
+    var leaves = [["macaque", 42], ["orangutan", 82], ["gorilla", 122], ["chimpanzee", 162], ["human", 202]];
+    var LX = 282, hc = [236, 182], ghc = [176, 152], oghc = [114, 117], root = [48, 79.5];
+    function elbow(px, py, cx, cy, marks, thick) {
       path(g, "M" + px + "," + py + " L" + px + "," + cy + " L" + cx + "," + cy, { w: thick ? 3.4 : 1.4, stroke: thick ? "#c0392b" : INK });
       for (var i = 0; i < marks; i++) {
         var mx = px + (cx - px) * (i + 1) / (marks + 1) + (R() - .5) * 3;
-        el("rect", { x: f(mx - 3), y: f(cy - 9), width: 6, height: 6, fill: human ? "#c0392b" : "#d9782a", stroke: INK, "stroke-width": .8 }, g);
+        el("rect", { x: f(mx - 3), y: f(cy - 9), width: 6, height: 6, fill: "#d9782a", stroke: INK, "stroke-width": .8 }, g);
       }
     }
     elbow(root[0], root[1], LX, leaves[0][1], 2);
     elbow(root[0], root[1], oghc[0], oghc[1], 2);
     elbow(oghc[0], oghc[1], LX, leaves[1][1], 3);
-    elbow(oghc[0], oghc[1], ghc[0], ghc[1], 8, true);
+    elbow(oghc[0], oghc[1], ghc[0], ghc[1], 7, true);
     elbow(ghc[0], ghc[1], LX, leaves[2][1], 3);
     elbow(ghc[0], ghc[1], hc[0], hc[1], 2);
     elbow(hc[0], hc[1], LX, leaves[3][1], 2);
-    elbow(hc[0], hc[1], LX, leaves[4][1], 2, false, true);
+    elbow(hc[0], hc[1], LX, leaves[4][1], 2);
     path(g, "M" + (root[0] - 14) + "," + root[1] + " L" + root[0] + "," + root[1], { w: 1.4 });
-    leaves.forEach(function (l) { note(svg, LX + 8, l[1] + 4, l[0], { size: 13.5, fill: INK, roman: true }); });
-    note(svg, 244, 212, "new human genes:", { size: 11.5, fill: "#9a4a12", anchor: "end", roman: true });
-    note(svg, 244, 226, "SRGAP2C, NOTCH2NL", { size: 11.5, fill: "#9a4a12", anchor: "end" });
-    note(svg, 182, 172, "a burst of", { size: 12, fill: "#9a4a12", anchor: "end" });
-    note(svg, 182, 186, "duplication", { size: 12, fill: "#9a4a12", anchor: "end" });
-    note(svg, 182, 200, "~8–12 million years ago", { size: 11, anchor: "end", roman: true });
-    el("rect", { x: 292, y: 16, width: 6, height: 6, fill: "#d9782a", stroke: INK, "stroke-width": .8 }, g);
-    note(svg, 304, 23, "duplications", { size: 11.5, roman: true });
+    leaves.forEach(function (l) {
+      primate(svg, l[0], LX + 16, l[1]);
+      note(svg, LX + 33, l[1] + 4.5, l[0], { size: 13, fill: INK, roman: true });
+    });
+    note(svg, 166, 176, "a burst of duplication", { size: 12, fill: "#9a4a12", anchor: "end", roman: true });
+    note(svg, 166, 193, "~8–12 million years ago", { size: 11.5, anchor: "end", roman: true });
+    el("rect", { x: 278, y: 13, width: 6, height: 6, fill: "#d9782a", stroke: INK, "stroke-width": .8 }, g);
+    note(svg, 290, 20, "duplication events", { size: 11, roman: true });
   })();
   function geneModel(g, x, y, w, color, opts) {
     opts = opts || {};
@@ -472,33 +499,37 @@
   (function () {
     var svg = $("w1"); if (!svg) return;
     var g = inkLayer(svg), R = rng(81);
-    note(svg, 150, 22, "One sample: reads that fit both genes…", { size: 12, fill: INK, anchor: "middle", roman: true });
-    for (var r = 0; r < 3; r++) {
-      var x = 28 + r * 9;
-      while (x < 270) { var len = 20 + R() * 14; path(g, "M" + f(x) + "," + (34 + r * 6) + " L" + f(Math.min(272, x + len)) + "," + (34 + r * 6), { w: 2.2, stroke: "#b8b0a2" }); x += len + 5 + R() * 6; }
-    }
-    arrow(g, 150, 54, 150, 70, { w: 1.2 });
-    note(svg, 160, 66, "MRJD + proximity linkage", { size: 11, roman: true });
-    note(svg, 150, 88, "…become four complete copies", { size: 12, fill: INK, anchor: "middle", roman: true });
-    note(svg, 98, 108, "PMS2", { size: 13.5, fill: INK, anchor: "middle" });
-    note(svg, 98, 120, "gene", { size: 10.5, anchor: "middle", roman: true });
-    note(svg, 226, 108, "PMS2CL", { size: 13.5, fill: INK, anchor: "middle" });
-    note(svg, 226, 120, "pseudogene", { size: 10.5, anchor: "middle", roman: true });
-    var vars = [[58, 120], [74, 142], [190, 252], [214, 270]];
-    [["hap 1", 134], ["hap 2", 160]].forEach(function (h, i) {
-      note(svg, 34, h[1] + 9, h[0], { size: 11, anchor: "end", roman: true });
-      box(g, 40, h[1], 116, 13, A, .7);
-      box(g, 168, h[1], 116, 13, B, .75);
-      if (i === 0) {
-        box(g, 92, h[1], 34, 13, B, .95);
-        path(g, "M109," + (h[1] + 15) + " L109,194", { w: .9, dash: "2 2" });
+    // the reference: the gene and its pseudogene, in two places on chromosome 7
+    note(svg, 80, 15, "PMS2", { size: 13, fill: INK, anchor: "middle" });
+    note(svg, 220, 15, "PMS2CL", { size: 13, fill: INK, anchor: "middle" });
+    [[20, A], [160, B]].forEach(function (r) {
+      path(g, "M" + r[0] + ",28 L" + (r[0] + 120) + ",28", { w: 1.3 });
+      [[8, 12], [34, 8], [56, 10], [80, 8], [100, 14]].forEach(function (e) { box(g, r[0] + e[0], 23, e[1], 10, r[1], .8, 1); });
+      // reads that align equally well here and in the other copy
+      for (var row = 0; row < 4; row++) {
+        var x = r[0] - 4 + R() * 8;
+        while (x < r[0] + 116) { var len = 18 + R() * 10; ghost(g, x, 40 + row * 6.5, Math.min(len, r[0] + 120 - x), 3.6); x += len + 3 + R() * 5; }
       }
+    });
+    note(svg, 150, 79, "reads align equally well to both: ambiguous", { size: 10.5, anchor: "middle", roman: true });
+    arrow(g, 150, 85, 150, 101, { w: 1.2 });
+    note(svg, 150, 114, "Multi-region Joint Detection (MRJD)", { size: 12, fill: INK, anchor: "middle", roman: true });
+    note(svg, 150, 127, "with TruPath proximity linkage", { size: 10.5, anchor: "middle", roman: true });
+    // four reconstructed copies, under the region each belongs to
+    var vars = [[44, 118], [66, 98], [186, 246], [214, 262]];
+    [["hap 1", 142], ["hap 2", 166]].forEach(function (h, i) {
+      note(svg, 17, h[1] + 9.5, h[0], { size: 10, anchor: "end", roman: true });
+      box(g, 20, h[1], 120, 13, A, .72);
+      box(g, 160, h[1], 120, 13, B, .78);
+      if (i === 0) { box(g, 84, h[1], 32, 13, B, .95); path(g, "M100," + (h[1] + 15) + " L100,194", { w: .9, dash: "2 2" }); }
       [vars[0][i], vars[1][i], vars[2][i], vars[3][i]].forEach(function (vx) { path(g, "M" + vx + "," + (h[1] - 2) + " L" + vx + "," + (h[1] + 15), { w: 1.6 }); });
     });
-    note(svg, 109, 206, "gene conversion: pseudogene", { size: 10.5, anchor: "middle", fill: "#7a4a12", roman: true });
-    note(svg, 109, 218, "sequence copied into PMS2", { size: 10.5, anchor: "middle", fill: "#7a4a12", roman: true });
-    path(g, "M214,204 L214,214", { w: 1.6 });
-    note(svg, 220, 213, "= a variant", { size: 10.5, roman: true });
+    note(svg, 100, 205, "gene conversion: PMS2CL", { size: 10.5, anchor: "middle", fill: "#7a4a12", roman: true });
+    note(svg, 100, 217, "sequence copied into PMS2", { size: 10.5, anchor: "middle", fill: "#7a4a12", roman: true });
+    path(g, "M206,197 L206,207", { w: 1.6 });
+    note(svg, 212, 206, "= a variant", { size: 10.5, roman: true });
+    note(svg, 150, 244, "Every copy rebuilt in full, gene and", { size: 11.5, fill: INK, anchor: "middle", roman: true });
+    note(svg, 150, 258, "pseudogene told apart.", { size: 11.5, fill: INK, anchor: "middle", roman: true });
   })();
 
   // ---------------------------------------------------------------- alpha-globin genotype glyphs

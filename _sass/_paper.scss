@@ -9,7 +9,7 @@
 html { background: var(--newsprint); color: var(--ink); scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--newsprint); color: var(--ink);
-  font: 400 1.125rem/1.62 var(--body); font-optical-sizing: auto;
+  font: 400 1.22rem/1.6 var(--body); font-feature-settings: "kern", "liga", "onum";
   overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; line-height: 1.12; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
@@ -41,7 +41,7 @@ img { max-width: 100%; }
   padding-block: clamp(64px, 8vw, 112px);
 }
 /* the one small label style: kickers, eyebrows and list labels all use it */
-.kicker { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tiger-ink); }
+.kicker { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--tiger-ink); }
 .sheet-title { font-size: clamp(2.3rem, 5vw, 3.9rem); margin-top: 10px; }
 .lede { max-width: 62ch; margin-top: 18px; color: var(--ink-2); font-size: 1.16rem; }
 

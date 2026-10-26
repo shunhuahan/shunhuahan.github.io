@@ -22,7 +22,7 @@
 .note { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 0 28px; padding: 18px 0 20px; position: relative; }
 .note + .note { border-top: 1px solid rgba(90, 80, 71, .16); }
 .note .yr { font-size: 1.1rem; color: var(--tiger-ink); text-align: right; line-height: 1.55; padding-right: 4px; font-variant-numeric: oldstyle-nums; }
-.note .kind { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.note .kind { font-size: 1.02rem; letter-spacing: .08em; font-variant-caps: all-small-caps; color: var(--ink-3); }
 .note .t { font-size: 1.12rem; line-height: 1.45; margin-top: 3px; }
 .note .au { font-size: .96rem; color: var(--ink-2); margin-top: 4px; }
 .note .au strong { color: var(--ink); font-weight: 500; }
